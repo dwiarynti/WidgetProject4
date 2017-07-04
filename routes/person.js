@@ -6,16 +6,16 @@ var persondb = db.sublevel('person');
 var sitedb = db.sublevel('site');
 var sequencedb = db.sublevel('sequencenumberperson');
 
-persondb.get('person', function (err, persons) {
-    if (err) {
-        //console.log('person', err);
-        if (err.message == "Key not found in database") {
-            persondb.put('person', person, function (err) {
-                console.log('person data init');
-            });
-        }
-    }
-});
+// persondb.get('person', function (err, persons) {
+//     if (err) {
+//         //console.log('person', err);
+//         if (err.message == "Key not found in database") {
+//             persondb.put('person', person, function (err) {
+//                 console.log('person data init');
+//             });
+//         }
+//     }
+// });
 
 router.post('/person/cleanup',function(req,res)
 {
