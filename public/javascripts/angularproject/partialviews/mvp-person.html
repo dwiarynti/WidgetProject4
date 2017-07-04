@@ -1,0 +1,24 @@
+<div class="mvp-widget">
+    <div class="mvp-person-heading">
+        <img class="mvp-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">Person</span>
+    </div>
+    <div class="mvp-body">
+        <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 11%;">Site</th>                    
+                    <th style="width: 11%;">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="personobj in personList">
+                    <td>{{personobj.sitename}}</td>
+                    <td>{{personobj.name}}</td>
+                </tr>
+            </tbody>
+        </table>  
+
+</div>
+
+

@@ -1,0 +1,36 @@
+<div ng-controller="applicationcontroller">
+    <!--<div class="ps-dashboard-header">
+        {{ applicationObj.appname }}
+    </div>
+    <div gridster="gridsterOpts">
+        <ul>
+            <li gridster-item="item" ng-repeat="item in applicationObj.widget">
+                <ps-widget-body-v2>
+                    
+                </ps-widget-body-v2>
+            </li>
+        </ul>
+    </div>-->
+    <div class="common-widget">
+        <div class="common-heading">
+            <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+            <span class="www-employee-title">{{ applicationObj.appname }}</span>
+        </div>
+        <div class="common-body">
+            <div class="row" style="margin:1%">
+                <div gridster="gridsterOpts">
+                    <ul>
+                        <li gridster-item="item" ng-repeat="item in applicationObj.widget" style="box-shadow: 0 0 0px rgba(0, 0, 0, 0.3);">
+                            <ps-widget-body-v2>
+                                
+                            </ps-widget-body-v2>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

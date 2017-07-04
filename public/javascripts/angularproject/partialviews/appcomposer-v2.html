@@ -1,0 +1,40 @@
+<div ng-controller="appcomposer-v2controller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">Application Composer V2</span>
+        <button class="btn btn-default" ng-click="ViewPage()" style="float:right">View Page</button>
+    </div>
+    <div class="common-body">
+        <div class="row" style="margin:2%;">
+            <input type="text" class="form-control" ng-model="appmanagementv2obj.appname" placeholder="Application Name"/>  
+        </div> 
+        <div class="row" style="margin:1%">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">WIDGET</div>
+                    <div class="panel-body">
+                        <div class="btn-group-vertical" style="width:100%">
+                            <button ng-repeat="widget in widgetDefinitions" type="button" class="btn btn-default" ng-click="addNewWidget(widget)">{{widget.title}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9" >
+                <div gridster="gridsterOpts">
+                    <ul>
+                        <li gridster-item="item" ng-repeat="item in appmanagementv2obj.widget" style="height:0px">
+                            <ps-widget-body-v2>
+                            </ps-widget-body-v2>
+                        </li>
+                    </ul>
+                </div>
+                <br>
+                <button ng-if="appmanagementv2obj.euid == 0" class="btn btn-primary btn-lg" ng-click="Save()" style="width:100%">Save</button>
+                <button ng-if="appmanagementv2obj.euid != 0" class="btn btn-primary btn-lg" ng-click="Update()" style="width:100%">Update</button>
+            </div>
+        </div>
+
+</div>
+
+</div>

@@ -1,0 +1,14 @@
+<div ng-controller="prewpagecontroller">
+    <div class="ps-dashboard-header">
+        {{ pervpageObj.pagename }}
+    </div>
+    <div gridster="gridsterOpts">
+        <ul>
+            <li gridster-item="item" ng-repeat="item in pervpageObj.widget">
+                <ps-widget-body>
+                    
+                </ps-widget-body>
+            </li>
+        </ul>
+    </div>
+</div>

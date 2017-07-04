@@ -1,0 +1,186 @@
+
+/*.button-default {
+  -webkit-transition: 0.25s ease-out 0.1s color;
+  -moz-transition: 0.25s ease-out 0.1s color;
+  -o-transition: 0.25s ease-out 0.1s color;
+  transition: 0.25s ease-out 0.1s color;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  outline: none;
+  position: relative;
+}*/
+
+.show-notifications {
+  position: relative;
+}
+.show-notifications:hover #icon-bell {
+  fill: #34495e;
+}
+.show-notifications:focus #icon-bell {
+  fill: #34495e;
+}
+.show-notifications .notifications-count {
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background: #5c3380;
+  color: #fefefe;
+  font: normal 12px arial;
+  height: 19px;
+  line-height: 1.75em;
+  position: absolute;
+  right: 1px;
+  text-align: center;
+  top: -1px;
+  width: 19px;
+}
+
+.notifications {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-transition: 0.25s ease-out 0.1s opacity;
+  -moz-transition: 0.25s ease-out 0.1s opacity;
+  -o-transition: 0.25s ease-out 0.1s opacity;
+  transition: 0.25s ease-out 0.1s opacity;
+  background: #ecf0f1;
+  border: 1px solid #bdc3c7;
+  left: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 60px;
+}
+.notifications:after {
+  border: 10px solid transparent;
+  border-bottom-color: #5c3380;
+  content: '';
+  display: block;
+  height: 0;
+  left: 10px;
+  position: absolute;
+  top: -20px;
+  width: 0;
+}
+.notifications h3 {
+  background: #5c3380;
+  color: #fefefe;
+  margin: 0;
+  padding: 10px;
+  width: 350px;
+  cursor: default;
+  font-size: 1.05em;
+  font-weight: normal;
+}
+.notifications .show-all {
+  background: #5c3380;
+  color: #fefefe;
+  margin: 0;
+  padding: 10px;
+  width: 350px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+.notifications .show-all:hover {
+  text-decoration: underline;
+}
+.notifications .show-all:focus {
+  text-decoration: underline;
+}
+.notifications .notifications-list {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.notifications .notifications-list .item {
+  -webkit-transition: -webkit-transform 0.25s ease-out 0.1s;
+  -moz-transition: -moz-transform 0.25s ease-out 0.1s;
+  -o-transition: -o-transform 0.25s ease-out 0.1s;
+  transition: transform 0.25s ease-out 0.1s;
+  border-top: 1px solid #bdc3c7;
+  color: #7f8c8d;
+  cursor: default;
+  display: block;
+  padding: 10px;
+  position: relative;
+  white-space: nowrap;
+  width: 350px;
+}
+.notifications .notifications-list .item:before {
+  display: inline-block;
+  vertical-align: middle;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background: #5c3380;
+  content: '';
+  height: 8px;
+  width: 8px;
+}
+.notifications .notifications-list .item .details {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  white-space: normal;
+  width: 280px;
+}
+.notifications .notifications-list .item .details .title {
+  display: block;
+}
+.notifications .notifications-list .item .details .date {
+  display: block;
+  color: #95a5a6;
+  font-size: .85em;
+  margin-top: 3px;
+}
+.notifications .notifications-list .item .button-dismiss {
+  display: inline-block;
+  vertical-align: middle;
+  color: #bdc3c7;
+  font-size: 2.25em;
+}
+.notifications .notifications-list .item .button-dismiss:hover {
+  color: #95a5a6;
+}
+.notifications .notifications-list .item .button-dismiss:focus {
+  color: #95a5a6;
+}
+.notifications .notifications-list .item.no-data {
+  text-align: center;
+}
+.notifications .notifications-list .item.no-data:before {
+  display: none;
+}
+.notifications .notifications-list .item.expired {
+  color: #bdc3c7;
+}
+.notifications .notifications-list .item.expired:before {
+  background: #bdc3c7;
+}
+.notifications .notifications-list .item.expired .details .date {
+  color: #bdc3c7;
+}
+.notifications .notifications-list .item.dismissed {
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.notifications.empty .notifications-list .no-data {
+  display: block;
+  padding: 10px;
+}

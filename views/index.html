@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Widget Project</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="/javascripts/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/javascripts/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="/javascripts/Content/angular-gridster.min.css" rel="stylesheet" />
+    <!--<link href="/javascripts/Content/AdminLTE.css" rel="stylesheet" />-->
+    <link href="/javascripts/app/app.css" rel="stylesheet" />
+    <link href="/javascripts/dist/psFramework.css" rel="stylesheet" />
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    
+
+    <!-- widget css -->
+    <link href="/javascripts/app/widgets/wwaTemperature/wwaTemperature.css" rel="stylesheet" />
+    <link href="/javascripts/app/widgets/wwaInventory/wwaInventory.css" rel="stylesheet" />
+    <link href="/javascripts/app/widgets/wwaEmployee/wwaEmployee.css" rel="stylesheet" />
+    <link href="/javascripts/angularproject/css/mvp.css" rel="stylesheet" />
+    <!--<link href="/javascripts/angularproject/css/mvp-person.css" rel="stylesheet" />-->
+    <link href="/javascripts/angularproject/css/common.css" rel="stylesheet" />
+    <link href="/javascripts/angularproject/css/notification.css" rel="stylesheet" />
+
+    <script src="/javascripts/Scripts/jquery-2.1.3.min.js"></script>
+    
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>-->
+    <script src="/javascripts/Scripts/angular.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>-->
+    <script src="/javascripts/Scripts/angular-animate.min.js"></script>
+    <script src="/javascripts/Scripts/angular-route.min.js"></script>
+    <script src="/javascripts/Scripts/angular-resource.js"></script>    
+    <script src="/javascripts/Scripts/angular-gridster.min.js"></script>
+    <script src="/javascripts/Scripts/bootstrap.min.js"></script>
+    <!--<script src="/javascripts/Scripts/datetime-picker.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>-->
+    <!--<script src="/javascripts/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.0/ui-bootstrap-tpls.min.js"></script>
+    <!--<script src="/javascripts/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>-->
+    <script src="/javascripts/Scripts/ngStorage.min.js"></script>
+    <script src="/javascripts/app/services/common.service.js"></script>
+
+    <script src="/javascripts/dist/psFramework.js"></script>
+    
+    <script src="/javascripts/app/appModule.js"></script>
+    <script src="/javascripts/app/appConfig.js"></script>
+    <script src="/javascripts/app/appRouteConfig.js"></script>
+    <script src="/javascripts/app/appController.js"></script>
+    <script src="/javascripts/angularproject/controllers/appmanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/appmanagement-v2-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/usermanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/notificationmanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/sitemanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/devicemanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/locationmanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/peoplemanagement-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/authsetting-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/appcomposer-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/appcomposer-v2-ctrl.js"></script>    
+    <script src="/javascripts/angularproject/controllers/mvp-location-ctrl.js"></script>
+    <script src="/javascripts/angularproject/controllers/mvp-person-ctrl.js"></script>
+    <script src="/javascripts/angularproject/controllers/mvp-device-ctrl.js"></script>
+    <script src="/javascripts/angularproject/controllers/mvp-persondevice-ctrl.js"></script>
+    <script src="/javascripts/angularproject/controllers/mvp-personlocation-ctrl.js"></script>
+    <script src="/javascripts/angularproject/widgets/mvp-text/mvp-text-ctrl.js"></script>
+    <script src="/javascripts/angularproject/widgets/mvp-label/mvp-label-ctrl.js"></script>
+    <script src="/javascripts/angularproject/widgets/mvp-table/mvp-table-ctrl.js"></script>
+    <script src="/javascripts/angularproject/controllers/prevpage-ctrl.js"></script>
+    <script src="/javascripts/angularproject/controllers/application-ctrl.js"></script>
+    <!--<script src="/javascripts/angularproject/controllers/notificationpopover-crtl.js"></script>    -->
+
+
+
+    <!-- angular resource-->
+    <script src="/javascripts/app/services/passingdata.service.js"></script>
+    <script src="/javascripts/app/services/employeeResource.js"></script>
+    <script src="/javascripts/app/services/locationResource.js"></script>    
+    <script src="/javascripts/app/services/widgetResource.js"></script>    
+    <script src="/javascripts/app/services/widgetmanagementResource.js"></script>    
+    <script src="/javascripts/app/services/siteResource.js"></script>    
+    <script src="/javascripts/app/services/locationsiteResource.js"></script>    
+    <script src="/javascripts/app/services/appmanagementResource.js"></script>     
+    <script src="/javascripts/app/services/notificationmanagementResource.js"></script>     
+    <script src="/javascripts/app/services/authsettingResource.js"></script>    
+    <script src="/javascripts/app/services/personResource.js"></script>    
+    <script src="/javascripts/app/services/deviceResource.js"></script>
+    <script src="/javascripts/app/services/persondeviceResource.js"></script>
+    <script src="/javascripts/app/services/personlocationResource.js"></script>
+    <script src="/javascripts/app/services/userResource.js"></script>
+    <script src="/javascripts/app/services/roomResource.js"></script>
+    <script src="/javascripts/app/services/roomdevResource.js"></script>
+    <script src="/javascripts/app/services/dataService.js"></script>
+
+    <!--<script src="/javascripts/app/directives/wwaDashboardDirective.js"></script>-->
+    <script src="/javascripts/app/directives/wwaGuidesDirective.js"></script>
+    <script src="/javascripts/app/directives/wwaLocationsDirective.js"></script>
+<script src="/javascripts/angularproject/directives/mvp-locationdirectives.js"></script>
+<script src="/javascripts/angularproject/directives/mvp-persondirectives.js"></script>
+<script src="/javascripts/angularproject/directives/mvp-devicedirectives.js"></script>
+<script src="/javascripts/angularproject/directives/mvp-persondevicedirectives.js"></script>
+<script src="/javascripts/angularproject/directives/mvp-personlocationdirectives.js"></script>
+<script src="/javascripts/angularproject/widgets/mvp-text/mvp-textdirectives.js"></script>
+<script src="/javascripts/angularproject/widgets/mvp-table/mvp-tabledirectives.js"></script>
+<script src="/javascripts/angularproject/widgets/mvp-label/mvp-labeldirectives.js"></script>
+
+    <!-- widget JavaScript files -->
+    <script src="/javascripts/app/widgets/wwaTemperature/wwaTemperatureDirective.js"></script>
+    <script src="/javascripts/app/widgets/wwaInventory/wwaInventoryDirective.js"></script>
+    <script src="/javascripts/app/widgets/wwaEmployee/wwaEmployeeDirective.js"></script>
+    
+
+
+    <!-- setting dialogs -->
+    <script src="/javascripts/app/dialogs/wwaSelectEmployeeController.js"></script>
+    <script src="/javascripts/app/dialogs/wwaSelectLocationController.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-location/mvp-location-dialog-ctrl.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-device/mvp-device-dialog-ctrl.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-persondevice/mvp-persondevice-dialog-ctrl.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-personlocation/mvp-personlocation-dialog-ctrl.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-text/mvp-text-dialog-ctrl.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-table/mvp-table-dialog-ctrl.js"></script>
+    <script src="/javascripts/angularproject/dialog/mvp-label/mvp-label-dialog-ctrl.js"></script>
+    <!--<script src="/javascripts/angularproject/dialog/mvp-person/mvp-person-dialog-ctrl.js"></script>-->
+
+</head>
+<body class="container-fluid" ng-controller="appController" ng-style="state == 'unauthorized'?{'background-color':'#eee'}:{}">
+
+    <div ng-switch="state" >
+        <div class="row" >
+                <div ng-switch-when="unauthorized" class="sign-in-form">
+                           <div class="col-md-6 col-md-offset-3">
+                               <div class="panel panel-login">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <h2>MVP POC</h2>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                              <uib-tabset style="background-color: white;" class="rounded">
+                                                <uib-tab class="tab-users">
+                                                    <uib-tab-heading>
+                                                        <i class="fa fa-fw fa-sign-in"></i> Login
+                                                    </uib-tab-heading>
+                                                    <form style="margin:1%">
+                                                        <h3 class="text-center">Login</h1>
+                                                        <p ng-if="errmessage != ''" class="text-danger">* {{errmessage}}</p>
+
+                                                        <div class="form-group">
+                                                            <label>Username</label>
+                                                            <input type="text" ng-model="loginobj.username" class="form-control"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Password</label>
+                                                            <input type="password" ng-model="loginobj.password" class="form-control"/>
+                                                        </div>
+                                                        <button class="btn btn-default" ng-click="signIn()">Sign In</button>                
+                                                    </form>
+                                                        <br>
+                                                    
+                                                </uib-tab>
+                                                <uib-tab class="tab-users">
+                                                    <uib-tab-heading>
+                                                        <i class="fa fa-fw fa-pencil-square-o"></i> Register
+                                                    </uib-tab-heading>
+                                                    <form style="margin:1%">
+                                                        <h3 class="text-center">Register</h1>
+                                                        <p ng-if="errmessage != ''" class="text-danger">* {{errmessage}}</p>
+
+                                                        <div class="form-group">
+                                                            <label>Username</label>
+                                                            <input type="text" ng-model="registerobj.username" class="form-control"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Password</label>
+                                                            <input type="password" ng-model="registerobj.password" class="form-control"/>
+                                                        </div>
+                                                        <button class="btn btn-default" ng-click="signUp()">Sign Up</button>                
+                                                    </form>
+                                                    <br>
+                                                    
+                                                </uib-tab>
+                                                </uib-tabset>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                           </div>
+                 </div>
+        </div>
+        
+        
+            <div ng-switch-when="authorized">
+            <ps-framework title="MVP POC"
+                          subtitle="MVP Prove of Concept"
+                          icon-file="/javascripts/images/Logo.png">
+                <ps-menu>
+                    <div ng-repeat="menu in menuItems">
+                        <ps-menu-item ng-show="!menu.isGroup" label="{{menu.label}}" icon="{{menu.icon}}" route="{{menu.href}}"></ps-menu-item>
+                        <ps-menu-group ng-show="menu.isGroup" label="{{menu.label}}" icon="{{menu.icon}}">
+                            <ps-menu-item ng-repeat="submenu in menu.submenuItems" label="{{submenu.label}}" icon="{{submenu.icon}}" route="{{submenu.href}}"></ps-menu-item>
+                        </ps-menu-group>
+                    </div>
+                    
+                </ps-menu>
+            </ps-framework>
+            </div>
+        
+    </div>
+
+
+</body>
+</html>

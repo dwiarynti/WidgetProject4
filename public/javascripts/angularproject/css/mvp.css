@@ -1,0 +1,150 @@
+/*.mvp*/.mvp-widget {
+    height: 100%;
+    width: 100%;
+    font-size: 16px;
+}
+
+.mvp-body {
+    /*display: table;*/
+    background-color: white;
+    color: darkblue;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    
+}
+
+.mvp-row {
+    display: table-row;
+}
+
+.mvp-icon {
+    height: 24px;
+    width: 24px;
+    margin-top: -3px;
+    margin-left: 3px;
+}
+
+.mvp-name-area {
+    display: table-cell;
+    width: 180px;
+    vertical-align: top;
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+
+.mvp-name-area h4 {
+    margin-bottom: 4px;
+    font-size: 10px;
+}
+
+.mvp-name-area p {
+    font-size: 20px;
+}
+
+.mvp-picture-area {
+    display: table-cell;
+    background-size: cover;
+    background-position: center;
+}
+
+
+/*MVP HEADING STYLES*/
+.mvp-location-heading {
+    background-color: skyblue;
+    color: darkblue;
+    height: 32px;
+    padding-top: 2px;
+    font-size: 15px;
+    line-height: 32px;
+}
+.mvp-person-heading {
+    background-color: peachpuff;
+    color: darkblue;
+    height: 32px;
+    padding-top: 2px;
+    font-size: 15px;
+    line-height: 32px;
+}
+.mvp-device-heading {
+    background-color: darkcyan;
+    color: white;
+    height: 32px;
+    padding-top: 2px;
+    font-size: 15px;
+    line-height: 32px;
+}
+
+.mvp-persondevice-heading {
+    background-color: lightcoral;
+    color: white;
+    height: 32px;
+    padding-top: 2px;
+    font-size: 15px;
+    line-height: 32px;
+}
+
+.mvp-personlocation-heading {
+    background-color: olive;
+    color: white;
+    height: 32px;
+    padding-top: 2px;
+    font-size: 15px;
+    line-height: 32px;
+}
+.mvp-widgets-heading {
+    /*background-color: darkcyan;*/
+    /*color: white;*/
+    /*height: 32px;*/
+    /*padding-top: 2px;*/
+    /*font-size: 15px;*/
+    /*line-height: 32px;*/
+}
+
+.tab-users,
+.tab-chats,
+.tab-settings{
+  width: 50%;
+}
+
+.nav>li {
+  background-color: #CECECE;
+  color: #FFF;
+  font-size: 1em;
+  text-align: center;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+  background-color: #67c0ea;
+  border: none;
+  color: #FFF;
+}
+
+.nav-tabs>li>a {
+  border: none;
+  border-radius: 0;
+  color: #FFF;
+  margin: 0;
+}
+
+.nav-tabs>li>a:focus,
+.nav-tabs>li>a:hover {
+  background-color: #3c8dbc;
+  border: none;
+  border-radius: 0;
+  color: #FFF;
+}
+li.alert_li {
+  /*font-size: 11px; */
+  color:grey;
+  padding:10px 0px 2px 0px;
+  border-bottom: thin solid #c0c0c0;
+}
+li.alert_li:hover{background-color:#eee}
+
+.widgetinput {
+    width: 80%;
+}

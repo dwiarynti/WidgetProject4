@@ -1,0 +1,61 @@
+<div ng-controller="appmanagemetcontroller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">Application Management</span>
+    </div>
+    <div class="common-body">
+        <div class="row" style="margin:1%">
+            <div class="col-md-12" >
+                <button ng-click="Add()" type="button" class="btn btn-flat" data-widget=""><i class="glyphicon glyphicon-plus"></i> Add Field</button>
+                <br><br>
+                <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 11%;">Page Name</th>
+                        <th style="width: 11%;">Page pagestatus</th>
+                        <th style="width: 11%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pageobj in PageList">
+                        <td ng-if="pageobj.editmode == false">{{pageobj.pagename}}</td>
+                        <td ng-if="pageobj.editmode == true">
+                            <input type="text" placeholder="Page Name" class="form-control col-md-6" ng-model="pageobj.pagename">
+                        </td>
+
+                        <td ng-if="pageobj.pagestatus == true && pageobj.editmode == false">Enable</td>
+                        <td ng-if="pageobj.pagestatus == false && pageobj.editmode == false">Disable</td>
+
+                        <td ng-if="pageobj.editmode == true">
+                            <input type="radio" name="pagestatustype_{{pageobj.id}}" ng-model="pageobj.pagestatus" data-ng-value="true" /> Enable
+                            <input type="radio" name="pagestatustype_{{pageobj.id}}" ng-model="pageobj.pagestatus" data-ng-value="false"/> Disable
+                        </td>
+
+
+                        <td ng-if="pageobj.editmode == false">
+                            <a ng-click="Edit(pageobj)" class="link" style="cursor: pointer">Edit</a> 
+                            <label ng-if="pageobj.pagestatus == true">|</label>
+                            <a ng-if="pageobj.pagestatus == true" ng-click="ComposePage(pageobj)" class="link" style="cursor: pointer">Compose</a>
+                        </td>
+
+                        <td ng-if="pageobj.editmode == true && pageobj.id != 0">
+                            <a ng-click="Update(pageobj)" class="link" style="cursor: pointer">Update</a> |
+                            <a ng-click="turnoffeditmode(pageobj)" class="link" style="cursor: pointer">Cancel</a>                            
+                        </td>
+
+                        <td ng-if="pageobj.editmode == true && pageobj.id == 0">
+                            <!--<a ng-click="Save(pageobj)" class="link" style="cursor: pointer">Save</a>-->
+                            <a ng-click="ComposePage(pageobj)" class="link" style="cursor: pointer">Compose</a> |
+                            <a ng-click="turnoffaddmode($index)" class="link" style="cursor: pointer">Cancel</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+
+            </div>
+        </div>
+
+</div>
+
+</div>

@@ -1,0 +1,30 @@
+<div ng-controller="authsettingcontroller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">Authentication Setting</span>
+    </div>
+    <div class="common-body">
+        <!--<div class="row">-->
+
+        <!--</div>-->
+
+        <!--<input type="radio" ng-model="obj" name="authseting" value="true"/>ON
+        <input type="radio" ng-model="obj" name="authseting" value="false"/>OFF-->
+        
+        <div class="row" style="margin:1%">
+
+            <div class="form-group">
+                <label>Authentication</label><br>
+                <input type="radio" class="" name="authsetting" ng-model="obj" data-ng-value="true" /> ON
+                <input type="radio" class="" name="authsetting" ng-model="obj" data-ng-value="false"/> OFF
+
+            </div>
+            <button type="button" ng-click="updateAuthenticationSetting()" class="btn btn-primary">Update</button>
+
+
+        </div>
+
+</div>
+
+</div>

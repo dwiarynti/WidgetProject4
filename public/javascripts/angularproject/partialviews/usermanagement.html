@@ -1,0 +1,160 @@
+<div ng-controller="usermanagementcontroller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">User Management</span>
+    </div>
+    <div class="common-body">
+        <div class="row" style="margin:1%">
+            <div class="col-md-12" >
+                <button ng-click="btnAddClick()" type="button" class="btn btn-flat" data-widget=""><i class="glyphicon glyphicon-plus"></i> Add User</button>
+                <br><br>
+                <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 11%;">Site</th>
+                        <th style="width: 11%;">Role</th>                                                
+                        <th style="width: 11%;">Username</th>
+                        <th style="width: 11%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in userlist">
+                        <td>{{user.sitename}}</td>                        
+                        <td>{{user.role}}</td>                        
+                        <td>{{user.username}}</td>
+                        <td>
+                            <a ng-click="btnEditClick(user)" class="link" style="cursor: pointer">Edit</a>|
+                            <a ng-click="btnDeleteClick(user)" class="link" style="cursor: pointer">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+
+            </div>
+        </div>
+
+</div>
+
+<div class="modal modal-message fade" id="modal-add">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal">x</a>
+                    <h4 class="modal-title">Add User</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Username" ng-model="userobject.username">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Password" ng-model="userobject.password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="userobject.role">
+                            <option value="">Please Select Role</option>
+                            <option value="{{role.rolename}}" ng-repeat="role in roles">{{role.rolename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group has-feedback" ng-show="userobject.role != 'Super Admin'">
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="userobject.siteid">
+                            <option value="">Please Select Site</option>
+                            <option value="{{site.id}}" ng-repeat="site in sitelist">{{site.sitename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group has-feedback" ng-show="userobject.role != 'Super Admin'">
+                        <label>Select Page :</label>
+                        <div class="row">
+                            <div class="col-md-3" ng-repeat="obj in pagelist">
+                                <input type="checkbox" ng-model="active" value="{{obj.id}}" ng-change="pushSelectedTransactionType(obj,active, 'add')" /> {{obj.pagename}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
+                    <button type="button" class="btn btn-default btn-width" ng-click="Save()">
+                        <span>Add</span>
+                    </button>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-message fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal">x</a>
+                    <h4 class="modal-title">Add User</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Username" ng-model="selecteduser.username">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Password" ng-model="selecteduser.password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="selecteduser.role">
+                            <option value="">Please Select Role</option>
+                            <option ng-selected="isSelectedItem(selecteduser.role, role.rolename)" value="{{role.rolename}}" ng-repeat="role in roles">{{role.rolename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group has-feedback" ng-show="selecteduser.role != 'Super Admin'">
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="selecteduser.siteid">
+                            <option value="">Please Select Site</option>
+                            <option value="{{site.id}}" ng-repeat="site in sitelist">{{site.sitename}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group has-feedback" ng-show="selecteduser.role != 'Super Admin'">
+                        <label>Select Page :</label>
+                        <div class="row">
+                            <div class="col-md-3" ng-repeat="obj in pagelistEditMode">
+                                <input type="checkbox" ng-model="obj.selected" value="{{obj.id}}" ng-change="pushSelectedTransactionType(obj,obj.selected, 'edit')" /> {{obj.pagename}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
+                    <button type="button" class="btn btn-default btn-width" ng-click="Update()">
+                        <span>Update</span>
+                    </button>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-message fade" id="modal-delete">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="javascript:;" class="close" data-dismiss="modal">x</a>
+                            <h4 class="modal-title">Delete Question</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                            <p>Are you sure you want to delete this user?</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
+                            <button type="button" class="btn btn-default btn-width" ng-click="Delete()">
+                                <span>Ok</span>
+                            </button>
+                        
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+</div>

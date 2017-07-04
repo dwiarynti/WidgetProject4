@@ -1,0 +1,75 @@
+<div ng-controller="sitemanagementcontroller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">Site Management</span>
+    </div>
+    <div class="common-body">
+        <div class="row" style="margin:1%">
+            <div class="col-md-12" >
+                <button ng-click="Add()" type="button" class="btn btn-flat" data-widget=""><i class="glyphicon glyphicon-plus"></i> Add Field</button>
+                 <!--<span custom-popover popover-html="Some Popover Texttt" popover-placement="bottom" popover-label="Label"></span>-->
+                <br><br>
+                <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 7%;">Site</th>
+                        <th style="width: 7%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="obj in sitelist">
+                        <td ng-if="obj.editmode == false">{{obj.sitename}}</td>
+                        <td ng-if="obj.editmode == true">
+                            <input type="text" placeholder="Topic" class="form-control col-md-6" ng-model="obj.sitename">
+                        </td>
+
+                        <td ng-if="obj.editmode == false">
+                            <a ng-click="Edit(obj)" class="link" style="cursor: pointer">Edit</a> |
+                            <a ng-click="btnDeleteClick(obj)" class="link" style="cursor: pointer">Delete</a>
+                        </td>
+
+                        <td ng-if="obj.editmode == true && obj.id != 0">
+                            <a ng-click="Update(obj)" class="link" style="cursor: pointer">Update</a> |
+                            <a ng-click="turnoffeditmode(obj)" class="link" style="cursor: pointer">Cancel</a>                            
+                        </td>
+
+                        <td ng-if="obj.editmode == true && obj.id == 0">
+                            <a ng-click="Save(obj)" class="link" style="cursor: pointer">Save</a> |
+                            <a ng-click="turnoffaddmode($index)" class="link" style="cursor: pointer">Cancel</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+
+            </div>
+        </div>
+
+</div>
+
+</div>
+
+    <div class="modal modal-message fade" id="modal-delete">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="javascript:;" class="close" data-dismiss="modal">x</a>
+                            <h4 class="modal-title">Delete site</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                            <p>Are you sure you want to delete this site?</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
+                            <button type="button" class="btn btn-default btn-width" ng-click="Delete()">
+                                <span>Ok</span>
+                            </button>
+                        
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+</div>

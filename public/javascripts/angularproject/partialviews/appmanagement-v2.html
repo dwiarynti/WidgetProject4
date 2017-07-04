@@ -1,0 +1,42 @@
+<div ng-controller="appmanagemet-v2controller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">Application Management V2</span>
+    </div>
+    <div class="common-body">
+        <div class="row" style="margin:1%">
+            <div class="col-md-12" >
+                <button ng-click="Add()" type="button" class="btn btn-flat" data-widget=""><i class="glyphicon glyphicon-plus"></i> Add Field</button>
+                <br><br>
+                <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 11%;">Application Name</th>
+                        <th style="width: 11%;">Application Status</th>
+                        <th style="width: 11%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="appobj in PageList">
+                        <td>{{appobj.appname}}</td>
+
+                        <td ng-if="appobj.appstatus == true">Enable</td>
+                        <td ng-if="appobj.appstatus == false">Disable</td>
+
+                        <td>
+                            <a ng-click="ComposePage(appobj)" class="link" style="cursor: pointer" ng-if="appobj.appstatus == true">Compose</a> 
+                            <label ng-if="appobj.appstatus == true">|</label>
+                            <a ng-click="Disable(appobj)" class="link" style="cursor: pointer" ng-if="appobj.appstatus == true">Disable</a>
+                            <a ng-click="Disable(appobj)" class="link" style="cursor: pointer" ng-if="appobj.appstatus == false">Enable</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+
+            </div>
+        </div>
+
+</div>
+
+</div>

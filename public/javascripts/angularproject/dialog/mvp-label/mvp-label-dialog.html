@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <h3 class="modal-title">label Widget</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label>Placeholder</label>
+        <input class="form-control" ng-model="configuration.placeholder"/>
+    </div>
+    <div class="form-group">
+        <label>Data Source</label>
+        <!--<select class="form-control"
+                ng-model="configuration.datasource" 
+                ng-options="data as obj.sourcename for obj in datasourcelist"
+                ng-change="getDataSourceFeilds(data)">
+        </select>-->
+        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.datasource" ng-change="getDataSourceFeilds()">
+            <option value="">Please Select</option>
+            <option ng-repeat="obj in datasourcelist" value="{{obj}}" ng-selected="isSelectedItem(obj.sourcename,configuration.datasource.sourcename)">{{obj.sourcename}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Field Name</label>
+        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.fieldname">
+            <option value="">Please Select</option>
+            <option value="{{obj}}" ng-repeat="obj in fieldnamelist" ng-selected="isSelectedItem(obj,configuration.fieldname)">{{obj}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Condition</label>
+        <span class="glyphicon glyphicon-plus-sign newlead-IconPlus" ng-click="addcondition()"></span>
+        <div class="row" ng-repeat="condition in configuration.conditions">
+            <div class="col-md-6">
+                <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="condition.fieldname" ng-change="getValue(condition.fieldname, condition )">
+                    <option value="">Please Select Field</option>
+                    <option ng-repeat="obj in fieldnamelist" ng-selected="isSelectedItem(obj,condition.fieldname)">{{obj}}</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="condition.value">
+                    <option value="">Please Select Value</option>
+                    <option ng-repeat="obj in condition.fieldvalue" ng-selected="isSelectedItem(obj,condition.value)">{{obj}}</option>                    
+                </select>
+                <!--<input class="form-control col-md-6" ng-model="condition.value" placeholder="value"/>-->
+            </div>  
+            <br>         
+        </div>
+    </div>
+    <!--<div class="form-group">
+        <label>Returned Data Type</label>
+        <div class="row">
+                <div class="col-md-6" ng-repeat="obj in returneddatatypes">
+                    <input type="radio" name="returneddatatype" value="{{obj}}" ng-model="configuration.returneddatatype"/>{{obj}}
+                </div>       
+        </div>
+    </div>-->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="saveSettings()">Ok</button>
+    <button type="button" class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+</div>

@@ -1,0 +1,14 @@
+<div ng-controller="notificationmanagementcontroller" style="color:black">
+    <ul style="list-style-type: none;padding: 0px;">
+        <!--<li>qwqw</li>-->
+        <li class="alert_li" ng-repeat="notification in notificationPopoverList" >
+            <p>
+                {{notification.topic}}
+            </p>
+            <p>
+                {{notification.datetime | date:'yyyy-MMM-dd HH:mm'}}
+            </p>
+            <!--<hr>-->
+        </li>
+    </ul>
+</div>
