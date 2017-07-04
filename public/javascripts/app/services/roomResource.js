@@ -13,7 +13,7 @@
                     gettyperoom: {method:'GET', params:{action:'gettyperoom'}},                
                     update: {method:'POST', params:{action:'update'}},                
                     delete: {method:'POST', params:{action:'delete'}},  
-                                  
+                    getsite: {method:'GET', params:{action:'getsite'}},                                                  
                });
     }
 }());

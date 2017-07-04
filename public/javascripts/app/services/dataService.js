@@ -242,122 +242,58 @@ angular.module('app').factory('dataService',
 
     var widgetform = [
                 {
-                    title: 'Text',
+                    title: 'Site',
                     settings: {
-                        sizeX: 5,
+                        sizeX: 3,
                         sizeY: 0,
-                        minSizeX: 5,
+                        minSizeX: 3,
                         minSizeY: 0,
-                        template: '<mvptext class="col-md-10" style="padding: 0px;"></mvptext>',
+                        template: '<mvpsite class="col-md-10" style="padding: 0px;"></mvpsite>',
                         widgetSettings: {
                             id: 5003,
                             configuration:{},
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-text/mvp-text-dialog.html',
-                            controller: 'mvp-textdialogcontroller',
+                            templateUrl: '/javascripts/angularproject/dialog/mvp-site/mvp-site-dialog.html',
+                            controller: 'mvp-sitedialogcontroller',
                             settingiconstatus :true
                         }
                     }
                 },
+                // {
+                //     title: 'Label',
+                //     settings: {
+                //         sizeX: 2,
+                //         sizeY: 0,
+                //         minSizeX: 2,
+                //         minSizeY: 0,
+                //         template: '<mvplabel></mvplabel>',
+                //         widgetSettings: {
+                //             id: 5003,
+                //             configuration:{},
+                //             templateUrl: '/javascripts/angularproject/dialog/mvp-label/mvp-label-dialog.html',
+                //             controller: 'mvp-labeldialogcontroller',
+                //             tempname : "label",
+                //             settingiconstatus :false                            
+                //         }
+                //     }
+                // },
                 {
-                    title: 'Label',
-                    settings: {
-                        sizeX: 2,
-                        sizeY: 0,
-                        minSizeX: 2,
-                        minSizeY: 0,
-                        template: '<mvplabel></mvplabel>',
-                        widgetSettings: {
-                            id: 5003,
-                            configuration:{},
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-label/mvp-label-dialog.html',
-                            controller: 'mvp-labeldialogcontroller',
-                            tempname : "label",
-                            settingiconstatus :false                            
-                        }
-                    }
-                },
-                {
-                    title: 'Table',
+                    title: 'Location',
                     settings: {
                         sizeX: 6,
                         sizeY: 2,
                         minSizeX: 5,
                         minSizeY: 2,
-                        template: '<mvptable></mvptable>',
+                        template: '<mvplocation></mvplocation>',
                         widgetSettings: {
                             id: 5003,
                             configuration:{},
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-table/mvp-table-dialog.html',
-                            controller: 'mvp-tabledialogcontroller',
+                            templateUrl: '/javascripts/angularproject/dialog/mvp-location/mvp-location-dialog.html',
+                            controller: 'mvp-locationdialogcontroller',
                             // tempname : "table",
                             settingiconstatus :true                            
                         }
                     }
                 },
-                // {
-                //     title: 'Person',
-                //     settings: {
-                //         sizeX: 5,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<mvpperson></mvpperson>',
-                //         widgetSettings: {
-                //             id: 5003,
-                //             selectedfilter :"",
-                //             templateUrl: '',
-                //             controller: ''
-                //         }
-                //     }
-                // }, 
-                // {
-                //     title: 'Device',
-                //     settings: {
-                //         sizeX: 5,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<mvpdevice></mvpdevice>',
-                //         widgetSettings: {
-                //             id: 5003,
-                //             selectedfilter :null,
-                //             templateUrl: '/javascripts/angularproject/dialog/mvp-device/mvp-device-dialog.html',
-                //             controller: 'mvp-devicedialogcontroller'
-                //         }
-                //     }
-                // },
-                // {
-                //     title: 'Person Device',
-                //     settings: {
-                //         sizeX: 5,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<mvppersondevice></mvppersondevice>',
-                //         widgetSettings: {
-                //             id: 5003,
-                //             selectedfilter :null,
-                //             templateUrl: '/javascripts/angularproject/dialog/mvp-persondevice/mvp-persondevice-dialog.html',
-                //             controller: 'mvp-persondevicedialogcontroller'
-                //         }
-                //     }
-                // },
-                // {
-                //     title: 'Person Location',
-                //     settings: {
-                //         sizeX: 5,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<mvppersonlocation></mvppersonlocation>',
-                //         widgetSettings: {
-                //             id: 5003,
-                //             selectedfilter :null,
-                //             templateUrl: '/javascripts/angularproject/dialog/mvp-personlocation/mvp-personlocation-dialog.html',
-                //             controller: 'mvp-personlocationdialogcontroller'
-                //         }
-                //     }
-                // }
             ];
 
     var getLocations = function () {

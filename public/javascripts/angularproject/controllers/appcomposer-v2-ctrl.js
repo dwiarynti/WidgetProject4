@@ -4,6 +4,9 @@ angular.module('app').controller('appcomposer-v2controller',
             $scope.appmanagementv2obj={};
             var widgetmanagementresource = new widgetmanagementResource();
             $rootScope.widgetviewmode = false;
+            $rootScope.number = {
+                site:0
+            };     
 
             $scope.gridsterOpts = {
                 columns: 13,

@@ -1,31 +1,75 @@
 "use strict";
 
 angular.module('app').controller('mvp-locationdialogcontroller',
-    ['$scope', 'dataService', 'locationsiteResource',
-    function ($scope, dataService, locationsiteResource) {
-        var locationsiteresource = new locationsiteResource();
-        $scope.selectedfilter = {"by":"", "option":""};
-        // $scope.selectedfilteroption = "";
-        $scope.filteroptions = {};
-        $scope.objmodel = {"FilterOption":[
-            {"OptionName":"Zone"},
-            {"OptionName":"Location"},
-        ]};
-        
-        var siteid = "001";
-        locationsiteresource.$distinct({_id:siteid}, function(data){
-            // $scope.objmodel = data.obj;
-            $scope.filteroptions = data.obj;
-            console.log(data.obj);
-        });
+    ['$scope', '$filter', 'dataService','widgetmanagementResource',
+    function ($scope, $filter, dataService, widgetmanagementResource) {
+        var widgetmanagementresource = new widgetmanagementResource();
+
+        $scope.configuration = {
+            "datasource":{}, 
+            "fieldname":[], 
+            "returneddatatype":"list"
+        };
+        $scope.fieldnamelist = [];
+
+        $scope.getDataSourceFeilds = function(){
+            if($scope.configuration.datasource != "")
+            {
+                var datasourcetype = typeof($scope.configuration.datasource);
+                var datasource = datasourcetype != "string" ? $scope.configuration.datasource : JSON.parse($scope.configuration.datasource);
+
+                angular.forEach(datasource.field, function (fieldname) {
+                    var isSelected = $filter('filter')($scope.configuration.fieldname,function(selectedfieldname){
+                        return selectedfieldname === fieldname
+                    })[0] != undefined ? true:false;
+                    console.log($filter('filter')($scope.configuration.fieldname,function(selectedfieldname){
+                        return selectedfieldname === fieldname
+                    })[0]);
+                    $scope.fieldnamelist.push({"key":fieldname, "isSelected":isSelected});
+                });
+            }
+
+        }
+
+        $scope.init = function(){  
+            if(Object.keys($scope.$parent.item.widgetSettings.configuration).length > 0)
+                $scope.configuration = $scope.$parent.item.widgetSettings.configuration;
+                $scope.getDataSourceFeilds();
+        }
+
+        $scope.init();
 
         $scope.saveSettings = function () {
-            $scope.item.widgetSettings.selectedfilter = $scope.selectedfilter;
-            console.log($scope.item);
-            // $scope.item.widgetSettings.id = $scope.selectedEmployee.id;
-            // $scope.$parent.selectedfilteroption = $scope.selectedfilteroption;
+
+            //getdatatype
+            var datasourcetype = typeof($scope.configuration.datasource);
+            $scope.configuration.datasource = datasourcetype != "string" ? $scope.configuration.datasource : JSON.parse($scope.configuration.datasource);
+            $scope.item.widgetSettings.configuration = $scope.configuration; 
+            console.log($scope.item.widgetSettings.configuration);
             $scope.$close();
         };
+        
+        $scope.getDataSource = function(){
+            widgetmanagementresource.$get(function(data){
+                if(data.success)
+                    $scope.datasourcelist = data.obj
 
-        // console.log($scope.selectedfilterby);
+            });
+        }
+
+        $scope.getDataSource();
+
+        
+        $scope.isSelectedItem = function(itemA, itemB){
+            return itemA == itemB ? true:false;
+        }
+
+        $scope.pushSelectedTransactionType = function (obj) {
+            if(obj.isSelected)
+                $scope.configuration.fieldname.push(obj.key);
+            else
+                $scope.configuration.fieldname.splice(obj.key,1);
+            
+            console.log($scope.configuration.fieldname);
+        }
     }]);

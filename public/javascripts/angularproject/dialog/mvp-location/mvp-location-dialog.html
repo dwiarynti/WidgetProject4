@@ -1,28 +1,26 @@
 <div class="modal-header">
-    <h3 class="modal-title">Location</h3>
+    <h3 class="modal-title">Table Widget</h3>
 </div>
 <div class="modal-body">
-    <!--<div class="form-group">
-        <label>Site</label>
-        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="profile.type">
-            <option value="">Please Select</option>
-        </select>
-    </div>-->
     <div class="form-group">
-        <label>Filter by</label>
-        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="selectedfilter.by">
+        <label>Data Source</label>
+        <!--<select class="form-control"
+                ng-model="configuration.datasource" 
+                ng-options="data as obj.sourcename for obj in datasourcelist"
+                ng-change="getDataSourceFeilds(data)">
+        </select>-->
+        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.datasource" ng-change="getDataSourceFeilds()">
             <option value="">Please Select</option>
-            <option ng-repeat="obj in objmodel.FilterOption" value="{{obj.OptionName}}">{{obj.OptionName}}</option>
+            <option ng-repeat="obj in datasourcelist" value="{{obj}}" ng-selected="isSelectedItem(obj.sourcename,configuration.datasource.sourcename)">{{obj.sourcename}}</option>
         </select>
     </div>
-    <div class="form-group" ng-if="selectedfilter.by != ''">
-        <label>{{selectedfilter.by}}</label>
-        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="selectedfilter.option">
-            <option value="">Please Select</option>
-            <option ng-if="selectedfilter.by == 'Location'" ng-repeat="obj in filteroptions.locations">{{obj}}</option>
-            <option ng-if="selectedfilter.by == 'Zone'" ng-repeat="obj in filteroptions.zone">{{obj}}</option>
-            
-        </select>
+    <div class="form-group">
+        <label>Field Name</label>
+        <div class="row">
+            <div class="col-md-6" ng-repeat="obj in fieldnamelist">
+                <input type="checkbox" ng-model="obj.isSelected" value="{{obj.key}}" ng-change="pushSelectedTransactionType(obj)" /> {{obj.key}}
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">
