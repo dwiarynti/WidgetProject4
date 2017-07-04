@@ -136,7 +136,7 @@ router.post('/widgetmanagement/create',function(req,res)
                     if(err)
                     res.json(500,err); 
                     else
-                    res.json({"success":true})
+                    res.json({"success":true, "obj": widget})
                 });
                
             });
