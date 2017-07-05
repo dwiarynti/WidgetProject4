@@ -11,23 +11,23 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             "cols":$scope.item.widgetSettings.configuration.cols != undefined ? $scope.item.widgetSettings.configuration.cols : []
         };
         $scope.fieldnamelist = [];
-        $scope.sitelist = [];
+        $scope.sitelist = $rootScope.sitelist;
 
-        $scope.init = function(){  
-                var sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
-                        return widget.widgetSettings.name === 'site'
-                });
-                angular.forEach(sitewidgets, function(widget) {
-                    roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
-                        if(data.success){
+        // $scope.init = function(){  
+        //         var sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
+        //                 return widget.widgetSettings.name === 'site'
+        //         });
+        //         angular.forEach(sitewidgets, function(widget) {
+        //             roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
+        //                 if(data.success){
                             
-                            $scope.sitelist.push(data.obj);
-                        }
-                    });
-                }, this);
-        }
+        //                     $scope.sitelist.push(data.obj);
+        //                 }
+        //             });
+        //         }, this);
+        // }
 
-        $scope.init();
+        // $scope.init();
 
         $scope.saveSettings = function () {
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);
@@ -57,5 +57,7 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             //     $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
             //     $scope.init();
             // });
+
+
 
     }]);

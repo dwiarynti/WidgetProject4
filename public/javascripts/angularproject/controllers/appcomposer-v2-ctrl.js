@@ -57,10 +57,8 @@ angular.module('app').controller('appcomposer-v2controller',
                         console.log(data);
                         $window.alert("Data saved successfully");
                     }
-                    
-                    // $scope.applicationObj = data.obj;
                     //Reinit menu
-                    // $rootScope.addedNewApp = true;
+                    $rootScope.addedNewApp = true;
                 });
             }
 
