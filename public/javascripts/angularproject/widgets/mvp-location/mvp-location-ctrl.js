@@ -11,15 +11,7 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.cols = [];
             $rootScope.cols = [];
             $scope.tableParams = {};
-            console.log($scope.$parent.item);
-            // if($scope.$parent.item.widgetSettings.configuration.conditions != undefined){
-            //     roomResource.conditions = $scope.$parent.item.widgetSettings.configuration.conditions;
-            //     roomResource.$getdata(function(data){
-            //         if(data.success){
-            //             $scope.obj = data.obj;
-            //         }
-            //     });
-            // }
+
             $scope.getcolumn = function(){
                 var getListFieldName = Object.keys($scope.listobj[0]);
                 if($scope.$parent.item.widgetSettings.configuration.cols != undefined)
@@ -45,15 +37,10 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.getLocationbySite();
                 else
                     $scope.getAllLocation();
-                // var selectedfilter = $scope.$parent.item.widgetSettings.selectedfilter;
-                // deviceresource.devicename = selectedfilter != ""?selectedfilter:null;
-                // deviceresource.$filter({_id:siteid}, function(data){
-                //     $scope.deviceList = data.obj;
-                // });
             });
-            
+            var self = this;
             $scope.setTable = function(){
-                $scope.tableParams = new NgTableParams({}, {
+                self.tableParams = new NgTableParams({}, {
                     counts: [],
                     dataset: $scope.listobj
                 });
@@ -75,10 +62,5 @@ angular.module('app').controller('mpv-locationcontroller',
                     }
                 });
             }
-
-    
-
-
-
         }
     ]);

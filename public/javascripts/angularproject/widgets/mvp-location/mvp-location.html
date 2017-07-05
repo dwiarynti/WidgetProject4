@@ -1,28 +1,8 @@
 
 <div class="form-group">
-    <!--<table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
-        <thead>
-        <tr>
-            <th ng-repeat="(key, value) in listobj[0]">
-            {{key}}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="row in listobj">
-            <td ng-repeat="cell in row">
-            {{cell}}
-            </td>
-        </tr>
-        </tbody>
-    </table>-->
-    <div>
-
-        <table ng-table-dynamic="tableParams with cols" 
-             class="table table-condensed table-bordered table-striped">
+    <table ng-table-dynamic="demo.tableParams with cols" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="row in $data">
           <td ng-repeat="col in $columns">{{row[col.field]}}</td>
         </tr>
-      </table>
-    </div>
+    </table>
 </div>

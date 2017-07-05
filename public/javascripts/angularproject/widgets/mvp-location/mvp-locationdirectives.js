@@ -5,6 +5,7 @@ angular.module('app').directive('mvplocation', [function () {
         scope: {
         },
         controller: "mpv-locationcontroller",
+        controllerAs: 'demo',
         templateUrl: '/javascripts/angularproject/widgets/mvp-location/mvp-location.html'
     }
 }]);
