@@ -120,7 +120,7 @@ angular.module('app').factory('dataService',
                         sizeY: 0,
                         minSizeX: 3,
                         minSizeY: 0,
-                        template: '<mvpsite class="col-md-10" style="padding: 0px;"></mvpsite>',
+                        template: '<mvpsite class="col-md-8" style="padding: 0px;"></mvpsite>',
                         widgetSettings: {
                             id: 5003,
                             name : 'site',
