@@ -19,7 +19,7 @@ angular.module('app').controller('appmanagemet-v2controller',
             //
             $scope.Add = function(){
                 var newapp = {"euid":0, "appname":"", "appstatus":true, "widget":[]};
-                passingdataservice.appmanagementv2obj = newapp;
+                passingdataservice.applicationObj = newapp;
                 $location.path('appcomposert-v2');
                 
             }
@@ -48,7 +48,7 @@ angular.module('app').controller('appmanagemet-v2controller',
             }
 
             $scope.ComposePage = function(obj){
-                passingdataservice.appmanagementv2obj = obj;
+                passingdataservice.applicationObj = obj;
                 $location.path('appcomposert-v2');
             }
 

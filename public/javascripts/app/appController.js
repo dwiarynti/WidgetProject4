@@ -134,8 +134,8 @@ angular.module('app').controller('appController',
                     //         { label: 'Paddles', href: '/paddles', icon: 'fa-magic' }
                     //     ]
                     // },
+                    // { label: 'App Management', href: '/appmanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
                     { label: 'App Management', href: '/appmanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
-                    { label: 'App Management V2', href: '/appmanagement-v2', icon: 'fa-user', isGroup: false, submenuItems: [] },
                     { label: 'User Management', href: '/usermanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
                     { label: 'Auth Setting', href: '/authsetting', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
                     { label: 'Notif Management', href: '/notificationmanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
@@ -149,31 +149,31 @@ angular.module('app').controller('appController',
                 }
 
 
-                appmanagementresource.$init(function (data) {
+                // appmanagementresource.$init(function (data) {
 
-                    var applist = { label: 'App List', href: '', icon: 'fa-gears', isGroup: true, submenuItems: [] };
+                //     var applist = { label: 'App List', href: '', icon: 'fa-gears', isGroup: true, submenuItems: [] };
 
-                    if (data.success) {
+                //     if (data.success) {
 
-                        var list = data.obj;
+                //         var list = data.obj;
 
-                        angular.forEach(list, function (item) {
-                            if (item.pagestatus) {
-                                applist.submenuItems.push({ label: item.pagename, href: '/prevpage/' + item.id, icon: 'fa-dashboard' });
-                            }
-                        });
+                //         angular.forEach(list, function (item) {
+                //             if (item.pagestatus) {
+                //                 applist.submenuItems.push({ label: item.pagename, href: '/prevpage/' + item.id, icon: 'fa-dashboard' });
+                //             }
+                //         });
 
-                    }
+                //     }
 
-                    $scope.menuItems.push(applist);
+                //     $scope.menuItems.push(applist);
 
-                    $rootScope.addedNewApp = false;
-                });
+                //     $rootScope.addedNewApp = false;
+                // });
 
                 //application list widget v2
                 widgetmanagementresource.$getall(function (data) {
 
-                    var applist = { label: 'App List V2', href: '', icon: 'fa-gears', isGroup: true, submenuItems: [] };
+                    var applist = { label: 'App List', href: '', icon: 'fa-gears', isGroup: true, submenuItems: [] };
 
                     if (data.success) {
 

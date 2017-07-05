@@ -1,7 +1,7 @@
 angular.module('app').controller('appcomposer-v2controller',
     ['$scope', '$rootScope', '$window', '$location', 'dataService','passingdataservice', 'widgetmanagementResource',
         function ($scope, $rootScope, $window, $location, dataService, passingdataservice, widgetmanagementResource) {
-            $scope.appmanagementv2obj={};
+            $scope.applicationObj={};
             var widgetmanagementresource = new widgetmanagementResource();
             $rootScope.widgetviewmode = false;
             $rootScope.number = {
@@ -25,8 +25,8 @@ angular.module('app').controller('appcomposer-v2controller',
             
 
             $scope.init = function(){
-                if(passingdataservice.appmanagementv2obj != undefined){
-                    $scope.appmanagementv2obj = passingdataservice.appmanagementv2obj;
+                if(passingdataservice.applicationObj != undefined){
+                    $scope.applicationObj = passingdataservice.applicationObj;
                 }else{
                     $location.path('appmanagement-v2');
                 }
@@ -37,36 +37,36 @@ angular.module('app').controller('appcomposer-v2controller',
 
             $scope.addNewWidget = function (widget) {
                 var newWidget = angular.copy(widget.settings);
-                $scope.appmanagementv2obj.widget.push(newWidget);
+                $scope.applicationObj.widget.push(newWidget);
             }
 
 
             $scope.ViewPage = function(){
-                // window.open($location.path('/prevpage/', {id:$scope.appmanagementv2obj.euid}));
-                $location.path('application/'+$scope.appmanagementv2obj.euid);
+                // window.open($location.path('/prevpage/', {id:$scope.applicationObj.euid}));
+                $location.path('application/'+$scope.applicationObj.euid);
             }
 
             $scope.Save = function(){
-                widgetmanagementresource.appname = $scope.appmanagementv2obj.appname;
-                widgetmanagementresource.appstatus = $scope.appmanagementv2obj.appstatus;
-                widgetmanagementresource.widget = $scope.appmanagementv2obj.widget;
+                widgetmanagementresource.appname = $scope.applicationObj.appname;
+                widgetmanagementresource.appstatus = $scope.applicationObj.appstatus;
+                widgetmanagementresource.widget = $scope.applicationObj.widget;
 
                 widgetmanagementresource.$create(function(data){
                     if(data.success){
                         $window.alert("Data saved successfully");
                     }
                     
-                    // $scope.appmanagementv2obj = data.obj;
+                    // $scope.applicationObj = data.obj;
                     //Reinit menu
                     // $rootScope.addedNewApp = true;
                 });
             }
 
             $scope.Update = function(){
-                widgetmanagementresource.euid = $scope.appmanagementv2obj.euid;
-                widgetmanagementresource.appname = $scope.appmanagementv2obj.appname;
-                widgetmanagementresource.appstatus = $scope.appmanagementv2obj.appstatus;
-                widgetmanagementresource.widget = $scope.appmanagementv2obj.widget;
+                widgetmanagementresource.euid = $scope.applicationObj.euid;
+                widgetmanagementresource.appname = $scope.applicationObj.appname;
+                widgetmanagementresource.appstatus = $scope.applicationObj.appstatus;
+                widgetmanagementresource.widget = $scope.applicationObj.widget;
                 widgetmanagementresource.$update(function(data){
                     if(data.success){
                         $window.alert("Data updated successfully");

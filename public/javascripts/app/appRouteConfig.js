@@ -21,14 +21,14 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                 template: '<div><h1>WELCOME</h1></div>'
             }
         },
+        // {
+        //     url: '/appmanagement',
+        //     config: {
+        //         templateUrl: '/javascripts/angularproject/partialviews/appmanagement.html'
+        //     }
+        // },
         {
             url: '/appmanagement',
-            config: {
-                templateUrl: '/javascripts/angularproject/partialviews/appmanagement.html'
-            }
-        },
-        {
-            url: '/appmanagement-v2',
             config: {
                 templateUrl: '/javascripts/angularproject/partialviews/appmanagement-v2.html'
             }
