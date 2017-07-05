@@ -30,8 +30,8 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.getroom = function(){
-                roomresource.$gettyperoom(function(data){
-                    // console.log(data)
+                roomresource.$getall(function(data){
+                    console.log(data)
                     if(data.success)
                         $scope.roomlist = data.obj;                   
                 });
