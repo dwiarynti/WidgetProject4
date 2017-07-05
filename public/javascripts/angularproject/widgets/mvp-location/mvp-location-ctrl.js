@@ -13,11 +13,11 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.tableParams = {};
 
             $scope.getcolumn = function(){
-                var getListFieldName = Object.keys($scope.listobj[0]);
-                if($scope.$parent.item.widgetSettings.configuration.cols != undefined)
+                if( $scope.$parent.item.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.$parent.item.widgetSettings.configuration.cols;
-                else
-                    var number = 5;
+                }
+                else{
+                    var getListFieldName = Object.keys($scope.listobj[0]);
                     var count  = 0;
                     angular.forEach(getListFieldName, function(fieldName){
                         if(count < 5)
@@ -27,13 +27,15 @@ angular.module('app').controller('mpv-locationcontroller',
                         count = count +1;
                     });
                     $scope.$parent.item.widgetSettings.configuration.cols = $scope.cols;
+                }
             }
 
 
             $scope.$watch(function () {
                 return $scope.$parent.item.widgetSettings.configuration;
-            }, function () {
-                if($scope.$parent.item.widgetSettings.configuration.siteid != undefined)
+            },               
+                function () {
+                if($scope.$parent.item.widgetSettings.configuration.siteid != 0)
                     $scope.getLocationbySite();
                 else
                     $scope.getAllLocation();

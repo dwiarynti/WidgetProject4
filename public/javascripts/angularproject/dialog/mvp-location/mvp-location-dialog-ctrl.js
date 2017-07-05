@@ -12,25 +12,6 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         };
         $scope.fieldnamelist = [];
         $scope.sitelist = [];
-        // $scope.cols = $rootScope.cols;
-        // $scope.getDataSourceFeilds = function(){
-        //     if($scope.configuration.datasource != "")
-        //     {
-        //         var datasourcetype = typeof($scope.configuration.datasource);
-        //         var datasource = datasourcetype != "string" ? $scope.configuration.datasource : JSON.parse($scope.configuration.datasource);
-
-        //         // angular.forEach(datasource.field, function (fieldname) {
-        //         //     var isSelected = $filter('filter')($scope.configuration.fieldname,function(selectedfieldname){
-        //         //         return selectedfieldname === fieldname
-        //         //     })[0] != undefined ? true:false;
-        //         //     console.log($filter('filter')($scope.configuration.fieldname,function(selectedfieldname){
-        //         //         return selectedfieldname === fieldname
-        //         //     })[0]);
-        //         //     $scope.fieldnamelist.push({"key":fieldname, "isSelected":isSelected});
-        //         // });
-        //     }
-
-        // }
 
         $scope.init = function(){  
                 var sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
@@ -54,16 +35,6 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             console.log($scope.item.widgetSettings.configuration);
             $scope.$close();
         };
-        
-        $scope.getDataSource = function(){
-            // roomResource.$get(function(data){
-            //     if(data.success)
-            //         $scope.datasourcelist = data.obj
-
-            // });
-        }
-
-        $scope.getDataSource();
 
         
         $scope.isSelectedItem = function(itemA, itemB){
@@ -78,4 +49,13 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             
             console.log($scope.configuration.fieldname);
         }
+
+        
+            // $scope.$watch(function () {
+            //     return $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
+            // }, function () {
+            //     $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
+            //     $scope.init();
+            // });
+
     }]);

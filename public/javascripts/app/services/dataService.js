@@ -112,134 +112,6 @@ angular.module('app').factory('dataService',
         }
     ];
 
-    var widgetDefinitions = [
-                // {
-                //     title: 'Temperature',
-                //     settings: {
-                //         sizeX: 3,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<wwa-temperature></wwa-temperature>',
-                //         widgetSettings: {
-                //             id: 1000,
-                //             templateUrl: '/javascripts/app/dialogs/wwaSelectLocationTemplate.html',
-                //             controller: 'wwaSelectLocationController'
-                //         }
-                //     }
-                // },
-                // {
-                //     title: 'Inventory',
-                //     settings: {
-                //         sizeX: 5,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<wwa-inventory></wwa-inventory>',
-                //         widgetSettings: {
-                //             id: 1002,
-                //             templateUrl: '/javascripts/app/dialogs/wwaSelectLocationTemplate.html',
-                //             controller: 'wwaSelectLocationController'
-                //         }
-                //     }
-                // },
-                // {
-                //     title: 'Employee',
-                //     settings: {
-                //         sizeX: 5,
-                //         sizeY: 3,
-                //         minSizeX: 2,
-                //         minSizeY: 2,
-                //         template: '<wwa-employee></wwa-employee>',
-                //         widgetSettings: {
-                //             id: 5000,
-                //             templateUrl: '/javascripts/app/dialogs/wwaSelectEmployeeTemplate.html',
-                //             controller: 'wwaSelectEmployeeController'
-                //         }
-                //     }
-                // },
-                {
-                    title: 'Location',
-                    settings: {
-                        sizeX: 5,
-                        sizeY: 3,
-                        minSizeX: 2,
-                        minSizeY: 2,
-                        template: '<mvplocation></mvplocation>',
-                        widgetSettings: {
-                            id: 5003,
-                            selectedfilter:{by:"", option:""},
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-location/mvp-location-dialog.html',
-                            controller: 'mvp-locationdialogcontroller'
-                        }
-                    }
-                },
-                {
-                    title: 'Person',
-                    settings: {
-                        sizeX: 5,
-                        sizeY: 3,
-                        minSizeX: 2,
-                        minSizeY: 2,
-                        template: '<mvpperson></mvpperson>',
-                        widgetSettings: {
-                            id: 5003,
-                            selectedfilter :"",
-                            templateUrl: '',
-                            controller: ''
-                        }
-                    }
-                }, 
-                {
-                    title: 'Device',
-                    settings: {
-                        sizeX: 5,
-                        sizeY: 3,
-                        minSizeX: 2,
-                        minSizeY: 2,
-                        template: '<mvpdevice></mvpdevice>',
-                        widgetSettings: {
-                            id: 5003,
-                            selectedfilter :null,
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-device/mvp-device-dialog.html',
-                            controller: 'mvp-devicedialogcontroller'
-                        }
-                    }
-                },
-                {
-                    title: 'Person Device',
-                    settings: {
-                        sizeX: 5,
-                        sizeY: 3,
-                        minSizeX: 2,
-                        minSizeY: 2,
-                        template: '<mvppersondevice></mvppersondevice>',
-                        widgetSettings: {
-                            id: 5003,
-                            selectedfilter :null,
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-persondevice/mvp-persondevice-dialog.html',
-                            controller: 'mvp-persondevicedialogcontroller'
-                        }
-                    }
-                },
-                {
-                    title: 'Person Location',
-                    settings: {
-                        sizeX: 5,
-                        sizeY: 3,
-                        minSizeX: 2,
-                        minSizeY: 2,
-                        template: '<mvppersonlocation></mvppersonlocation>',
-                        widgetSettings: {
-                            id: 5003,
-                            selectedfilter :null,
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-personlocation/mvp-personlocation-dialog.html',
-                            controller: 'mvp-personlocationdialogcontroller'
-                        }
-                    }
-                }
-            ];
-
     var widgetform = [
                 {
                     title: 'Site',
@@ -259,24 +131,6 @@ angular.module('app').factory('dataService',
                         }
                     }
                 },
-                // {
-                //     title: 'Label',
-                //     settings: {
-                //         sizeX: 2,
-                //         sizeY: 0,
-                //         minSizeX: 2,
-                //         minSizeY: 0,
-                //         template: '<mvplabel></mvplabel>',
-                //         widgetSettings: {
-                //             id: 5003,
-                //             configuration:{},
-                //             templateUrl: '/javascripts/angularproject/dialog/mvp-label/mvp-label-dialog.html',
-                //             controller: 'mvp-labeldialogcontroller',
-                //             tempname : "label",
-                //             settingiconstatus :false                            
-                //         }
-                //     }
-                // },
                 {
                     title: 'Location',
                     settings: {
@@ -288,7 +142,10 @@ angular.module('app').factory('dataService',
                         widgetSettings: {
                             id: 5003,
                             name : 'location',                            
-                            configuration:{},
+                            configuration:{
+                                siteid:0,
+                                cols : []
+                            },
                             templateUrl: '/javascripts/angularproject/dialog/mvp-location/mvp-location-dialog.html',
                             controller: 'mvp-locationdialogcontroller',
                             // tempname : "table",
@@ -348,7 +205,6 @@ angular.module('app').factory('dataService',
         getLocation: getLocation,
         getEmployees: getEmployees,
         getEmployee: getEmployee,
-        getWidgetDefinition: getWidgetDefinition,
         getWidgetForm: getWidgetForm
     };
 }]);

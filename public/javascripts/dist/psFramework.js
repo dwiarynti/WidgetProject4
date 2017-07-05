@@ -351,7 +351,7 @@ angular.module('psDashboard').directive('psWidgetBodyV2',
                 $compile(newElement)(scope);
                 // console.log(scope.$parent.$parent.$root.widgetviewmode);
                 scope.close = function () {
-                    scope.appmanagementv2obj.widget.splice(scope.appmanagementv2obj.widget.indexOf(scope.item), 1);
+                    scope.applicationObj.widget.splice(scope.applicationObj.widget.indexOf(scope.item), 1);
                 };
 
                 scope.settings = function () {

@@ -53,6 +53,8 @@ angular.module('app').controller('appcomposer-v2controller',
 
                 widgetmanagementresource.$create(function(data){
                     if(data.success){
+                        $scope.applicationObj = data.obj;
+                        console.log(data);
                         $window.alert("Data saved successfully");
                     }
                     
