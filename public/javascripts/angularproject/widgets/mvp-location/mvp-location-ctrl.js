@@ -13,10 +13,11 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.tableParams = {};
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
+            $scope.widgetdata = $scope.$parent.item;
 
             $scope.getcolumn = function(){
-                if( $scope.$parent.item.widgetSettings.configuration.cols.length > 0){
-                    $scope.cols = $scope.$parent.item.widgetSettings.configuration.cols;
+                if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
+                    $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
                 }
                 else{
                     var getListFieldName = Object.keys($scope.listobj[0]);
@@ -28,19 +29,20 @@ angular.module('app').controller('mpv-locationcontroller',
                             $scope.cols.push({field:fieldName, title: fieldName, show:false});
                         count = count +1;
                     });
-                    $scope.$parent.item.widgetSettings.configuration.cols = $scope.cols;
+                    $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
                 }
             }
 
             $scope.getSiteId = function(params) {
                 var siteid = 0;
-                if($scope.$parent.item.widgetSettings.configuration.siteid != 0){
-                    siteid = $scope.$parent.item.widgetSettings.configuration.siteid;
-                }else if($scope.sitewidgets.length == 1){
-                    siteid = $scope.sitewidgets[0].widgetSettings.configuration.datasource;
-                }else{
-                    
+                if($scope.sitewidgets.length == 1){
+                    var siteid1 = $scope.widgetdata.widgetSettings.configuration.siteid; //old
+                    var siteid2 = $scope.sitewidgets[0].widgetSettings.configuration.datasource; //new
+                    if(siteid1 == siteid2 || siteid1 != siteid2){
+                        siteid = siteid2 != undefined ? siteid2 : 0;
+                    }
                 }
+
                 return siteid;
             }
 
@@ -52,18 +54,21 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.getAllLocation();
             }
 
-            $scope.$watch(
-                function () {return $scope.$parent.item.widgetSettings.configuration;}, function () {
+            $scope.$watchCollection(
+                function () {return  $scope.listapplicationwidget;}
+            ,  function (newValue,oldValue) {
+                console.log($scope.listapplicationwidget);
+                $scope.getSites();
                 $scope.getLocationData();
             });
 
-            $scope.$watch(
-                function () {return  $scope.$parent.$parent.$parent.$parent.applicationObj.widget;}
-            ,  function () {
+            $scope.$watchCollection(
+                function () {return $rootScope.isSingleSiteUpdated;}
+            ,  function (newValue,oldValue) {
+                // console.log($scope.listapplicationwidget);
                 $scope.getSites();
+                $scope.getLocationData();
             });
-
-
 
             var self = this;
             $scope.setTable = function(){
@@ -99,13 +104,27 @@ angular.module('app').controller('mpv-locationcontroller',
                     $rootScope.sitelist = [];
                 }
                 angular.forEach($scope.sitewidgets, function(widget) {
+                    if(widget.widgetSettings.configuration.datasource != undefined){
                     roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
                         if(data.success){
-                            $rootScope.sitelist.push(data.obj);
+                            var isRedundantdata = $filter('filter')($rootScope.sitelist,function(site){
+                                        return site.uuid === data.obj.uuid
+                                    }).length > 0 ? true:false;
+                            if(!isRedundantdata){
+                                $rootScope.sitelist.push(data.obj);
+                            }
                         }
                     });
+                    }
+
                 }, this);
+                console.log($rootScope.sitelist);
             }
+
+            $scope.updateConfigurationSiteId = function(){
+
+            }
+
             // $scope.getSites();
         }
     ]);

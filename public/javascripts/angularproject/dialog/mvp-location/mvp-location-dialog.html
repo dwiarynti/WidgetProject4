@@ -4,7 +4,12 @@
 <div class="modal-body">
     <div class="form-group" ng-show="sitelist.length > 0">
         <label>Site :</label>
-        <label ng-if="sitelist.length == 1">{{sitelist[0].name}}</label>
+        <div ng-if="sitelist.length == 1">
+            <label >{{sitelist[0].name}}</label>
+            <input hidden ng-value="sitelist[0].uuid" ng-model="configuration.siteid"/>
+        </div>
+
+
         <select ng-if="sitelist.length > 1" class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.siteid">
             <option ng-repeat="obj in sitelist" ng-value="obj.uuid" ng-selected="isSelectedItem(obj.uuid,configuration.siteid)">{{obj.name}}</option>
         </select>
