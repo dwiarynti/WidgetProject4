@@ -35,11 +35,13 @@ angular.module('app').controller('mpv-locationcontroller',
 
             $scope.getSiteId = function(params) {
                 var siteid = 0;
-                if($scope.sitewidgets.length == 1){
+                if($scope.sitewidgets.length > 0){
                     var siteid1 = $scope.widgetdata.widgetSettings.configuration.siteid; //old
                     var siteid2 = $scope.sitewidgets[0].widgetSettings.configuration.datasource; //new
-                    if(siteid1 == siteid2 || siteid1 != siteid2){
+                    if((siteid1 == siteid2 && $scope.sitewidgets.length == 1) || (siteid1 != siteid2 && $scope.sitewidgets.length == 1)){
                         siteid = siteid2 != undefined ? siteid2 : 0;
+                    }else if(siteid1 != 0){
+                        siteid = siteid1;
                     }
                 }
 
@@ -57,7 +59,7 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.$watchCollection(
                 function () {return  $scope.listapplicationwidget;}
             ,  function (newValue,oldValue) {
-                console.log($scope.listapplicationwidget);
+                // console.log($scope.listapplicationwidget);
                 $scope.getSites();
                 $scope.getLocationData();
             });
@@ -99,7 +101,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
                     return widget.widgetSettings.name === 'site'
                 });
-                console.log($scope.sitewidgets)
+                // console.log($scope.sitewidgets)
                 if($scope.sitewidgets.length != 0){
                     $rootScope.sitelist = [];
                 }
@@ -118,7 +120,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     }
 
                 }, this);
-                console.log($rootScope.sitelist);
+                // console.log($rootScope.sitelist);
             }
 
             $scope.updateConfigurationSiteId = function(){

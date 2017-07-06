@@ -31,7 +31,7 @@ angular.module('app').controller('mvp-sitedialogcontroller',
         
         $scope.getDataSource = function(){
             roomresource.$getsite(function(data){
-                console.log(data);
+                // console.log(data);
                 if(data.success)
                     $scope.datasourcelist = data.obj
 
@@ -48,8 +48,9 @@ angular.module('app').controller('mvp-sitedialogcontroller',
                 $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
                     return widget.widgetSettings.name === 'site'
                 });
-                if($scope.sitewidgets.length == 1){
-                    $rootScope.isSingleSiteUpdated = true;
-                }
+                $rootScope.isSingleSiteUpdated = true;
+                // if($scope.sitewidgets.length == 1){
+                    
+                // }
             }
     }]);
