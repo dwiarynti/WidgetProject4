@@ -33,12 +33,12 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                 templateUrl: '/javascripts/angularproject/partialviews/appmanagement-v2.html'
             }
         },
-        {
-            url: '/appcomposer',
-            config: {
-                templateUrl: '/javascripts/angularproject/partialviews/appcomposer.html'
-            }
-        },
+        // {
+        //     url: '/appcomposer',
+        //     config: {
+        //         templateUrl: '/javascripts/angularproject/partialviews/appcomposer.html'
+        //     }
+        // },
         {
             url: '/appcomposert-v2',
             config: {
