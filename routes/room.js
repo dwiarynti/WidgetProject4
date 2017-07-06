@@ -7,6 +7,22 @@ var sequencedb = db.sublevel('sequencenumberroom');
 var roomdevdevicedb = db.sublevel('roomdevdevice');
 
 
+router.post('/room/cleanup',function(req,res)
+{
+    var listobj = [];
+    roomdb.put('room',listobj,function(err)
+        {
+            if(err)
+            {
+                res.json(500,err);
+            }
+            else
+            {
+                 res.json({"success": true});
+            }
+        });
+});
+
 router.post('/room/create', function (req, res) {
 
     var generateid = "";
@@ -107,13 +123,29 @@ router.post('/room/create', function (req, res) {
 
 router.get('/room/getall',function(req,res)
 {
+    var listobj = [];
+     var room = {
+        uuid :"",
+        name: "",
+        parent :"",
+        datecreated : "",
+        datemodified : "",
+        changeby : "",
+        changebyname :"",
+        areatype :"",
+        shortaddress: "",
+        fulladdress:"",
+        Location :"",
+        disable : ""
+    }
     roomdb.get('room',function(err,rooms)
     {
         if(err)
         {
             if(err.message == "Key not found in database" )
             {
-                res.json({"success": true , "obj": []});
+                listobj.push(room);
+                res.json({"success": true , "obj": listobj});
             }
             else
             {
@@ -122,7 +154,7 @@ router.get('/room/getall',function(req,res)
         }
         else
         {
-            var listobj = [];
+            
             for(var i = 0 ; i < rooms.length; i++)
             {
                 if(rooms[i].disable == false)
@@ -148,7 +180,11 @@ router.get('/room/getall',function(req,res)
                      listobj[i].parentname = "-";
                 }
             }
-            }
+        }
+        if(listobj.length == 0)
+        {
+            listobj.push(room);
+        }
             res.json({"success": true , "obj": listobj});
         }
     })
@@ -287,7 +323,6 @@ router.post('/room/delete',function(req,res)
         }
     })
 })
-
 
 router.get('/room/gettyperoom',function(req,res)
 {
@@ -434,6 +469,7 @@ var getloc = function(id,callback)
                 {
                     if(rooms[i].parent == id)
                     {
+                     
                     listresult.push(rooms[i]);
                     rooms[i].Building = [];
                     listarea.push(rooms[i]);
@@ -458,6 +494,7 @@ var getloc = function(id,callback)
                             {
                                 if(rooms[j].parent == listarea[i].uuid)
                                 {
+                                    rooms[j].parentname = listarea[i].name;
                                     listresult.push(rooms[j]);
                                     rooms[j].Floor = [];
                                     listarea[i].Building.push(rooms[j]);
@@ -479,6 +516,7 @@ var getloc = function(id,callback)
                             {
                             if(rooms[j].parent == listarea[i].Building[k].uuid)
                             {
+                                rooms[j].parentname = listarea[i].name;
                                 listresult.push(rooms[j]);
                                 rooms[j].Zone = [];
                                 listarea[i].Building[k].Floor.push(rooms[j]);
@@ -503,6 +541,7 @@ var getloc = function(id,callback)
                                 {
                                 if(rooms[j].parent == listarea[i].Building[k].Floor[l].uuid)
                                 {
+                                    rooms[j].parentname = listarea[i].name;
                                     listresult.push(rooms[j]);
                                     rooms[j].Room = [];
                                     listarea[i].Building[k].Floor[l].Zone.push(rooms[j]);
@@ -530,6 +569,7 @@ var getloc = function(id,callback)
                                         {
                                         if(rooms[j].parent == listarea[i].Building[k].Floor[l].Zone[m].uuid)
                                         {
+                                            rooms[j].parentname = listarea[i].name;
                                             listresult.push(rooms[j]);
                                             rooms[j].Section = [];
                                             listarea[i].Building[k].Floor[l].Zone[m].Room.push(rooms[j]);
@@ -560,6 +600,7 @@ var getloc = function(id,callback)
                                         {
                                         if(rooms[j].parent == listarea[i].Building[k].Floor[l].Zone[m].Room[n].uuid)
                                         {
+                                            rooms[j].parentname = listarea[i].name;
                                             listresult.push(rooms[j]);
                                             rooms[j].Closet = [];
                                             listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section.push(rooms[j]);
@@ -593,6 +634,7 @@ var getloc = function(id,callback)
                                             {
                                             if(rooms[j].parent == listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section[o].uuid)
                                             {
+                                                rooms[j].parentname = listarea[i].name;
                                                 listresult.push(rooms[j]);
                                                 listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section[o].Closet.push(rooms[j]);
                                             }
@@ -613,6 +655,7 @@ var getloc = function(id,callback)
                         uuid : listresult[i].uuid,
                         name:  listresult[i].name,
                         parent : listresult[i].parent,
+                        parentname : listresult[i].parentname,
                         datecreated :  listresult[i].datacreated,
                         datemodified : listresult[i].datemodified,
                         changeby :  listresult[i].changeby,
@@ -636,11 +679,27 @@ var getloc = function(id,callback)
 router.get('/room/getloc/:_id',function(req,res)
 {
  var id = req.params._id;
+ var listobj = [];
+ var room = {
+        uuid :"",
+        name: "",
+        parent :"",
+        datecreated : "",
+        datemodified : "",
+        changeby : "",
+        changebyname :"",
+        areatype :"",
+        shortaddress: "",
+        fulladdress:"",
+        Location :"",
+        disable : ""
+}
  var data = getloc(id,function(responsedata)
  {
      if(responsedata == "0")
      {
-         res.json({"success": true , "obj":[]});
+         listobj.push(room);
+         res.json({"success": true , "obj":listobj});
      }
      else if(responsedata == "1")
      {
@@ -648,7 +707,16 @@ router.get('/room/getloc/:_id',function(req,res)
      }
      else
      {
-         res.json({"success": true , "obj": responsedata});
+         if(responsedata.length == 0)
+         {
+             listobj.push(room);
+             res.json({"success": true , "obj": listobj});
+         }
+         else
+         {
+              res.json({"success": true , "obj": responsedata});
+         }
+        
      }
  })
 });
