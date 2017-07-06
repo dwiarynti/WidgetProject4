@@ -463,13 +463,21 @@ var getloc = function(id,callback)
         {
             var listarea = [];
             var listresult = [];
+            var parentname = "";
+           
+         
             for(var i = 0 ; i < rooms.length; i++)
             {
                 if(rooms[i].disable == false)
                 {
+
+                    if(rooms[i].uuid == id)
+                    {
+                        parentname = rooms[i].name;
+                    }
                     if(rooms[i].parent == id)
                     {
-                     
+                    rooms[i].parentname = parentname;
                     listresult.push(rooms[i]);
                     rooms[i].Building = [];
                     listarea.push(rooms[i]);
