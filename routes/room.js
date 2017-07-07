@@ -752,14 +752,24 @@ router.get('/room/getdevice/:_id',function(req,res)
      }
      else
      {
-         if(responsedata.length == 0)
-         {
+        if(responsedata.length == 0)
+        {
             listobj.push(device);
             res.json({"success": true , "obj":listobj});
-         }
-         else
-         {
-        roomdevdevicedb.get('roomdevdevice',function(err,devices)
+        }
+        else
+        {
+        roomdb.get('room',function(err,room)
+        {
+            for(var i = 0 ; i < room.length;i++)
+            {
+                if(room[i].areatype == "site")
+                {
+                    responsedata.push(room[i]);
+                }
+            }
+
+              roomdevdevicedb.get('roomdevdevice',function(err,devices)
         {
             if(err)
             {
@@ -802,7 +812,9 @@ router.get('/room/getdevice/:_id',function(req,res)
                
             }
         });
-         }
+        })
+      
+        }
      }
 });
 });
