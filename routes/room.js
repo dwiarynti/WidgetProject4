@@ -733,11 +733,18 @@ router.get('/room/getdevice/:_id',function(req,res)
 {
 
  var id = req.params._id;
+ var listobj = [];
+ var device = {
+     euid: "",
+     room: "",
+     type:""
+ }
  var data = getloc(id,function(responsedata)
  {
      if(responsedata == "0")
      {
-         res.json({"success": true , "obj":[]});
+         listobj.push(device);
+         res.json({"success": true , "obj":listobj});
      }
      else if(responsedata == "1")
      {
@@ -745,13 +752,21 @@ router.get('/room/getdevice/:_id',function(req,res)
      }
      else
      {
+         if(responsedata.length == 0)
+         {
+            listobj.push(device);
+            res.json({"success": true , "obj":listobj});
+         }
+         else
+         {
         roomdevdevicedb.get('roomdevdevice',function(err,devices)
         {
             if(err)
             {
                 if(err.message == "Key not found in database")
                 {
-                    res.json({"success": true , "obj":[]});
+                    listobj.push(device);
+                    res.json({"success": true , "obj":listobj});
                 }
                 else
                 {
@@ -765,16 +780,29 @@ router.get('/room/getdevice/:_id',function(req,res)
                     {
                         for(var j = 0 ; j < devices.length; j++)
                         {
+                            if(devices[i].type == "fixed")
+                            {
                             if(devices[j].room == responsedata[i].uuid)
                             {
                                 devices[j].roomname = responsedata[i].name;
                                 listresult.push(devices[j]);
                             }
+                            }
                         }
                     }
-                res.json({"success": true , "obj":listresult});
+                    if(listresult.length == 0)
+                    {
+                         listobj.push(device);
+                         res.json({"success": true , "obj":listobj});
+                    }
+                    else
+                    {
+                         res.json({"success": true , "obj":listresult});
+                    }
+               
             }
         });
+         }
      }
 });
 });
