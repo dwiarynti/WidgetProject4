@@ -182,6 +182,63 @@ router.get('/roomdev/getall',function(req,res)
     });
 });
 
+router.get('/roomdev/getdevicefix',function(req,res)
+{
+   
+     var listobj = [];
+     var device = {
+     euid: "",
+     room: "",
+     type:""
+    }
+    roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
+    {
+        if(err)
+        {
+            if(err.message ==  "Key not found in database")
+            {
+            listobj.push(device);
+            res.json({success:true,"obj": listobj});
+            }
+            else
+            {
+            res.json(500,err);
+            }
+        }
+        else
+        {
+           roomdb.get('room',function(err,rooms)
+           {
+            for(var i = 0 ; i < rooms.length;i++)
+            {
+                for(var j = 0 ; j < roomdev.length;j++)
+                {
+                    if(roomdev[j].type == "fixed")
+                    {
+                    if(roomdev[j].room == rooms[i].uuid)
+                    {
+                        roomdev[j].roomname = rooms[i].name;
+                    }
+                    listobj.push(roomdev[j]);
+                    }
+                    
+                }
+            }
+            if(listobj.length == 0)
+            {
+                listobj.push(device);
+                res.json({"success" : true ,"obj": listobj })
+            }
+            else
+            {
+                res.json({"success" : true ,"obj": listobj })
+            }
+           });
+        }
+
+    });
+});
+
 router.get('/roomdev/getroom',function(req,res)
 {
     roomdevroomdb.get('roomdevroom',function(err,data)
