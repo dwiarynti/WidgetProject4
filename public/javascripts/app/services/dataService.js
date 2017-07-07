@@ -153,6 +153,28 @@ angular.module('app').factory('dataService',
                         }
                     }
                 },
+                // {
+                //     title: 'Device',
+                //     settings: {
+                //         sizeX: 6,
+                //         sizeY: 2,
+                //         minSizeX: 5,
+                //         minSizeY: 2,
+                //         template: '<mvpdevice></mvpdevice>',
+                //         widgetSettings: {
+                //             id: 5003,
+                //             name : 'device',                            
+                //             configuration:{
+                //                 siteid:0,
+                //                 cols : []
+                //             },
+                //             templateUrl: '/javascripts/angularproject/dialog/mvp-device/mvp-device-dialog.html',
+                //             controller: 'mvp-devicedialogcontroller',
+                //             // tempname : "table",
+                //             settingiconstatus :true                            
+                //         }
+                //     }
+                // },
             ];
 
     var getLocations = function () {

@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 class="modal-title">Device Widget</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group" ng-show="sitelist.length > 0">
+        
+        <div ng-if="sitelist.length == 1">
+            <label>Site :</label>
+            <label >{{sitelist[0].name}}</label>
+            <input hidden ng-value="sitelist[0].uuid" ng-model="configuration.siteid"/>
+        </div>
+
+        <div ng-if="sitelist.length > 1">
+            <label>Site :</label>
+            <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.siteid">
+                <option ng-repeat="obj in sitelist" ng-value="obj.uuid" ng-selected="isSelectedItem(obj.uuid,configuration.siteid)">{{obj.name}}</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label>Column :</label>
+        <div class="row">
+            <div class="col-md-6" ng-repeat="col in configuration.cols">
+                <label class="checkbox-inline" >
+                    <input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="col.show"/> {{col.title}}
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="saveSettings()">Ok</button>
+    <button type="button" class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+</div>
