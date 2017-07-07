@@ -765,7 +765,10 @@ router.get('/room/getdevice/:_id',function(req,res)
             {
                 if(room[i].areatype == "site")
                 {
+                    if(room[i].uuid == id)
+                    {
                     responsedata.push(room[i]);
+                    }
                 }
             }
 
