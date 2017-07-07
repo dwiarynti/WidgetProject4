@@ -780,7 +780,7 @@ router.get('/room/getdevice/:_id',function(req,res)
                     {
                         for(var j = 0 ; j < devices.length; j++)
                         {
-                            if(devices[i].type == "fixed")
+                            if(devices[j].type == "fixed")
                             {
                             if(devices[j].room == responsedata[i].uuid)
                             {
