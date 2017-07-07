@@ -16,8 +16,7 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.8.1",
-    "object-assign": "^4.1.0",
-    "passport": "^0.3.2"
+    "object-assign": "^4.1.0"
   },
   "engine": {
     "node": "*",
