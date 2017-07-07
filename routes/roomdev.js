@@ -213,14 +213,17 @@ router.get('/roomdev/getdevicefix',function(req,res)
             {
                 for(var j = 0 ; j < roomdev.length;j++)
                 {
-                    if(roomdev[j].type == "fixed")
-                    {
+                   
                     if(roomdev[j].room == rooms[i].uuid)
                     {
                         roomdev[j].roomname = rooms[i].name;
+                        if(roomdev[j].type == "fixed")
+                        {
+                        listobj.push(roomdev[j]);
+                        }
                     }
-                    listobj.push(roomdev[j]);
-                    }
+                   
+                    
                     
                 }
             }
@@ -231,7 +234,7 @@ router.get('/roomdev/getdevicefix',function(req,res)
             }
             else
             {
-                res.json({"success" : true ,"obj": listobj })
+            res.json({"success" : true ,"obj": listobj })
             }
            });
         }
