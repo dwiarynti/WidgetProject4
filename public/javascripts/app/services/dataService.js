@@ -144,8 +144,10 @@ angular.module('app').factory('dataService',
                             name : 'location',                            
                             configuration:{
                                 siteid:0,
-                                cols : []
+                                cols : [],
+                                rows : [],
                             },
+                            commonconfiguration : {},
                             templateUrl: '/javascripts/angularproject/dialog/mvp-location/mvp-location-dialog.html',
                             controller: 'mvp-locationdialogcontroller',
                             // tempname : "table",

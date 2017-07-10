@@ -5,31 +5,31 @@ angular.module('app').controller('mpv-locationcontroller',
             var roomresource = new roomResource();
             var deviceresource = new deviceResource();
             var siteid = "001";
-            $scope.listobj = [];
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
-            
+            $scope.listobj = [];
             $scope.cols = [];
             $rootScope.cols = [];
             $scope.tableParams = {};
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;
-
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
                 }
                 else{
-                    var getListFieldName = Object.keys($scope.listobj[0]);
-                    var count  = 0;
-                    angular.forEach(getListFieldName, function(fieldName){
-                        if(count < 5)
-                            $scope.cols.push({field:fieldName, title: fieldName, show:true});
-                        else
-                            $scope.cols.push({field:fieldName, title: fieldName, show:false});
-                        count = count +1;
-                    });
-                    $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
+                    if($scope.widgetdata.widgetSettings.configuration.rows.length != 0){
+                        var getListFieldName = Object.keys($scope.widgetdata.widgetSettings.configuration.rows[0]);
+                        var count  = 0;
+                        angular.forEach(getListFieldName, function(fieldName){
+                            if(count < 5)
+                                $scope.cols.push({field:fieldName, title: fieldName, show:true});
+                            else
+                                $scope.cols.push({field:fieldName, title: fieldName, show:false});
+                            count = count +1;
+                        });
+                        $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
+                    }
                 }
             }
 
@@ -48,42 +48,54 @@ angular.module('app').controller('mpv-locationcontroller',
                 return siteid;
             }
 
-            $scope.getLocationData = function(){
-                var siteid = $scope.getSiteId();
+            $scope.getLocationData = function(siteid){
                 if(siteid != 0)
                     $scope.getLocationbySite(siteid);
                 else
                     $scope.getAllLocation();
             }
 
+            $scope.init = function(){
+                $scope.getSites();
+                var siteid = $scope.getSiteId();
+                $scope.getLocationData(siteid);
+            }
+
             $scope.$watchCollection(
                 function () {return  $scope.listapplicationwidget;}
             ,  function (newValue,oldValue) {
-                // console.log($scope.listapplicationwidget);
-                $scope.getSites();
-                $scope.getLocationData();
+                $scope.init();          
+
             });
 
             $scope.$watchCollection(
                 function () {return $rootScope.isSingleSiteUpdated;}
             ,  function (newValue,oldValue) {
-                // console.log($scope.listapplicationwidget);
-                $scope.getSites();
-                $scope.getLocationData();
+                $scope.init();               
             });
+
+            
+
+            $scope.$watch(
+                function () {return $rootScope.updatelistlocationobj;}
+            ,  function (newValue,oldValue) {
+                $scope.setTable();
+            });
+
 
             var self = this;
             $scope.setTable = function(){
                 self.tableParams = new NgTableParams({}, {
                     counts: [],
-                    dataset: $scope.listobj
+                    dataset: $scope.widgetdata.widgetSettings.configuration.rows
                 });
                 $scope.getcolumn();
             }
 
             $scope.getAllLocation = function(){
                 roomresource.$getall(function(data){
-                    $scope.listobj = data.obj;
+                    // $scope.widgetdata.widgetSettings.configuration.rows = data.obj;
+                    $scope.showSeveralLocationRows(data.obj);
                     $scope.setTable();
                 });
             }
@@ -91,7 +103,8 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.getLocationbySite = function(siteid){
                 roomresource.$getloc({_id:siteid}, function(data){
                     if(data.success){
-                        $scope.listobj = data.obj;
+                        // $scope.widgetdata.widgetSettings.configuration.rows = data.obj;
+                        $scope.showSeveralLocationRows(data.obj);                        
                         $scope.setTable();
                     }
                 });
@@ -101,7 +114,6 @@ angular.module('app').controller('mpv-locationcontroller',
                 $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
                     return widget.widgetSettings.name === 'site'
                 });
-                // console.log($scope.sitewidgets)
                 if($scope.sitewidgets.length != 0){
                     $rootScope.sitelist = [];
                 }
@@ -119,14 +131,34 @@ angular.module('app').controller('mpv-locationcontroller',
                     });
                     }
 
-                }, this);
-                // console.log($rootScope.sitelist);
+                });
             }
 
-            $scope.updateConfigurationSiteId = function(){
-
+            $scope.test = function(data){
+                return data;
             }
 
-            // $scope.getSites();
+            $scope.showSeveralLocationRows = function(newLocationData){
+                var count  = 0;
+                if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
+                    angular.forEach(newLocationData, function(data){
+                        if(data.display == undefined){
+                            count = count +1;
+                            data.display = false;
+                            // data.display = count < 3 ? true:false;
+                        }
+                    }); 
+                }else {
+                    angular.forEach(newLocationData, function(data){
+                        var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
+                            return data.uuid === row.uuid
+                        })[0];
+                        data.display = obj != null ? obj.display:false;
+                    }); 
+                }
+                $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
+            }
+
+
         }
     ]);

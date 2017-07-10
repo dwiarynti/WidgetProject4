@@ -8,32 +8,25 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         $rootScope.isSingleSiteUpdated = false;
         $scope.configuration = {
             "siteid":$scope.item.widgetSettings.configuration.siteid != undefined ? $scope.item.widgetSettings.configuration.siteid : 0,
-            "cols":$scope.item.widgetSettings.configuration.cols != undefined ? $scope.item.widgetSettings.configuration.cols : []
+            "cols":$scope.item.widgetSettings.configuration.cols != undefined ? $scope.item.widgetSettings.configuration.cols : [],
+            "rows": $scope.item.widgetSettings.configuration.rows
         };
         $scope.fieldnamelist = [];
         $scope.sitelist = $rootScope.sitelist;
-        console.log($scope.sitelist);
-        // $scope.init = function(){  
-        //         var sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
-        //                 return widget.widgetSettings.name === 'site'
-        //         });
-        //         angular.forEach(sitewidgets, function(widget) {
-        //             roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
-        //                 if(data.success){
-                            
-        //                     $scope.sitelist.push(data.obj);
-        //                 }
-        //             });
-        //         }, this);
-        // }
+        $scope.listlocationobj  = $scope.configuration.rows;
+        $rootScope.updatelistlocationobj = false;
 
-        // $scope.init();
+        
 
         $scope.saveSettings = function () {
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);
             $scope.item.widgetSettings.configuration = $scope.configuration; 
-            $rootScope.isSingleSiteUpdated = true;
-            // console.log($scope.item.widgetSettings.configuration);
+
+            if($scope.configuration.siteid != $scope.item.widgetSettings.configuration.siteid){
+                $rootScope.isSingleSiteUpdated = true;
+            }
+
+            $rootScope.updatelistlocationobj = true;
             $scope.$close();
         };
 
@@ -47,17 +40,14 @@ angular.module('app').controller('mvp-locationdialogcontroller',
                 $scope.configuration.fieldname.push(obj.key);
             else
                 $scope.configuration.fieldname.splice(obj.key,1);
-            
-            // console.log($scope.configuration.fieldname);
         }
 
-        
-            // $scope.$watch(function () {
-            //     return $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
-            // }, function () {
-            //     $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
-            //     $scope.init();
-            // });
+        $scope.selectAllRows = function(){
+            angular.forEach($scope.configuration.rows, function(row) {
+                row.display = true;                
+            });
+        }
+
 
 
 
