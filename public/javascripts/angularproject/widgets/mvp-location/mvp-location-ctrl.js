@@ -12,7 +12,9 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.tableParams = {};
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
-            $scope.widgetdata = $scope.$parent.item;
+            // $scope.widgetdata = $scope.$parent.item;
+            $scope.widgetdata = {};
+            $rootScope.initwidget = false;
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
@@ -55,32 +57,30 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.getAllLocation();
             }
 
-            $scope.init = function(){
-                $scope.getSites();
-                var siteid = $scope.getSiteId();
-                $scope.getLocationData(siteid);
-            }
-
-            $scope.$watchCollection(
-                function () {return  $scope.listapplicationwidget;}
-            ,  function (newValue,oldValue) {
-                $scope.init();          
-
-            });
-
-            $scope.$watchCollection(
-                function () {return $rootScope.isSingleSiteUpdated;}
-            ,  function (newValue,oldValue) {
-                $scope.init();               
-            });
 
             
 
-            $scope.$watch(
-                function () {return $rootScope.updatelistlocationobj;}
+            $scope.$watchCollection(
+                function () {return  $rootScope.initwidget;}
             ,  function (newValue,oldValue) {
-                $scope.setTable();
+                $scope.init();
+                $rootScope.initwidget = false;          
+
             });
+
+            // $scope.$watchCollection(
+            //     function () {return $rootScope.isSingleSiteUpdated;}
+            // ,  function (newValue,oldValue) {
+            //     $scope.init();               
+            // });
+
+            
+
+            // $scope.$watch(
+            //     function () {return $rootScope.updatelistlocationobj;}
+            // ,  function (newValue,oldValue) {
+            //     $scope.setTable();
+            // });
 
 
             var self = this;
@@ -134,10 +134,6 @@ angular.module('app').controller('mpv-locationcontroller',
                 });
             }
 
-            $scope.test = function(data){
-                return data;
-            }
-
             $scope.showSeveralLocationRows = function(newLocationData){
                 var count  = 0;
                 if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
@@ -157,7 +153,22 @@ angular.module('app').controller('mpv-locationcontroller',
                     }); 
                 }
                 $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
+                $scope.$parent.item = {};
+                $scope.$parent.item = angular.copy($scope.widgetdata);
+
             }
+
+            $scope.init = function(){
+                $scope.widgetdata = angular.copy($scope.$parent.item);
+                $scope.getSites();
+                var siteid = $scope.getSiteId();
+                $scope.getLocationData(siteid);
+
+                $scope.$parent.item = {};
+                $scope.$parent.item = angular.copy($scope.widgetdata);
+            }
+
+            $scope.init();
 
 
         }

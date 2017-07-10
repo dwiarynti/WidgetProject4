@@ -15,18 +15,16 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         $scope.sitelist = $rootScope.sitelist;
         $scope.listlocationobj  = $scope.configuration.rows;
         $rootScope.updatelistlocationobj = false;
+        console.log($scope.$parent);
 
         
 
         $scope.saveSettings = function () {
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);
-            $scope.item.widgetSettings.configuration = $scope.configuration; 
+            $scope.item.widgetSettings.configuration = {};
+            $scope.item.widgetSettings.configuration = angular.copy($scope.configuration);
+            $rootScope.initwidget = true;
 
-            if($scope.configuration.siteid != $scope.item.widgetSettings.configuration.siteid){
-                $rootScope.isSingleSiteUpdated = true;
-            }
-
-            $rootScope.updatelistlocationobj = true;
             $scope.$close();
         };
 
