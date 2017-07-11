@@ -11,7 +11,6 @@
                  update: {method:'POST', params:{action:'update'}},
                  delete: {method:'POST', params:{action:'delete'}},
                  getAll: {method:'GET', params:{action:'getall'}},
-                 getdevicefix: {method:'GET', params:{action:'getdevicefix'}},
                })
     }
 }());
