@@ -34,4 +34,10 @@ angular.module('app').controller('mvp-locationdialogcontroller',
                 $scope.configuration.fieldname.splice(obj.key,1);
         }
 
+        $scope.selectAllRows = function(){
+            angular.forEach($scope.configuration.rows, function(row) {
+                row.display = true;                
+            });
+        }
+
     }]);

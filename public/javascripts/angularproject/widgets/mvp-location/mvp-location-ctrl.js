@@ -61,7 +61,12 @@ angular.module('app').controller('mpv-locationcontroller',
 
             var self = this;
             $scope.setTable = function(){
-                self.tableParams = new NgTableParams({}, {
+                self.tableParams = new NgTableParams({
+                    // noPager: true,
+                    // page: 1,
+                    count: $scope.listobj.length
+                }, {
+                    // total: 1,
                     counts: [],
                     dataset: $scope.listobj
                 });
