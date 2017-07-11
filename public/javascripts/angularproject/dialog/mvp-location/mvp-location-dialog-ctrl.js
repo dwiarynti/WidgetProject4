@@ -13,18 +13,12 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         };
         $scope.fieldnamelist = [];
         $scope.sitelist = $rootScope.sitelist;
-        $scope.listlocationobj  = $scope.configuration.rows;
-        $rootScope.updatelistlocationobj = false;
-        console.log($scope.$parent);
-
-        
 
         $scope.saveSettings = function () {
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);
-            $scope.item.widgetSettings.configuration = {};
-            $scope.item.widgetSettings.configuration = angular.copy($scope.configuration);
-            $rootScope.initwidget = true;
+            $scope.item.widgetSettings.configuration = $scope.configuration; 
 
+            $rootScope.initwidget = true;
             $scope.$close();
         };
 
@@ -39,14 +33,5 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             else
                 $scope.configuration.fieldname.splice(obj.key,1);
         }
-
-        $scope.selectAllRows = function(){
-            angular.forEach($scope.configuration.rows, function(row) {
-                row.display = true;                
-            });
-        }
-
-
-
 
     }]);

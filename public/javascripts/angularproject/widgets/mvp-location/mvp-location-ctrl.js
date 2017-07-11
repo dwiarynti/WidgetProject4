@@ -5,33 +5,32 @@ angular.module('app').controller('mpv-locationcontroller',
             var roomresource = new roomResource();
             var deviceresource = new deviceResource();
             var siteid = "001";
-            $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
             $scope.listobj = [];
+            $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
+            
             $scope.cols = [];
             $rootScope.cols = [];
             $scope.tableParams = {};
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
-            // $scope.widgetdata = $scope.$parent.item;
-            $scope.widgetdata = {};
+            $scope.widgetdata = $scope.$parent.item;
             $rootScope.initwidget = false;
+
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
                 }
                 else{
-                    if($scope.widgetdata.widgetSettings.configuration.rows.length != 0){
-                        var getListFieldName = Object.keys($scope.widgetdata.widgetSettings.configuration.rows[0]);
-                        var count  = 0;
-                        angular.forEach(getListFieldName, function(fieldName){
-                            if(count < 5)
-                                $scope.cols.push({field:fieldName, title: fieldName, show:true});
-                            else
-                                $scope.cols.push({field:fieldName, title: fieldName, show:false});
-                            count = count +1;
-                        });
-                        $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
-                    }
+                    var getListFieldName = Object.keys($scope.listobj[0]);
+                    var count  = 0;
+                    angular.forEach(getListFieldName, function(fieldName){
+                        if(count < 5)
+                            $scope.cols.push({field:fieldName, title: fieldName, show:true});
+                        else
+                            $scope.cols.push({field:fieldName, title: fieldName, show:false});
+                        count = count +1;
+                    });
+                    $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
                 }
             }
 
@@ -50,51 +49,28 @@ angular.module('app').controller('mpv-locationcontroller',
                 return siteid;
             }
 
-            $scope.getLocationData = function(siteid){
+            $scope.getLocationData = function(){
+                var siteid = $scope.getSiteId();
                 if(siteid != 0)
                     $scope.getLocationbySite(siteid);
                 else
                     $scope.getAllLocation();
             }
 
-
             
-
-            $scope.$watchCollection(
-                function () {return  $rootScope.initwidget;}
-            ,  function (newValue,oldValue) {
-                $scope.init();
-                $rootScope.initwidget = false;          
-
-            });
-
-            // $scope.$watchCollection(
-            //     function () {return $rootScope.isSingleSiteUpdated;}
-            // ,  function (newValue,oldValue) {
-            //     $scope.init();               
-            // });
-
-            
-
-            // $scope.$watch(
-            //     function () {return $rootScope.updatelistlocationobj;}
-            // ,  function (newValue,oldValue) {
-            //     $scope.setTable();
-            // });
-
 
             var self = this;
             $scope.setTable = function(){
                 self.tableParams = new NgTableParams({}, {
                     counts: [],
-                    dataset: $scope.widgetdata.widgetSettings.configuration.rows
+                    dataset: $scope.listobj
                 });
                 $scope.getcolumn();
             }
 
             $scope.getAllLocation = function(){
                 roomresource.$getall(function(data){
-                    // $scope.widgetdata.widgetSettings.configuration.rows = data.obj;
+                    $scope.listobj = data.obj;
                     $scope.showSeveralLocationRows(data.obj);
                     $scope.setTable();
                 });
@@ -103,8 +79,8 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.getLocationbySite = function(siteid){
                 roomresource.$getloc({_id:siteid}, function(data){
                     if(data.success){
-                        // $scope.widgetdata.widgetSettings.configuration.rows = data.obj;
-                        $scope.showSeveralLocationRows(data.obj);                        
+                        $scope.listobj = data.obj;
+                        $scope.showSeveralLocationRows(data.obj);
                         $scope.setTable();
                     }
                 });
@@ -153,23 +129,19 @@ angular.module('app').controller('mpv-locationcontroller',
                     }); 
                 }
                 $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
-                $scope.$parent.item = {};
-                $scope.$parent.item = angular.copy($scope.widgetdata);
-
             }
 
-            $scope.init = function(){
-                $scope.widgetdata = angular.copy($scope.$parent.item);
-                $scope.getSites();
-                var siteid = $scope.getSiteId();
-                $scope.getLocationData(siteid);
+            $scope.$watchCollection(
+                function () {return $rootScope.initwidget;}
+            ,  function (newValue,oldValue) {
+                $scope.init();
+            });
 
-                $scope.$parent.item = {};
-                $scope.$parent.item = angular.copy($scope.widgetdata);
+            $scope.init = function(){
+                $scope.getSites();
+                $scope.getLocationData();
             }
 
             $scope.init();
-
-
         }
     ]);
