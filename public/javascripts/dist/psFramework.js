@@ -340,8 +340,8 @@ angular.module('psDashboard').directive('psWidgetBody',
 ]);
 
 angular.module('psDashboard').directive('psWidgetBodyV2',
-    ['$compile', '$modal',
-    function ($compile, $modal) {
+    ['$compile', '$modal', '$rootScope',
+    function ($compile, $modal, $rootScope) {
         return {
             templateUrl: '/javascripts/ext-modules/psDashboard/psWidgetBody-V2-Template.html',
             link: function (scope, element, attrs) {
@@ -351,6 +351,8 @@ angular.module('psDashboard').directive('psWidgetBodyV2',
                 $compile(newElement)(scope);
                 // console.log(scope.$parent.$parent.$root.widgetviewmode);
                 scope.close = function () {
+
+                    $rootScope.initwidget.location = scope.item.widgetSettings.name == "site" ? true:false;
                     scope.applicationObj.widget.splice(scope.applicationObj.widget.indexOf(scope.item), 1);
                 };
 

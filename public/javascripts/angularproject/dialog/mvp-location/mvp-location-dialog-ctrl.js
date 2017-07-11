@@ -18,7 +18,7 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);
             $scope.item.widgetSettings.configuration = $scope.configuration; 
 
-            $rootScope.initwidget = true;
+            $rootScope.initwidget.location = true;
             $scope.$close();
         };
 

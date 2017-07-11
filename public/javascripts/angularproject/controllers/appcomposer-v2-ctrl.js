@@ -7,6 +7,10 @@ angular.module('app').controller('appcomposer-v2controller',
             $rootScope.number = {
                 site:0
             };     
+            $rootScope.listSiteWidget = [];
+            $rootScope.isSingleSiteUpdated = false;
+
+            $rootScope.initwidget = {location:false};
 
             $scope.gridsterOpts = {
                 columns: 13,
@@ -54,7 +58,6 @@ angular.module('app').controller('appcomposer-v2controller',
                 widgetmanagementresource.$create(function(data){
                     if(data.success){
                         $scope.applicationObj = data.obj;
-                        console.log(data);
                         $window.alert("Data saved successfully");
                     }
                     //Reinit menu

@@ -14,7 +14,7 @@ angular.module('app').controller('mpv-locationcontroller',
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;
-            $rootScope.initwidget = false;
+            
 
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
@@ -34,7 +34,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 }
             }
 
-            $scope.getSiteId = function(params) {
+            $scope.getSiteId = function() {
                 var siteid = 0;
                 if($scope.sitewidgets.length > 0){
                     var siteid1 = $scope.widgetdata.widgetSettings.configuration.siteid; //old
@@ -62,11 +62,8 @@ angular.module('app').controller('mpv-locationcontroller',
             var self = this;
             $scope.setTable = function(){
                 self.tableParams = new NgTableParams({
-                    // noPager: true,
-                    // page: 1,
                     count: $scope.listobj.length
                 }, {
-                    // total: 1,
                     counts: [],
                     dataset: $scope.listobj
                 });
@@ -95,6 +92,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
                     return widget.widgetSettings.name === 'site'
                 });
+
                 if($scope.sitewidgets.length != 0){
                     $rootScope.sitelist = [];
                 }
@@ -103,15 +101,14 @@ angular.module('app').controller('mpv-locationcontroller',
                     roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
                         if(data.success){
                             var isRedundantdata = $filter('filter')($rootScope.sitelist,function(site){
-                                        return site.uuid === data.obj.uuid
-                                    }).length > 0 ? true:false;
+                                return site.uuid === data.obj.uuid
+                            }).length > 0 ? true:false;
                             if(!isRedundantdata){
                                 $rootScope.sitelist.push(data.obj);
                             }
                         }
                     });
                     }
-
                 });
             }
 
@@ -134,12 +131,14 @@ angular.module('app').controller('mpv-locationcontroller',
                     }); 
                 }
                 $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
+                console.log(newLocationData);
             }
 
             $scope.$watchCollection(
-                function () {return $rootScope.initwidget;}
+                function () {return $rootScope.initwidget.location;}
             ,  function (newValue,oldValue) {
                 $scope.init();
+                $rootScope.initwidget.location = false;
             });
 
             $scope.init = function(){

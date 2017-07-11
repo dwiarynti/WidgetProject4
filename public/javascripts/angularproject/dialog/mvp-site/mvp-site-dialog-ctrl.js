@@ -14,7 +14,7 @@ angular.module('app').controller('mvp-sitedialogcontroller',
         $scope.fieldvalue = [];
         $scope.returneddatatypes = ["list", "singledata"];
         $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
-        $rootScope.isSingleSiteUpdated = false;
+        // $rootScope.isSingleSiteUpdated = false;
         $scope.init = function(){
             if($scope.$parent.item.widgetSettings.configuration != undefined)
                 $scope.configuration = $scope.$parent.item.widgetSettings.configuration;
@@ -48,7 +48,7 @@ angular.module('app').controller('mvp-sitedialogcontroller',
                 $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
                     return widget.widgetSettings.name === 'site'
                 });
-                $rootScope.isSingleSiteUpdated = true;
+                $rootScope.initwidget.location = true;
                 // if($scope.sitewidgets.length == 1){
                     
                 // }

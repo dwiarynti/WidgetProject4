@@ -6,7 +6,7 @@ angular.module('app').controller('mpv-sitecontroller',
             var deviceresource = new deviceResource();
             var siteid = "001";
             $scope.obj = "";
-                   
+            
             $scope.getWdigetValue = function(){
                 roomresource.$getbyid({_id:$scope.$parent.item.widgetSettings.configuration.datasource},function(data){
                     if(data.success){
