@@ -13,8 +13,7 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.tableParams = {};
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
-            $scope.widgetdata = $scope.$parent.item;
-            
+            $scope.widgetdata = $scope.$parent.item;            
 
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
@@ -119,11 +118,24 @@ angular.module('app').controller('mpv-locationcontroller',
                 var count  = 0;
                 // if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
                     angular.forEach(newLocationData, function(data){
-                        if(data.display == undefined){
-                            count = count +1;
+                        var selectRowsStatus = $scope.$parent.item.widgetSettings.configuration.selectRowsStatus;
+                        if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
+                            
                             // data.display = false;
-                            data.display = count <= 3 ? true:false;
+                            data.display = count <= 2 ? true:false;
+                        }else{
+                            var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
+                                return data.uuid === row.uuid
+                            })[0];
+                            if(obj != null){
+                                data.display = !obj.display && count <= 2 && !selectRowsStatus ? true : obj.display;
+                            }else{
+                                data.display = false;
+                            }
+                            // data.display = obj != null ? obj.display:false;
                         }
+                        // $scope.$parent.item.widgetSettings.configuration.selectRowsStatus
+                        count = data.display == true ? count +1:count;
                     }); 
                 // }else {
                 //     angular.forEach(newLocationData, function(data){

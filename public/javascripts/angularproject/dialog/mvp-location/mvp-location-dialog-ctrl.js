@@ -9,7 +9,8 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         $scope.configuration = {
             "siteid":$scope.item.widgetSettings.configuration.siteid != undefined ? $scope.item.widgetSettings.configuration.siteid : 0,
             "cols":$scope.item.widgetSettings.configuration.cols != undefined ? $scope.item.widgetSettings.configuration.cols : [],
-            "rows": $scope.item.widgetSettings.configuration.rows
+            "rows": $scope.item.widgetSettings.configuration.rows,
+            "selectRowsStatus": $scope.item.widgetSettings.configuration.selectRowsStatus
         };
         $scope.fieldnamelist = [];
         $scope.sitelist = $rootScope.sitelist;
@@ -35,8 +36,10 @@ console.log($scope.sitelist)
         }
 
         $scope.selectAllRows = function(){
+            $scope.configuration.selectRowsStatus = true;
+            var displayedRows = $filter('filter')($scope.configuration.rows, function(row){return row.display === true});
             angular.forEach($scope.configuration.rows, function(row) {
-                row.display = true;                
+                row.display = displayedRows.length == $scope.configuration.rows.length ? false : true;                
             });
         }
 
