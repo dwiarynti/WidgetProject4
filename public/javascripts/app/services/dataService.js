@@ -146,7 +146,8 @@ angular.module('app').factory('dataService',
                                 siteid:0,
                                 cols : [],
                                 rows : [],
-                                selectRowsStatus : false
+                                selectRowsStatus : false,
+                                initializeStatus : false
                             },
                             commonconfiguration : {},
                             templateUrl: '/javascripts/angularproject/dialog/mvp-location/mvp-location-dialog.html',

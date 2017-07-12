@@ -45,10 +45,16 @@ angular.module('app').controller('mvp-sitedialogcontroller',
         }
 
         $scope.updatesitelist = function(){
-                $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
-                    return widget.widgetSettings.name === 'site'
+                // $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
+                //     return widget.widgetSettings.name === 'site'
+                // });
+                var othersWidget = $filter('filter')($scope.listapplicationwidget,function(widget){
+                    return widget.widgetSettings.name !== 'site'
                 });
-                $rootScope.initwidget.location = true;
+                angular.forEach(othersWidget, function(widget) {
+                    widget.widgetSettings.configuration.initializeStatus = true;
+                });
+                // $rootScope.initwidget.location = true;
                 // if($scope.sitewidgets.length == 1){
                     
                 // }

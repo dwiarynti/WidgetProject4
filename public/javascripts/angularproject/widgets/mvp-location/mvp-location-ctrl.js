@@ -14,7 +14,7 @@ angular.module('app').controller('mpv-locationcontroller',
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;            
-
+            // console.log($scope.widgetdata);
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
@@ -146,14 +146,14 @@ angular.module('app').controller('mpv-locationcontroller',
                 //     }); 
                 // }
                 $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
-                console.log(newLocationData);
+                // console.log(newLocationData);
             }
 
             $scope.$watchCollection(
-                function () {return $rootScope.initwidget.location;}
+                function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
                 $scope.init();
-                $rootScope.initwidget.location = false;
+                $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
             });
 
             $scope.init = function(){
