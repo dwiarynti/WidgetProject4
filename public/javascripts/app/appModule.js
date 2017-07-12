@@ -7,4 +7,5 @@ angular.module("app", [
     "ngStorage",
     "common.services",
     "ui.bootstrap",
-    "ngTable",]);
+    "ngTable",
+    "anguFixedHeaderTable"]);

@@ -13,7 +13,7 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         };
         $scope.fieldnamelist = [];
         $scope.sitelist = $rootScope.sitelist;
-
+console.log($scope.sitelist)
         $scope.saveSettings = function () {
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);
             $scope.item.widgetSettings.configuration = $scope.configuration; 
