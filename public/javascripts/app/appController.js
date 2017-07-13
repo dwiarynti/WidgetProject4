@@ -136,12 +136,13 @@ angular.module('app').controller('appController',
                     // },
                     // { label: 'App Management', href: '/appmanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
                     { label: 'App Management', href: '/appmanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
-                    { label: 'User Management', href: '/usermanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
-                    { label: 'Auth Setting', href: '/authsetting', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
-                    { label: 'Notif Management', href: '/notificationmanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
-                    { label: 'Loc Management', href: '/locationmanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
-                    { label: 'People Management', href: '/peoplemanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
-                    { label: 'Device Management', href: '/devicemanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
+                    
+                    // { label: 'User Management', href: '/usermanagement', icon: 'fa-user', isGroup: false, submenuItems: [] },
+                    // { label: 'Auth Setting', href: '/authsetting', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
+                    // { label: 'Notif Management', href: '/notificationmanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
+                    // { label: 'Loc Management', href: '/locationmanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
+                    // { label: 'People Management', href: '/peoplemanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
+                    // { label: 'Device Management', href: '/devicemanagement', icon: 'fa-wrench', isGroup: false, submenuItems: [] },
 
                 ];
                 if(role == "Super Admin"){
@@ -188,9 +189,23 @@ angular.module('app').controller('appController',
                     }
 
                     $scope.menuItems.push(applist);
+                    $scope.menuSetting();
 
                     $rootScope.addedNewApp = false;
                 });
+            }
+
+            $scope.menuSetting = function(){
+                var obj = { label: 'Settings', href: '', icon: 'fa-gears', isGroup: true, submenuItems: [
+                        // {label: item.appname, href: '/application/' + item.euid, icon: 'fa-dashboard'},
+                        { label: 'User Management', href: '/usermanagement', icon: 'fa-user' },
+                        { label: 'Auth Setting', href: '/authsetting', icon: 'fa-wrench'},
+                        // { label: 'Notif Management', href: '/notificationmanagement', icon: 'fa-wrench'},
+                        { label: 'Loc Management', href: '/locationmanagement', icon: 'fa-wrench'},
+                        { label: 'People Management', href: '/peoplemanagement', icon: 'fa-wrench'},
+                        { label: 'Device Management', href: '/devicemanagement', icon: 'fa-wrench'},
+                    ] };
+                $scope.menuItems.push(obj);    
             }
 
             // $scope.getNotification = function(){
