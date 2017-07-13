@@ -36,6 +36,7 @@ router.post('/person/cleanup',function(req,res)
 router.get('/person/getall', function (req, res) {
     persondb.get('person', function (err, person) {
         if (err)
+        {
             if (err.message == "Key not found in database") {
                 res.json({ "success": true, "message": "no data", "obj": [] });
             }
@@ -43,8 +44,9 @@ router.get('/person/getall', function (req, res) {
                
                 res.json(500, err);
             }
-        
+        }
         else 
+        {
          var listobj = [];
                 for(var i = 0 ; i < person.length;i++)
                 {
@@ -54,6 +56,7 @@ router.get('/person/getall', function (req, res) {
                     }
                 }
         res.json({ "success": true, "obj": listobj })
+        }
     });
 });
 

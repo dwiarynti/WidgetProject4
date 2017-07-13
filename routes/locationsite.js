@@ -185,23 +185,30 @@ router.post('/locationsite/create', function (req, res) {
 router.get('/locationsite/:_id', function (req, res) {
     var id = req.params._id;
     locationdb.get('locationsite', function (err, locations) {
-        if (err)
+        if(err)
+        {
             if (err.message == "Key not found in database") {
                 res.json({ "success": true, "message": "no data", "obj": [] });
             }
             else {
                 res.json(500, err);
             }
-        else
-            var item = {};
-        for (var index = 0; index < locations.length; index++) {
-            var element = locations[index];
-            if (element.id == id) {
-                item = element;
-            }
         }
-        res.json({ "obj": item });
-
+        else
+        {
+            var item = {};
+            for (var i = 0; i < locations.length; i++) 
+            {
+                if(locations[i] != null)
+                {
+                    if (locations[i].id == id) 
+                    {
+                    item = locations[i];
+                    }
+                }
+            }
+            res.json({ "obj": item });
+        }
     })
 });
 
