@@ -43,4 +43,8 @@ console.log($scope.sitelist)
             });
         }
 
+        $scope.selectSingleRow = function(){
+            $scope.configuration.selectRowsStatus = true;
+        }
+
     }]);
