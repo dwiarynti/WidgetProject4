@@ -63,12 +63,12 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                 templateUrl: '/javascripts/angularproject/partialviews/usermanagement.html'
             }
         },
-        {
-            url: '/notificationmanagement',
-            config: {
-                templateUrl: '/javascripts/angularproject/partialviews/notificationmanagement.html'
-            }
-        },
+        // {
+        //     url: '/notificationmanagement',
+        //     config: {
+        //         templateUrl: '/javascripts/angularproject/partialviews/notificationmanagement.html'
+        //     }
+        // },
         {
             url: '/authsetting',
             config: {
