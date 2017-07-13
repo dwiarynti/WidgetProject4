@@ -170,7 +170,10 @@ angular.module('app').factory('dataService',
                 //             name : 'device',                            
                 //             configuration:{
                 //                 siteid:0,
-                //                 cols : []
+                //                 cols : [],
+                //                 rows : [],
+                //                 selectRowsStatus : false,
+                //                 initializeStatus : false
                 //             },
                 //             templateUrl: '/javascripts/angularproject/dialog/mvp-device/mvp-device-dialog.html',
                 //             controller: 'mvp-devicedialogcontroller',

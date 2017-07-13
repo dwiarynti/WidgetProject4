@@ -74,16 +74,20 @@ angular.module('app').controller('mpv-devicecontroller',
 
             var self = this;
             $scope.setTable = function(){
-                self.tableParams = new NgTableParams({}, {
+                self.tableParams = new NgTableParams({
+                    count : $scope.listobj.length
+                }, {
                     counts: [],
                     dataset: $scope.listobj
                 });
                 $scope.getcolumn();
+                console.log($scope.listobj)
             }
 
             $scope.getAlldevice = function(){
                 roomdevresource.$getdevicefix(function(data){
                     $scope.listobj = data.obj;
+                    $scope.showSeveralDeviceRows(data.obj);
                     $scope.setTable();
                 });
             }
@@ -92,6 +96,7 @@ angular.module('app').controller('mpv-devicecontroller',
                 roomresource.$getdevice({_id:siteid}, function(data){
                     if(data.success){
                         $scope.listobj = data.obj;
+                        $scope.showSeveralDeviceRows(data.obj);
                         $scope.setTable();
                     }
                 });
@@ -123,10 +128,43 @@ angular.module('app').controller('mpv-devicecontroller',
                 // console.log($rootScope.sitelist);
             }
 
-            $scope.updateConfigurationSiteId = function(){
-
+            $scope.showSeveralDeviceRows = function(newDeviceData){
+                var count  = 0;
+                // if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
+                    angular.forEach(newDeviceData, function(data){
+                        var selectRowsStatus = $scope.widgetdata.widgetSettings.configuration.selectRowsStatus;
+                        if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
+                            
+                            // data.display = false;
+                            data.display = count <= 2 ? true:false;
+                        }else{
+                            var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
+                                return data.uuid === row.uuid
+                            })[0];
+                            if(obj != null){
+                                data.display = !obj.display && count <= 2 && !selectRowsStatus ? true : obj.display;
+                            }else{
+                                data.display = false;
+                            }
+                            // data.display = obj != null ? obj.display:false;
+                        }
+                        // $scope.$parent.item.widgetSettings.configuration.selectRowsStatus
+                        count = data.display == true ? count +1:count;
+                    }); 
+                // }else {
+                //     angular.forEach(newDeviceData, function(data){
+                //         var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
+                //             return data.uuid === row.uuid
+                //         })[0];
+                //         data.display = obj != null ? obj.display:false;
+                //     }); 
+                // }
+                $scope.widgetdata.widgetSettings.configuration.rows = newDeviceData;
             }
 
             // $scope.getSites();
+            $scope.test = function(data){
+                console.log(data);
+            }
         }
     ]);

@@ -45,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="obj in configuration.rows">
+                <tr ng-repeat="obj in configuration.rows" ng-if="obj.uuid != ''">
                     <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display"/></td>
                     <td>{{obj.uuid}}</td>
                     <td>{{obj.name}}</td>

@@ -118,7 +118,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 var count  = 0;
                 // if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
                     angular.forEach(newLocationData, function(data){
-                        var selectRowsStatus = $scope.$parent.item.widgetSettings.configuration.selectRowsStatus;
+                        var selectRowsStatus = $scope.widgetdata.widgetSettings.configuration.selectRowsStatus;
                         if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
                             
                             // data.display = false;

@@ -12,7 +12,7 @@ angular.module('app').controller('mvp-devicedialogcontroller',
         };
         $scope.fieldnamelist = [];
         $scope.sitelist = $rootScope.sitelist;
-        console.log($scope.sitelist);
+        // console.log($scope.sitelist);
         // $scope.init = function(){  
         //         var sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
         //                 return widget.widgetSettings.name === 'site'
