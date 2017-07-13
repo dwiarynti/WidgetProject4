@@ -116,7 +116,7 @@ angular.module('app').factory('dataService',
                 {
                     title: 'Site',
                     settings: {
-                        sizeX: 3,
+                        sizeX: 4,
                         sizeY: 0,
                         minSizeX: 3,
                         minSizeY: 0,
@@ -134,7 +134,7 @@ angular.module('app').factory('dataService',
                 {
                     title: 'Location',
                     settings: {
-                        sizeX: 6,
+                        sizeX: 10,
                         sizeY: 2,
                         minSizeX: 5,
                         minSizeY: 2,
