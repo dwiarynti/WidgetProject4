@@ -7,7 +7,12 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.devicetypes = ["fixed", "mobile"];
             $scope.deviceslist = [];
-            $scope.deviceobj = {};
+            $scope.deviceobj = {
+                euid:0,
+                type:"",
+                room:0,
+                person:0
+            };
             $scope.roomlist =[];
             $scope.personlist =[];
             $scope.action = "";
@@ -34,7 +39,6 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.getroom = function(){
                 roomresource.$getall(function(data){
-                    console.log(data)
                     if(data.success)
                         $scope.roomlist = data.obj;                   
                 });

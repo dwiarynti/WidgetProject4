@@ -1,3 +1,8 @@
+    <style>
+        .table {
+            height: 200px;
+        }
+    </style>
 <div class="modal-header">
     <h3 class="modal-title">Device Widget</h3>
 </div>
@@ -29,15 +34,15 @@
                     <th>Person</th>
                 </tr>
             </thead>
-            <!-- <tbody>
+             <tbody>
                 <tr ng-repeat="obj in configuration.rows" ng-if="obj.uuid != ''">
                     <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display" ng-change="selectSingleRow()"/></td>
-                    <td>{{obj.uuid}}</td>
-                    <td>{{obj.name}}</td>
-                    <td>{{obj.parentname}}</td>
-                    <td>{{obj.areatype}}</td>
+                    <td>{{obj.euid}}</td>
+                    <td>{{obj.type}}</td>
+                    <td>{{obj.roomname}}</td>
+                    <td>{{obj.person}}</td>
                 </tr>
-            </tbody> -->
+            </tbody> 
         </table>  
     </div>
     <div class="form-group">

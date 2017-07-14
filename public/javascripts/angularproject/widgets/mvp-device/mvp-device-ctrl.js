@@ -8,7 +8,7 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
 
             $scope.widgetdata = $scope.$parent.item; 
-
+console.log($scope.widgetdata);
             $scope.getAllDevice = function(){
                 roomdevresource.$getAll(function(data){
                     if(data.success)
@@ -32,7 +32,7 @@ angular.module('app').controller('mpv-devicecontroller',
                     counts: [],
                     dataset: $scope.listobj
                 });
-                console.log($scope.listobj);
+                // console.log($scope.listobj);
                 $scope.getcolumn();
             }
 
@@ -65,7 +65,7 @@ angular.module('app').controller('mpv-devicecontroller',
                             data.display = count <= 2 ? true:false;
                         }else{
                             var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
-                                return data.uuid === row.uuid
+                                return data.euid === row.euid
                             })[0];
                             if(obj != null){
                                 data.display = !obj.display && count <= 2 && !selectRowsStatus ? true : obj.display;
