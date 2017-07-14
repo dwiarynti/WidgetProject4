@@ -6,8 +6,9 @@ var devicedb = db.sublevel('device');
 var sitedb = db.sublevel('site');
 var roomdevroomdb = db.sublevel('roomdevroom');
 var roomdevdevicedb = db.sublevel('roomdevdevice');
-var devownpersondb = db.sublevel('devownperson');
-var devowndevicedb = db.sublevel('devowndevice');
+var decownpersondb = db.sublevel('decownperson');
+var decowndevicedb = db.sublevel('decowndevice');
+
 var roomdb = db.sublevel('room');
 
 
@@ -20,7 +21,8 @@ router.post('/roomdev/create',function(req,res)
     var devices  = {
         euid : req.body.deviceobj.euid,
         room : req.body.deviceobj.room,
-        type : req.body.deviceobj.type
+        type : req.body.deviceobj.type,
+        person : req.body.deviceobj.person
     }
 
     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
@@ -137,7 +139,92 @@ router.post('/roomdev/create',function(req,res)
             }
             else
             {
-                res.json({"success": true })
+            var listownperson = [];
+            var person  = {
+                    person : devices.person,
+                    version: 1,
+                    device : []
+            }
+            person.device.push(devices.euid);
+            decowndevicedb.get('decowndevice',function(err,owndevice)
+            {
+                var listowndev = [];
+                var devown ={
+                    uuid : devices.euid,
+                    person: devices.person
+                }
+                if(err)
+                    {
+                        if(err.message == "Key not found in database")
+                            {
+                                listowndev.push(devown);
+                            }
+                        else
+                            {
+                                res.json(500,err);
+                            }
+                    }
+                else
+                    {
+                        if(owndevice.length > 0)
+                            {
+                                listowndev = owndevice;
+                                listowndev.push(devown);
+                            }
+                        else
+                            {
+                                  listowndev.push(devown);
+                            }
+                    }
+            decownpersondb.get('decownperson',function(err,ownperson)
+            {
+                if(err)
+                    {
+                        if(err.message == "Key not found in database")
+                            {
+                                listownperson.push(person);
+                            }
+                        else{
+                            res.json(500,err);
+                        }
+                    }
+                else{
+                    if(ownperson.length > 0 )
+                        {
+                            listownperson = ownperson;
+                            listownperson.push(person);
+                        }
+                    else
+                        {
+                            listownperson.push(person);
+                        }
+                   }
+            decowndevicedb.put('decowndevice',listowndev,function(err)
+            {
+                if(err)
+                    {
+                        res.json(500,err);
+                    }
+                else
+                    {
+                        decownpersondb.get('decownperson',listownperson,function(err,ownperson)
+                        {
+                            if(err)
+                                {
+                                    res.json(500,err);
+                                }
+                            else
+                                {
+                                     res.json({"success": true })
+                                }
+                        });
+                    }
+            });
+                
+            });
+                
+            });
+               
             }
         })
         }
