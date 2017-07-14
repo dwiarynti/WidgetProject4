@@ -5,7 +5,7 @@ angular.module('app').directive('mvpdevice', [function () {
         scope: {
         },
         controller: "mpv-devicecontroller",
-        controllerAs: 'demo',
+        controllerAs: 'demodevice',
         templateUrl: '/javascripts/angularproject/widgets/mvp-device/mvp-device.html'
     }
 }]);

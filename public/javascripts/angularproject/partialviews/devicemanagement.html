@@ -15,6 +15,7 @@
                         <th style="width: 11%;">Mac Address</th>
                         <th style="width: 11%;">Type</th>
                         <th style="width: 11%;">Room</th>
+                        <th style="width: 11%;">Person</th>
                         <th style="width: 11%;">Action</th>
                     </tr>
                 </thead>
@@ -23,6 +24,7 @@
                         <td>{{deviceobj.euid}}</td>
                         <td>{{deviceobj.type}}</td>
                         <td>{{deviceobj.roomname}}</td>
+                        <td></td>
                         <td>
                             <!--<a ng-click="btnEditClick(deviceobj)" class="link" style="cursor: pointer">Edit</a>|-->
                             <a ng-click="btnDeleteClick(deviceobj)" class="link" style="cursor: pointer">Delete</a>
@@ -57,6 +59,15 @@
                         <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.room">
                             <option value="">Please Select Room</option>
                             <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
+                        </select>
+                    </div>
+                    <!--end-->
+
+                    <!--devicetype = mobile-->
+                    <div ng-if="deviceobj.type == 'mobile'" class="form-group has-feedback">
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.person">
+                            <option value="">Please Select Person</option>
+                            <option value="{{person.uuid}}" ng-repeat="person in personlist" ng-selected="isSelectedItem(deviceobj.room, person.uuid)">{{person.name}}</option>
                         </select>
                     </div>
                     <!--end-->

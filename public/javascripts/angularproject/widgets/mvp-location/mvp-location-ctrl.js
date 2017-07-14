@@ -90,6 +90,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 });
             }
 
+            //get widget site
             $scope.getSites = function(){
                 $scope.sitewidgets = $filter('filter')($scope.listapplicationwidget,function(widget){
                     return widget.widgetSettings.name === 'site'
