@@ -207,7 +207,7 @@ router.post('/roomdev/create',function(req,res)
                     }
                 else
                     {
-                        decownpersondb.get('decownperson',listownperson,function(err,ownperson)
+                        decownpersondb.put('decownperson',listownperson,function(err)
                         {
                             if(err)
                                 {
@@ -328,6 +328,36 @@ router.get('/roomdev/getdevicefix',function(req,res)
 
     });
 });
+
+router.get('/roomdev/getdevicemobile',function(req,res)
+{
+     var listobj = [];
+     var device = {
+     euid: "",
+     room: "",
+     type:""
+    }
+    roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
+    {
+        if(err)
+        {
+            if(err.message ==  "Key not found in database")
+            {
+            listobj.push(device);
+            res.json({success:true,"obj": listobj});
+            }
+            else
+            {
+            res.json(500,err);
+            }
+        }
+        else
+        {
+           res.json(roomdev);
+        }
+
+    });
+})
 
 router.get('/roomdev/getroom',function(req,res)
 {
