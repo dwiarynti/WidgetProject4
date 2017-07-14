@@ -182,31 +182,31 @@ angular.module('app').factory('dataService',
                         }
                     }
                 },
-                {
-                    title: 'Person',
-                    settings: {
-                        sizeX: 10,
-                        sizeY: 2,
-                        minSizeX: 5,
-                        minSizeY: 2,
-                        template: '<mvpperson></mvpperson>',
-                        widgetSettings: {
-                            id: 5003,
-                            name : 'person',                            
-                            configuration:{
-                                siteid:0,
-                                cols : [],
-                                rows : [],
-                                selectRowsStatus : false,
-                                initializeStatus : false
-                            },
-                            templateUrl: '/javascripts/angularproject/dialog/mvp-person/mvp-person-dialog.html',
-                            controller: 'mvp-persondialogcontroller',
-                            // tempname : "table",
-                            settingiconstatus :true                            
-                        }
-                    }
-                },
+                // {
+                //     title: 'Person',
+                //     settings: {
+                //         sizeX: 10,
+                //         sizeY: 2,
+                //         minSizeX: 5,
+                //         minSizeY: 2,
+                //         template: '<mvpperson></mvpperson>',
+                //         widgetSettings: {
+                //             id: 5003,
+                //             name : 'person',                            
+                //             configuration:{
+                //                 siteid:0,
+                //                 cols : [],
+                //                 rows : [],
+                //                 selectRowsStatus : false,
+                //                 initializeStatus : false
+                //             },
+                //             templateUrl: '/javascripts/angularproject/dialog/mvp-person/mvp-person-dialog.html',
+                //             controller: 'mvp-persondialogcontroller',
+                //             // tempname : "table",
+                //             settingiconstatus :true                            
+                //         }
+                //     }
+                // },
             ];
 
     var getLocations = function () {
