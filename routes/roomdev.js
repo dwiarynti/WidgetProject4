@@ -258,14 +258,28 @@ router.get('/roomdev/getall',function(req,res)
     var resultpersonloc = "";
     var resultroom = "";
     var resultperson = "";
+    var data = {
+        euid: "",
+        room: "",
+        type: "",
+        person: "",
+        roomname: "",
+        personname: ""
+    }
     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
     {
         if(err)
         {
             if(err.message ==  "Key not found in database")
-            res.json({success:true,"obj": {}});
+            {
+            var listdata = [];
+            listdata.push(data);
+            res.json({success:true,"obj": listdata});
+            }
             else
+            {
             res.json(500,err);
+            }
         }
         else
         {
@@ -372,7 +386,15 @@ router.get('/roomdev/getall',function(req,res)
                                 }
                         }
                     }
+                    if(listobj.length > 0)
+                    {
                     res.json({"success": true, "obj": listobj});
+                    }
+                    else
+                    {
+                    listobj.push(data);
+                    res.json({"success" :true, obj : listobj})
+                    }
 
                 });
 
