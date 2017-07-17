@@ -12,7 +12,21 @@ var personlocdb = db.sublevel('personloc');
 var roomdb = db.sublevel('room');
 
 
-
+router.post('/roomdev/cleanup',function(req,res)
+{
+    var listobj = [];
+    roomdevdevicedb.put('roomdevdevice',listobj,function(err)
+    {
+        if(err)
+            {
+                res.json(500,err);
+            }
+        else
+            {
+                res.json({"success":true})
+            }
+    });
+})
 
 router.post('/roomdev/create',function(req,res)
 {
