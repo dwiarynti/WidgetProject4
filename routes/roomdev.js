@@ -248,21 +248,36 @@ router.get('/roomdev/getall',function(req,res)
         }
         else
         {
+            var listfix = [];
+            var listmobile = [];
+            var listresult = [];
            roomdb.get('room',function(err,rooms)
            {
+            
             for(var i = 0 ; i < rooms.length;i++)
             {
                 for(var j = 0 ; j < roomdev.length;j++)
                 {
                   
-                    if(roomdev[j].room == rooms[i].uuid)
-                    {
+                   if(roomdev[j].type == "fixed")
+                    {    
                         roomdev[j].roomname = rooms[i].name;
+                        roomdev[j].person = "";               
+                        listresult.push(roomdev[j]);
                     }
-                    
+
+                    else
+                    {
+                        roomdev[j].room = "";
+                        roomdev[j].roomname = "";  
+                        listresult.push(roomdev[j])
+                    }   
                 }
             }
-            res.json({"success" : true ,"obj": roomdev })
+           
+
+            
+            res.json({"success" : true ,"obj": listresult })
            });
         }
 

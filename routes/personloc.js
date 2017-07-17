@@ -36,8 +36,7 @@ router.post('/personloc/create',function(req,res)
         }
 
         var person ={
-            uuid : generateid,
-            uuidperson : req.body.uuidperson,
+            uuid : req.body.deviceid,
             datecreate : req.body.datecreate,
             lastseen  : req.body.lastseen,
             geolocation : req.body.geolocation,
@@ -64,7 +63,7 @@ router.post('/personloc/create',function(req,res)
             {
             for(var i = 0 ; i < dataperson.length;i++)
             {
-                if(person.uuidperson == dataperson[i].uuidperson)
+                if(person.uuid == dataperson[i].uuid)
                 {
                     dataperson[i].datecreate =person.datecreate ;
                     dataperson[i].lastseen = person.lastseen;
