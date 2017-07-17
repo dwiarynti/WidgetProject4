@@ -17,8 +17,8 @@ router.post('/personloc/cleanup',function(req,res)
 
 router.post('/personloc/create',function(req,res)
 {
-    
-        var person ={
+    var listobj = [];
+    var person ={
             uuid : req.body.personobj.uuid,
             datecreate : req.body.personobj.datecreate,
             lastseen  : req.body.personobj.lastseen,
@@ -26,10 +26,9 @@ router.post('/personloc/create',function(req,res)
             room: req.body.personobj.room,
             site :"",
             zone : ""
-        }       
-        var listobj = [];
-        personlocdb.get('personloc',function(err,dataperson)
-        {
+    }   
+    personlocdb.get('personloc',function(err,dataperson)
+    {
             if(err)
             {
                 if(err.message == "Key not found in database")
@@ -43,21 +42,34 @@ router.post('/personloc/create',function(req,res)
             }
             else
             {
-            for(var i = 0 ; i < dataperson.length;i++)
-            {
-                if(person.uuid == dataperson[i].uuid)
+                var selected = "";
+                if(dataperson.length > 0)
                 {
-                    dataperson[i].datecreate =person.datecreate ;
-                    dataperson[i].lastseen = person.lastseen;
-                    dataperson[i].geolocation =person.geolocation;
-                    dataperson[i].room =person.room;
-                    dataperson[i].site =person.site;
-                    dataperson[i].zone =person.zone
-                   
+                    for(var i = 0 ; i < dataperson.length;i++)
+                    {
+                        if(person.uuid == dataperson[i].uuid)
+                        {
+                            dataperson[i].datecreate =person.datecreate ;
+                            dataperson[i].lastseen = person.lastseen;
+                            dataperson[i].geolocation =person.geolocation;
+                            dataperson[i].room =person.room;
+                            dataperson[i].site =person.site;
+                            dataperson[i].zone =person.zone;
+                            selected = "1";
+                        }
+                        listobj.push(dataperson[i]);
+                    }
+                    if(selected != "1")
+                    {
+                        listobj.push(person);
+                    }
                 }
-                listobj.push(dataperson[i]);
+                else
+                {
+                    listobj.push(person);
+                }
             }
-            }
+
             personlocdb.put('personloc',listobj,function(err)
             {
                 if(err)
@@ -65,7 +77,8 @@ router.post('/personloc/create',function(req,res)
                 else
                 res.json({"success":true})
             });
-        })
+    }); 
+
   
 });
 
