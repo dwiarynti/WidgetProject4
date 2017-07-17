@@ -12,6 +12,8 @@ var personlocdb = db.sublevel('personloc');
 var roomdb = db.sublevel('room');
 
 
+
+
 router.post('/roomdev/create',function(req,res)
 {
     var listobj = [];
@@ -415,7 +417,7 @@ router.get('/roomdev/getdevicemobile',function(req,res)
                         listobj.push(roomdev[i]);
                     }
             }
-           res.json(listobj);
+           res.json({success:true,"obj": listobj});
         }
 
     });
