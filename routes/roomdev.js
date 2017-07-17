@@ -262,7 +262,8 @@ router.get('/roomdev/getall',function(req,res)
                    if(roomdev[j].type == "fixed")
                     {    
                         roomdev[j].roomname = rooms[i].name;
-                        roomdev[j].person = "";               
+                        roomdev[j].person = "";
+                                       
                         listresult.push(roomdev[j]);
                     }
 
