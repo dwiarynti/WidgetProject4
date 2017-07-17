@@ -40,6 +40,7 @@ angular.module('app').controller('personlocmanagementcontroller',
             }
 
             $scope.init = function(){
+                $scope.getAllPersonLoc();
                 $scope.getdevicemobile();
                 $scope.getRoom();
             }
@@ -81,7 +82,6 @@ angular.module('app').controller('personlocmanagementcontroller',
             $scope.turnoffeditmode = function(obj){
                 $scope.editmode = false;
                 obj.editmode = false;
-                
             }
 
             $scope.Update = function(obj){
@@ -107,7 +107,6 @@ angular.module('app').controller('personlocmanagementcontroller',
                     if(data.success)
                         $scope.init();
                         $("#modal-delete").modal('hide');
-                    
                 });
             }
 
