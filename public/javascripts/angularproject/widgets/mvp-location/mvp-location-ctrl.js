@@ -14,7 +14,6 @@ angular.module('app').controller('mpv-locationcontroller',
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;            
-            // console.log($scope.widgetdata);
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
@@ -59,6 +58,15 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.getAllLocation();
             }
 
+            $scope.reinitDeviceWidget = function(){
+                var othersWidget = $filter('filter')($scope.listapplicationwidget,function(widget){
+                    return widget.widgetSettings.name !== 'site' && widget.widgetSettings.name !== 'location'
+                });
+                angular.forEach(othersWidget, function(widget) {
+                    widget.widgetSettings.configuration.initializeStatus = true;
+                });
+            }
+
             
 
             var self = this;
@@ -70,6 +78,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     dataset: $scope.listobj
                 });
                 $scope.getcolumn();
+                $scope.reinitDeviceWidget();
             }
 
             $scope.getAllLocation = function(){
@@ -157,10 +166,14 @@ angular.module('app').controller('mpv-locationcontroller',
                 $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
             });
 
+
             $scope.init = function(){
                 $scope.getSites();
                 $scope.getLocationData();
+                
             }
+
+            
 
             $scope.init();
         }
