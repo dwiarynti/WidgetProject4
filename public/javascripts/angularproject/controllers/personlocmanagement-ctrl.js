@@ -52,6 +52,8 @@ angular.module('app').controller('personlocmanagementcontroller',
 
             $scope.Save = function(){
                 personlocresource.personobj = $scope.personlocobj;
+                personlocresource.personobj.datecreate = new Date();
+                personlocresource.personobj.lastseen = new Date();
                 personlocresource.$create(function(data){
                     if(data.success)
                         $scope.init();
