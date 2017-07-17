@@ -466,6 +466,173 @@ router.get('/roomdev/getdevicefix',function(req,res)
     });
 });
 
+var getdevice = function(id,callback)
+{
+    var listobj = [];
+    var resultpersonloc = "";
+    var resultroom = "";
+    var resultperson = "";
+    var result = {
+        status :"",
+        listobj : []
+    }
+    var data = {
+        euid: "",
+        room: "",
+        type: "",
+        person: "",
+        roomname: "",
+        personname: ""
+    }
+    roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
+    {
+        if(err)
+        {
+            if(err.message ==  "Key not found in database")
+            {
+            var listdata = [];
+            listdata.push(data);
+            result.status = "0";
+            result.listobj = listdata;
+            return callback(result);
+            }
+            else
+            {
+            var listdata = [];
+            listdata.push(data);
+            result.status = "0";
+            result.listobj = listdata;
+            return callback(result);
+            }
+        }
+        else
+        {
+            for(var j = 0 ; j < roomdev.length;j++)
+            {
+                roomdev[j].roomname = "";
+                roomdev[j].personname = "";
+              
+                listobj.push(roomdev[j]);  
+            }
+        }
+        personlocdb.get('personloc',function(err,personloc)
+        {
+            if(err)
+            {
+                if(err.message == "Key not found in database")
+                    {
+                        resultpersonloc = "0";
+                    }
+                else
+                    {
+                        resultpersonloc = "0";
+                    }
+            }
+            else{
+                resultpersonloc ="1";
+            }
+
+            if(resultpersonloc == "1")
+            {
+                for(var i = 0 ; i < personloc.length;i++)
+                {
+                    for(var j = 0 ; j < listobj.length;j++)
+                        {
+                            if(listobj[j].euid == personloc[i].uuid)
+                            {
+                                listobj[j].room = personloc[i].room;
+                            }
+                        }
+                }
+            }
+            roomdb.get('room',function(err,rooms)
+            {
+
+                if(err)
+                {
+                    if(err.message == "Key not found in database")
+                        {
+                            resultroom = "0";
+                        }
+                    else
+                        {
+                            resultroom = "0";
+                        }
+                }
+                else
+                {
+                    resultroom = "1";
+                }
+
+                if(resultroom == "1")
+                {
+                    for(var i = 0 ; i < rooms.length;i++)
+                    {
+                        for(var j = 0 ; j < listobj.length;j++)
+                            {
+                                if(listobj[j].room == rooms[i].uuid)
+                                {
+                                    listobj[j].roomname = rooms[i].name;
+                                }
+                            }
+                    }
+                }
+
+                persondb.get('person', function (err, person) {
+                    if (err)
+                    {
+                        if (err.message == "Key not found in database") {
+                        resultperson = "0";
+                        }
+                        else {
+                        
+                            resultperson = "0";
+                        }
+                    }
+                    else 
+                    {
+                        resultperson = "1";
+                    }
+
+                    if(resultperson == "1")
+                    {
+                        for(var i = 0 ; i < person.length;i++)
+                        {
+                            for(var j = 0 ; j < listobj.length;j++)
+                                {
+                                    if(listobj[j].type == "mobile")
+                                    {
+                                        if(person[i].uuid == listobj[j].person)
+                                        {
+                                            listobj[j].personname = person[i].name;
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                    if(listobj.length > 0)
+                    {
+                        result.status = "1";
+                        result.listobj = listobj;
+                        return callback(result);
+                    }
+                    else
+                    {
+                         listobj.push(data);
+                        result.status = "0";
+                        result.listobj = listobj;
+                        return callback(result);
+                    }
+
+                });
+
+
+            });
+
+        });
+
+    });
+}
 router.get('/roomdev/getdevicemobile',function(req,res)
 {
      var listobj = [];
@@ -502,6 +669,46 @@ router.get('/roomdev/getdevicemobile',function(req,res)
 
     });
 })
+
+router.get('/roomdev/getbylocation/:_id',function(req,res)
+{
+    var locid = req.params._id;
+    var datadevice = {
+        euid: "",
+        room: "",
+        type: "",
+        person: "",
+        roomname: "",
+        personname: ""
+    }
+    var data = getdevice(locid,function(responsedata)
+    {
+        if(responsedata.status == "0")
+        {
+            res.json({"success": true , "obj":responsedata.listobj});
+        }
+        else
+        {
+            var result = [];
+            for(var i = 0 ; i < responsedata.listobj.length; i++)
+            {
+                if(responsedata.listobj[i].room == locid)
+                {
+                    result.push(responsedata.listobj[i])
+                }
+            }
+            if(result.length > 0)
+            {
+            res.json({"success": true , "obj":result});
+            }
+            else
+            {
+            result.push(datadevice);
+            res.json({"success": true , "obj":result});
+            }
+        }
+    });
+});
 
 router.get('/roomdev/getroom',function(req,res)
 {
