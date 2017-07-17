@@ -99,6 +99,12 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                 templateUrl: '/javascripts/angularproject/partialviews/peoplemanagement.html'
             }
         },
+        {
+            url: '/personlocmanagement',
+            config: {
+                templateUrl: '/javascripts/angularproject/partialviews/personlocmanagement.html'
+            }
+        },
     ];
 
     routes.forEach(function (route) {

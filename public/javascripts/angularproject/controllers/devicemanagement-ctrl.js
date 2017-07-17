@@ -46,7 +46,7 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.getperson = function(){
                 personresource.$getAll(function(data){
-                    console.log(data)
+                    console.log(data);
                     if(data.success)
                         $scope.personlist = data.obj;                   
                 });
@@ -59,6 +59,12 @@ angular.module('app').controller('devicemanagementcontroller',
                     if(data.success){
                         $scope.init();
                         $("#modal-add").modal('hide'); 
+                        $scope.deviceobj = {
+                            euid:0,
+                            type:"",
+                            room:0,
+                            person:0
+                        };
                     }else{
                         $scope.errormessage = data.messages;
                     }
@@ -78,6 +84,12 @@ angular.module('app').controller('devicemanagementcontroller',
                     if(data.success){
                         $scope.init();
                         $("#modal-add").modal('hide'); 
+                        $scope.deviceobj = {
+                            euid:0,
+                            type:"",
+                            room:0,
+                            person:0
+                        };
                     }
                 });
             }

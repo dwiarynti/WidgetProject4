@@ -1,0 +1,97 @@
+<div ng-controller="personlocmanagementcontroller">
+    <div class="common-widget">
+    <div class="common-heading">
+        <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
+        <span class="www-employee-title">personloc Management</span>
+    </div>
+    <div class="common-body">
+        <div class="row" style="margin:1%">
+            <div class="col-md-12" >
+                <button ng-click="Add()" type="button" class="btn btn-flat" data-widget=""><i class="glyphicon glyphicon-plus"></i> Add Field</button>
+                <br><br>
+                <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Mac Address</th>
+                        <th>Room</th>
+                        <th>Site</th>
+                        <th>Zone</th>
+                        <th>geolocation</th>
+                        <th>lastseen</th>
+                        <th>datecreate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="person in personlocList">
+                        <td>{{person.uuid}}</td>
+                        <td>{{person.room}}</td>
+                        <td>{{person.site}}</td>
+                        <td>{{person.zone}}</td>
+                        <td>{{person.geolocation}}</td>
+                        <td>{{person.lastseen}}</td>
+                        <td>{{person.datecreate}}</td>
+                    </tr>
+                </tbody>
+            </table>  
+
+            </div>
+        </div>
+
+</div>
+
+</div>
+    <div class="modal modal-message fade" id="modal-add">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal">x</a>
+                    <h4 class="modal-title">Add Person Location</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p> -->
+
+                    <div class="form-group has-feedback">
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="personlocobj.uuid">
+                            <option value="">Please Select Device</option>
+                            <option value="{{device.euid}}" ng-repeat="device in listdevice" >{{device.euid}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" placeholder="Room" class="form-control col-md-6" ng-model="personlocobj.room">
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
+                    <button type="button" class="btn btn-default btn-width" ng-click="Save()">
+                        <span>Save</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-message fade" id="modal-delete">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="javascript:;" class="close" data-dismiss="modal">x</a>
+                            <h4 class="modal-title">Delete Person</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                            <p>Are you sure you want to delete this person?</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
+                            <button type="button" class="btn btn-default btn-width" ng-click="Delete()">
+                                <span>Ok</span>
+                            </button>
+                        
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
