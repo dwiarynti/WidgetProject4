@@ -204,6 +204,7 @@ angular.module('app').controller('appController',
                         { label: 'Loc Management', href: '/locationmanagement', icon: 'fa-wrench'},
                         { label: 'People Management', href: '/peoplemanagement', icon: 'fa-wrench'},
                         { label: 'Device Management', href: '/devicemanagement', icon: 'fa-wrench'},
+                        { label: 'Personloc Management', href: '/personlocmanagement', icon: 'fa-wrench'},
                     ] };
                 $scope.menuItems.push(obj);    
             }

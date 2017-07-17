@@ -12,6 +12,7 @@
                  delete: {method:'POST', params:{action:'delete'}},
                  getAll: {method:'GET', params:{action:'getall'}},
                  getdevicefix: {method:'GET', params:{action:'getdevicefix'}},
+                 getdevicemobile: {method:'GET', params:{action:'getdevicemobile'}},
                })
     }
 }());
