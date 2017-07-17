@@ -17,34 +17,16 @@ router.post('/personloc/cleanup',function(req,res)
 
 router.post('/personloc/create',function(req,res)
 {
-    var generateid = "";
-    sequencedb.get('sequencenumberpersonloc',function(err,id)
-    {
-        if(err)
-        {
-            if(err.message == "Key not found in database")
-            {
-                generateid = 1;
-            }
-            else
-            {
-                res.json(500,err);
-            }
-        }
-        else{
-            generateid = id+1;
-        }
-
+    
         var person ={
-            uuid : req.body.deviceid,
-            datecreate : req.body.datecreate,
-            lastseen  : req.body.lastseen,
-            geolocation : req.body.geolocation,
-            room: req.body.room,
-            site : req.body.site,
-            zone : req.body.zone
-        };
-       
+            uuid : req.body.personobj.uuid,
+            datecreate : req.body.personobj.datecreate,
+            lastseen  : req.body.personobj.lastseen,
+            geolocation : req.body.personobj.geolocation,
+            room: req.body.personobj.room,
+            site :"",
+            zone : ""
+        }       
         var listobj = [];
         personlocdb.get('personloc',function(err,dataperson)
         {
@@ -84,7 +66,7 @@ router.post('/personloc/create',function(req,res)
                 res.json({"success":true})
             });
         })
-    })
+  
 });
 
 router.get('/personloc/getall',function(req,res)
