@@ -8,7 +8,7 @@ var roomdevroomdb = db.sublevel('roomdevroom');
 var roomdevdevicedb = db.sublevel('roomdevdevice');
 var decownpersondb = db.sublevel('decownperson');
 var decowndevicedb = db.sublevel('decowndevice');
-
+var personlocdb = db.sublevel('personloc');
 var roomdb = db.sublevel('room');
 
 
@@ -248,7 +248,7 @@ router.get('/roomdev/getall',function(req,res)
         }
         else
         {
-            var listfix = [];
+            var listpersonloc = [];
             var listmobile = [];
             var listresult = [];
            roomdb.get('room',function(err,rooms)
@@ -271,15 +271,54 @@ router.get('/roomdev/getall',function(req,res)
                     {
                         roomdev[j].room = "";
                         roomdev[j].roomname = "";  
-                        listresult.push(roomdev[j])
+                        listmobile.push(roomdev[j])
                     }   
                 }
             }
-           
 
-            
-            res.json({"success" : true ,"obj": listresult })
-           });
+        var resultpersonloc = "";
+        personlocdb.get('personloc',function(err,personloc)
+        {
+            if(err)
+            {
+                if(err.message == "Key not found in database")
+                    {
+                        resultpersonloc = "0";
+                    }
+                else
+                    {
+                        resultpersonloc = "0";
+                    }
+            }
+            else{
+                resultpersonloc ="1";
+            }
+
+            if(resultpersonloc  == "1")
+            {
+            for(var i = 0 ; i < personloc.length;i++)
+                {
+                    for(var j = 0; j < listmobile.length;j++)
+                        {
+                            if(personloc.uuid == listmobile.uuid)
+                            {
+                                listmobile[j].room = personloc[i].room;
+                            }
+                            listresult.push(listmobile[j]);
+                        }
+                }
+            }
+            else
+            {
+                for(var i = 0 ; i < listmobile.length;i++)
+                    {
+                        listresult.push(listmobile[i]);
+                    }
+            }
+        res.json({"success" : true ,"obj": listresult })
+
+        })
+        });
         }
 
     });
@@ -369,7 +408,14 @@ router.get('/roomdev/getdevicemobile',function(req,res)
         }
         else
         {
-           res.json(roomdev);
+            for(var i = 0 ; i < roomdev.length;i++)
+            {
+                if(roomdev[i].type == "mobile")
+                    {
+                        listobj.push(roomdev[i]);
+                    }
+            }
+           res.json(listobj);
         }
 
     });
