@@ -10,6 +10,7 @@ var decownpersondb = db.sublevel('decownperson');
 var decowndevicedb = db.sublevel('decowndevice');
 var personlocdb = db.sublevel('personloc');
 var roomdb = db.sublevel('room');
+var persondb = db.sublevel('person');
 
 
 router.post('/roomdev/cleanup',function(req,res)
@@ -253,6 +254,10 @@ router.post('/roomdev/create',function(req,res)
 
 router.get('/roomdev/getall',function(req,res)
 {
+    var listobj = [];
+    var resultpersonloc = "";
+    var resultroom = "";
+    var resultperson = "";
     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
     {
         if(err)
@@ -264,35 +269,14 @@ router.get('/roomdev/getall',function(req,res)
         }
         else
         {
-            var listpersonloc = [];
-            var listmobile = [];
-            var listresult = [];
-           roomdb.get('room',function(err,rooms)
-           {
-            
-            for(var i = 0 ; i < rooms.length;i++)
+            for(var j = 0 ; j < roomdev.length;j++)
             {
-                for(var j = 0 ; j < roomdev.length;j++)
-                {
-                  
-                   if(roomdev[j].type == "fixed")
-                    {    
-                        roomdev[j].roomname = rooms[i].name;
-                        roomdev[j].person = "";
-                                       
-                        listresult.push(roomdev[j]);
-                    }
-
-                    else
-                    {
-                        roomdev[j].room = "";
-                        roomdev[j].roomname = "";  
-                        listmobile.push(roomdev[j])
-                    }   
-                }
+                roomdev[j].roomname = "";
+                roomdev[j].personname = "";
+              
+                listobj.push(roomdev[j]);  
             }
-
-        var resultpersonloc = "";
+        }
         personlocdb.get('personloc',function(err,personloc)
         {
             if(err)
@@ -310,32 +294,92 @@ router.get('/roomdev/getall',function(req,res)
                 resultpersonloc ="1";
             }
 
-            if(resultpersonloc  == "1")
+            if(resultpersonloc == "1")
             {
-            for(var i = 0 ; i < personloc.length;i++)
+                for(var i = 0 ; i < personloc.length;i++)
                 {
-                    for(var j = 0; j < listmobile.length;j++)
+                    for(var j = 0 ; j < listobj.length;j++)
                         {
-                            if(personloc.uuid == listmobile.uuid)
+                            if(listobj[j].euid == personloc[i].uuid)
                             {
-                                listmobile[j].room = personloc[i].room;
+                                listobj[j].room = personloc[i].room;
                             }
-                            listresult.push(listmobile[j]);
                         }
                 }
             }
-            else
+            roomdb.get('room',function(err,rooms)
             {
-                for(var i = 0 ; i < listmobile.length;i++)
-                    {
-                        listresult.push(listmobile[i]);
-                    }
-            }
-        res.json({"success" : true ,"obj": listresult })
 
-        })
+                if(err)
+                {
+                    if(err.message == "Key not found in database")
+                        {
+                            resultroom = "0";
+                        }
+                    else
+                        {
+                            resultroom = "0";
+                        }
+                }
+                else
+                {
+                    resultroom = "1";
+                }
+
+                if(resultroom == "1")
+                {
+                    for(var i = 0 ; i < rooms.length;i++)
+                    {
+                        for(var j = 0 ; j < listobj.length;j++)
+                            {
+                                if(listobj[j].room == rooms[i].uuid)
+                                {
+                                    listobj[j].roomname = rooms[i].name;
+                                }
+                            }
+                    }
+                }
+
+                persondb.get('person', function (err, person) {
+                    if (err)
+                    {
+                        if (err.message == "Key not found in database") {
+                        resultperson = "0";
+                        }
+                        else {
+                        
+                            resultperson = "0";
+                        }
+                    }
+                    else 
+                    {
+                        resultperson = "1";
+                    }
+
+                    if(resultperson == "1")
+                    {
+                        for(var i = 0 ; i < person.length;i++)
+                        {
+                            for(var j = 0 ; j < listobj.length;j++)
+                                {
+                                    if(listobj[j].type == "mobile")
+                                    {
+                                        if(person[i].uuid == listobj[j].person)
+                                        {
+                                            listobj[j].personname = person[i].name;
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                    res.json({"success": true, "obj": listobj});
+
+                });
+
+
+            });
+
         });
-        }
 
     });
 });
