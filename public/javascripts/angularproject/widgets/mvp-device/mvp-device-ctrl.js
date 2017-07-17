@@ -21,6 +21,12 @@ console.log($scope.widgetdata);
             $scope.getDevicebyLocation = function(locationList){
                 angular.forEach(locationList, function(location){
                     //getroomdev by location
+                    // roomdevresource.$getAll(function(data){
+                    //     if(data.success)
+                            $scope.listobj = [];
+                            $scope.showSeveralLocationRows([]);
+                            $scope.setTable();
+                    // });
                 });
             }
 
@@ -103,8 +109,16 @@ console.log($scope.widgetdata);
                 }
                 
             }
-            $scope.init();
 
+            $scope.$watchCollection(
+                function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
+            ,  function (newValue,oldValue) {
+                console.log(newValue);
+                $scope.init();
+                $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
+            });
+
+            $scope.init();
 
         }
     ]);
