@@ -1,28 +1,28 @@
 angular.module('app').controller('personlocmanagementcontroller',
-    ['$scope', '$rootScope','personlocResource', 'roomdevResource',
-        function ($scope, $rootScope, personlocResource, roomdevResource) {
+    ['$scope', '$rootScope','personlocResource', 'roomdevResource', 'roomResource',
+        function ($scope, $rootScope, personlocResource, roomdevResource, roomResource) {
             var personlocresource = new personlocResource();
             var roomdevresource = new roomdevResource();
+            var roomresource = new roomResource();
             $scope.personlocList = [];
             $scope.deleteuuid = "";
             $scope.editmode = false;
             $scope.listdevice = [];
+            $scope.roomList = [];
             $scope.personlocobj = {
                     uuid :"",
                     datecreate : "",
                     lastseen  : "",
-                    geolocation : "",
+                    geolocation : 0,
                     room: "",
-                    site : "",
-                    zone : "",
-                    editmode:true
+                    site : 0,
+                    zone : 0
                 };
             
             var date = new Date();
 
-            $scope.init = function(){
+            $scope.getAllPersonLoc = function(){
                 personlocresource.$getall(function(data){
-                    console.log(data.obj);
                     $scope.personlocList = data.obj;
                 });
             }
@@ -30,24 +30,41 @@ angular.module('app').controller('personlocmanagementcontroller',
             $scope.getdevicemobile = function(){
                 roomdevresource.$getdevicemobile(function(data){
                     $scope.listdevice = data.obj;
-                    console.log($scope.listdevice);
                 });
             }
 
+            $scope.getRoom = function(){
+                roomresource.$getall(function(data){
+                    $scope.roomList = data.obj;
+                });
+            }
+
+            $scope.init = function(){
+                $scope.getdevicemobile();
+                $scope.getRoom();
+            }
+
             $scope.init();
-            $scope.getdevicemobile();
 
             $scope.Add = function(){
                 $("#modal-add").modal('show');
             }
 
-            $scope.Save = function(obj){
-                console.log(obj);
-                personlocresource.personobj = obj;
+            $scope.Save = function(){
+                personlocresource.personobj = $scope.personlocobj;
                 personlocresource.$create(function(data){
                     if(data.success)
                         $scope.init();
-                        
+                        $("#modal-add").modal('hide'); 
+                        $scope.personlocobj = {
+                            uuid :"",
+                            datecreate : "",
+                            lastseen  : "",
+                            geolocation : "",
+                            room: "",
+                            site : "",
+                            zone : ""
+                        };
                 });
             }
 

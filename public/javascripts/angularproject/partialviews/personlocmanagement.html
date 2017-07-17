@@ -16,7 +16,7 @@
                         <th>Room</th>
                         <th>Site</th>
                         <th>Zone</th>
-                        <th>geolocation</th>
+                        <!-- <th>geolocation</th> -->
                         <th>lastseen</th>
                         <th>datecreate</th>
                     </tr>
@@ -27,7 +27,7 @@
                         <td>{{person.room}}</td>
                         <td>{{person.site}}</td>
                         <td>{{person.zone}}</td>
-                        <td>{{person.geolocation}}</td>
+                        <!-- <td>{{person.geolocation}}</td> -->
                         <td>{{person.lastseen}}</td>
                         <td>{{person.datecreate}}</td>
                     </tr>
@@ -57,17 +57,20 @@
                         </select>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="text" placeholder="Room" class="form-control col-md-6" ng-model="personlocobj.room">
+                        <!-- <input type="text" placeholder="Room" class="form-control col-md-6" ng-model="personlocobj.room"> -->
+                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="personlocobj.room">
+                            <option value="">Please Select Room</option>
+                            <option value="{{room.uuid}}" ng-repeat="room in roomList" >{{room.name}}</option>
+                        </select>
                     </div>
-                    <br>
+                    <!-- <br> -->
                 </div>
-                <br>
+                <!-- <br> -->
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn btn-default btn-width btn-margin" data-dismiss="modal">Cancel</a>
                     <button type="button" class="btn btn-default btn-width" ng-click="Save()">
                         <span>Save</span>
                     </button>
-
                 </div>
             </div>
         </div>
