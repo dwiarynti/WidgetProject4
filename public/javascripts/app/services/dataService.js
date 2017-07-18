@@ -172,6 +172,7 @@ angular.module('app').factory('dataService',
                                 siteid:0,
                                 cols : [],
                                 rows : [],
+                                devicetype:"",
                                 selectRowsStatus : false,
                                 initializeStatus : false
                             },

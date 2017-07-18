@@ -7,7 +7,7 @@
     <h3 class="modal-title">Device Widget</h3>
 </div>
 <div class="modal-body">
-    <div class="form-group" ng-show="sitelist.length > 0">
+    <!-- <div class="form-group" ng-show="sitelist.length > 0">
         
         <div ng-if="sitelist.length == 1">
             <label>Site :</label>
@@ -19,6 +19,15 @@
             <label>Site :</label>
             <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.siteid">
                 <option ng-repeat="obj in sitelist" ng-value="obj.uuid" ng-selected="isSelectedItem(obj.uuid,configuration.siteid)">{{obj.name}}</option>
+            </select>
+        </div>
+    </div> -->
+
+    <div class="form-group">
+        <div>
+            <label>Device Type :</label>
+            <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.devicetype">
+                <option ng-repeat="obj in devicetype" ng-value="obj" ng-selected="isSelectedItem(obj,configuration.devicetype)">{{obj}}</option>
             </select>
         </div>
     </div>
@@ -35,7 +44,24 @@
                 </tr>
             </thead>
              <tbody>
-                <tr ng-repeat="obj in configuration.rows" ng-if="obj.uuid != ''">
+                <!-- device type = "" -->
+                <tr ng-repeat="obj in configuration.rows" ng-if="obj.euid != '' && configuration.devicetype == ''">
+                    <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display" ng-change="selectSingleRow()"/></td>
+                    <td>{{obj.euid}}</td>
+                    <td>{{obj.type}}</td>
+                    <td>{{obj.roomname}}</td>
+                    <td>{{obj.person}}</td>
+                </tr>
+                <!-- device type = fixed -->
+                <tr ng-repeat="obj in configuration.rows" ng-if="obj.euid != '' && configuration.devicetype == 'fixed' && obj.type == 'fixed'">
+                    <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display" ng-change="selectSingleRow()"/></td>
+                    <td>{{obj.euid}}</td>
+                    <td>{{obj.type}}</td>
+                    <td>{{obj.roomname}}</td>
+                    <td>{{obj.person}}</td>
+                </tr>
+                <!-- device type = mobile -->
+                <tr ng-repeat="obj in configuration.rows" ng-if="obj.euid != '' && configuration.devicetype == 'mobile' && obj.type == 'mobile'">
                     <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display" ng-change="selectSingleRow()"/></td>
                     <td>{{obj.euid}}</td>
                     <td>{{obj.type}}</td>

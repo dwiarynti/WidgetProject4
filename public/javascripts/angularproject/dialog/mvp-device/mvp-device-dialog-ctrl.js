@@ -7,8 +7,11 @@ angular.module('app').controller('mvp-devicedialogcontroller',
             "siteid":$scope.item.widgetSettings.configuration.siteid != undefined ? $scope.item.widgetSettings.configuration.siteid : 0,
             "cols":$scope.item.widgetSettings.configuration.cols != undefined ? $scope.item.widgetSettings.configuration.cols : [],
             "rows": $scope.item.widgetSettings.configuration.rows,
-            "selectRowsStatus": $scope.item.widgetSettings.configuration.selectRowsStatus
+            "selectRowsStatus": $scope.item.widgetSettings.configuration.selectRowsStatus,
+            "devicetype": $scope.item.widgetSettings.configuration.devicetype,
         };
+
+        $scope.devicetype = ["fixed", "mobile"];
 
         $scope.saveSettings = function () {
             // $scope.configuration.siteid = parseInt($scope.configuration.siteid);
@@ -27,6 +30,10 @@ angular.module('app').controller('mvp-devicedialogcontroller',
         
         $scope.selectSingleRow = function(){
             $scope.configuration.selectRowsStatus = true;
+        }
+
+        $scope.isSelectedItem = function(itemA, itemB){
+            return itemA == itemB ? true:false;
         }
     }]);
 

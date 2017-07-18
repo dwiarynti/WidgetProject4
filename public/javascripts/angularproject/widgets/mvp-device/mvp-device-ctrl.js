@@ -8,7 +8,7 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
 
             $scope.widgetdata = $scope.$parent.item; 
-// console.log($scope.widgetdata);
+console.log($scope.widgetdata);
             $scope.getAllDevice = function(){
                 roomdevresource.$getAll(function(data){
                     if(data.success)
