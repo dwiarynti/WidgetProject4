@@ -5,7 +5,7 @@ var db = require('./connection');
 var sequencedb = db.sublevel('sequencenumberpersonloc');
 var personlocdb = db.sublevel('personloc');
 var persondb = db.sublevel('person');
-
+var roomdb = db.sublevel('room');
 router.post('/personloc/cleanup',function(req,res)
 {
     var data = [];
@@ -68,15 +68,17 @@ router.post('/personloc/create',function(req,res)
                 {
                     listobj.push(person);
                 }
+
+                personlocdb.put('personloc',listobj,function(err)
+                {
+                    if(err)
+                    res.json(500,err);
+                    else
+                    res.json({"success":true})
+                });
             }
 
-            personlocdb.put('personloc',listobj,function(err)
-            {
-                if(err)
-                res.json(500,err);
-                else
-                res.json({"success":true})
-            });
+            
     }); 
 
   
@@ -105,13 +107,46 @@ router.get('/personloc/getall',function(req,res)
                 {
                     for(var j = 0 ; j < datapersonloc.length;j++)
                     {
+                        datapersonloc[j].roomname = "";
                         if(dataperson[i].uuid == datapersonloc[j].uuidperson)
                         {
                             datapersonloc[j].person = dataperson[i];
                         }
                     }
                 }
-                res.json({"success": true , "obj": datapersonloc});
+
+            roomdb.get('room',function(err,rooms)
+            {
+                if(err)
+                {
+                    if(err.message == "Key not found in database")
+                    {
+                        res.json({"success": true , "obj": datapersonloc});
+                    }
+                    else
+                    {
+                        res.json({"success": true , "obj": datapersonloc});
+                    }
+                }
+                else
+                {
+                    for(var i = 0 ; i < rooms.length;i++)
+                    {
+                        for(var j = 0 ; j < datapersonloc.length;j++)
+                        {
+                            if(datapersonloc[j].room == rooms[i].uuid)
+                            {
+                                datapersonloc[j].roomname = rooms[i].name;
+                            }
+                        }
+                    }
+                    res.json({"success": true , "obj": datapersonloc});
+
+                }
+            })
+
+
+                
             });
         }
     })
