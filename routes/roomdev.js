@@ -290,8 +290,8 @@ router.get('/roomdev/getall',function(req,res)
               
                 listobj.push(roomdev[j]);  
             }
-        }
-        personlocdb.get('personloc',function(err,personloc)
+
+             personlocdb.get('personloc',function(err,personloc)
         {
             if(err)
             {
@@ -402,6 +402,8 @@ router.get('/roomdev/getall',function(req,res)
             });
 
         });
+        }
+       
 
     });
 });
