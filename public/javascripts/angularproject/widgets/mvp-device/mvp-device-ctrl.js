@@ -19,15 +19,34 @@ console.log($scope.widgetdata);
             }
 
             $scope.getDevicebyLocation = function(locationList){
-                angular.forEach(locationList, function(location){
+                $scope.listobj = [];
+                angular.forEach(locationList, function(locdata){
                     //getroomdev by location
-                    // roomdevresource.$getAll(function(data){
-                    //     if(data.success)
-                            $scope.listobj = [];
-                            $scope.showSeveralLocationRows([]);
-                            $scope.setTable();
-                    // });
+                    // console.log(location);
+                    roomdevresource.$getbylocation({_id:locdata.uuid},function(data){
+                        if(data.success)
+                            angular.forEach(data.obj, function(obj){
+                                var isDataExisted = $filter('filter')($scope.listobj, function(existedobj){
+                                    return obj.euid === existedobj.euid
+                                });
+                                if(isDataExisted.length == 0){
+                                    $scope.listobj.push(obj);
+                                }
+                            });
+                    });
                 });
+            }
+
+            $scope.cleanupemptyvalue = function(){
+                if($scope.listobj.length > 1){
+                    angular.forEach($scope.listobj, function(obj){
+                        if(obj.euid == ""){
+                            $scope.listobj.splice(obj, 1);
+                        }
+                    });
+                }
+                $scope.showSeveralLocationRows($scope.listobj);
+                $scope.setTable();
             }
 
             var self = this;
@@ -38,7 +57,6 @@ console.log($scope.widgetdata);
                     counts: [],
                     dataset: $scope.listobj
                 });
-                // console.log($scope.listobj);
                 $scope.getcolumn();
             }
 
@@ -47,19 +65,22 @@ console.log($scope.widgetdata);
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
                 }
                 else{
-                    var getListFieldName = Object.keys($scope.listobj[0]);
-                    var count  = 0;
-                    angular.forEach(getListFieldName, function(fieldName){
-                        if(fieldName != 'display'){
-                            if(count < 5)
-                                $scope.cols.push({field:fieldName, title: fieldName, show:true});
-                            else
-                                $scope.cols.push({field:fieldName, title: fieldName, show:false});
-                            count = count +1;
-                        }
+                    if($scope.listobj.length > 0){
+                        var getListFieldName = Object.keys($scope.listobj[0]);
+                        var count  = 0;
+                        angular.forEach(getListFieldName, function(fieldName){
+                            if(fieldName != 'display'){
+                                if(count < 5)
+                                    $scope.cols.push({field:fieldName, title: fieldName, show:true});
+                                else
+                                    $scope.cols.push({field:fieldName, title: fieldName, show:false});
+                                count = count +1;
+                            }
 
-                    });
-                    $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
+                        });
+                        $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
+                    }
+
                 }
             }
 
@@ -104,6 +125,13 @@ console.log($scope.widgetdata);
                 var getselectedLocation = $scope.getLocationWidget();
                 if(getselectedLocation.length > 0){
                     $scope.getDevicebyLocation(getselectedLocation);
+                    $scope.$watchCollection(
+                        function () {return $scope.listobj;}
+                    ,  function (newValue,oldValue) {
+                        if($scope.listobj.length){
+                            $scope.cleanupemptyvalue();
+                        }
+                    });
                 }else{
                     $scope.getAllDevice();                    
                 }
@@ -113,7 +141,7 @@ console.log($scope.widgetdata);
             $scope.$watchCollection(
                 function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
-                console.log(newValue);
+                // console.log(newValue);
                 $scope.init();
                 $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
             });

@@ -46,7 +46,6 @@ angular.module('app').controller('mpv-locationcontroller',
                         siteid = siteid1;
                     }
                 }
-
                 return siteid;
             }
 
@@ -66,9 +65,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     widget.widgetSettings.configuration.initializeStatus = true;
                 });
             }
-
             
-
             var self = this;
             $scope.setTable = function(){
                 self.tableParams = new NgTableParams({

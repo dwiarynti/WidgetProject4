@@ -3,7 +3,7 @@
     <div class="common-heading">
         <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
         <span class="www-employee-title">Application Composer V2</span>
-        <button class="btn btn-default" ng-click="ViewPage()" style="float:right">View Page</button>
+        <button class="btn btn-default" ng-disabled="applicationObj.euid == 0" ng-click="ViewPage()" style="float:right">View Page</button>
     </div>
     <div class="common-body">
         <div class="row" style="margin:2%;">

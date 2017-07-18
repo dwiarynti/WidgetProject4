@@ -20,11 +20,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="deviceobj in deviceslist">
+                    <tr ng-repeat="deviceobj in deviceslist" ng-if="deviceobj.euid != ''">
                         <td>{{deviceobj.euid}}</td>
                         <td>{{deviceobj.type}}</td>
                         <td>{{deviceobj.roomname}}</td>
-                        <td></td>
+                        <td>{{deviceobj.personname}}</td>
                         <td>
                             <!--<a ng-click="btnEditClick(deviceobj)" class="link" style="cursor: pointer">Edit</a>|-->
                             <a ng-click="btnDeleteClick(deviceobj)" class="link" style="cursor: pointer">Delete</a>
