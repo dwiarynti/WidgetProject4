@@ -23,8 +23,11 @@
                     <tr ng-repeat="deviceobj in deviceslist" ng-if="deviceobj.euid != ''">
                         <td>{{deviceobj.euid}}</td>
                         <td>{{deviceobj.type}}</td>
-                        <td>{{deviceobj.roomname}}</td>
-                        <td>{{deviceobj.personname}}</td>
+                        <td ng-if="deviceobj.type == 'fixed'">{{deviceobj.roomname}}</td>
+                        <td ng-if="deviceobj.type == 'mobile'">-</td>
+
+                        <td ng-if="deviceobj.type == 'fixed'">-</td>
+                        <td ng-if="deviceobj.type == 'mobile'">{{deviceobj.personname}}</td>
                         <td>
                             <!--<a ng-click="btnEditClick(deviceobj)" class="link" style="cursor: pointer">Edit</a>|-->
                             <a ng-click="btnDeleteClick(deviceobj)" class="link" style="cursor: pointer">Delete</a>

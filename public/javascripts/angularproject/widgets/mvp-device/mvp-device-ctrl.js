@@ -8,7 +8,6 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
 
             $scope.widgetdata = $scope.$parent.item; 
-console.log($scope.widgetdata);
             $scope.getAllDevice = function(){
                 roomdevresource.$getAll(function(data){
                     if(data.success)
@@ -19,7 +18,9 @@ console.log($scope.widgetdata);
             }
 
             $scope.getDevicebyLocation = function(locationList){
-                $scope.listobj = [];
+                // $scope.listobj = [];
+                $scope.listobj = $scope.widgetdata.widgetSettings.configuration.initializeStatus ? []:$scope.listobj;
+                $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                 angular.forEach(locationList, function(locdata){
                     //getroomdev by location
                     // console.log(location);
@@ -35,18 +36,7 @@ console.log($scope.widgetdata);
                             });
                     });
                 });
-            }
-
-            $scope.cleanupemptyvalue = function(){
-                if($scope.listobj.length > 1){
-                    angular.forEach($scope.listobj, function(obj){
-                        if(obj.euid == ""){
-                            $scope.listobj.splice(obj, 1);
-                        }
-                    });
-                }
-                $scope.showSeveralLocationRows($scope.listobj);
-                $scope.setTable();
+                console.log($scope.listobj);
             }
 
             var self = this;
@@ -128,9 +118,8 @@ console.log($scope.widgetdata);
                     $scope.$watchCollection(
                         function () {return $scope.listobj;}
                     ,  function (newValue,oldValue) {
-                        if($scope.listobj.length){
-                            $scope.cleanupemptyvalue();
-                        }
+                        $scope.showSeveralLocationRows($scope.listobj);
+                        $scope.setTable();
                     });
                 }else{
                     $scope.getAllDevice();                    
@@ -142,8 +131,10 @@ console.log($scope.widgetdata);
                 function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
                 // console.log(newValue);
-                $scope.init();
-                $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
+                if($scope.widgetdata.widgetSettings.configuration.initializeStatus){
+                    $scope.init();
+                }
+                
             });
 
             $scope.init();
