@@ -129,7 +129,7 @@ angular.module('app').controller('mpv-locationcontroller',
                         if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
                             
                             // data.display = false;
-                            data.display = count <= 2 ? true:false;
+                            data.display = count <= 4 ? true:false;
                         }else{
                             var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
                                 return data.uuid === row.uuid

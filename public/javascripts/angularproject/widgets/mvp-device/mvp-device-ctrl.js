@@ -79,13 +79,13 @@ angular.module('app').controller('mpv-devicecontroller',
                     angular.forEach(newLocationData, function(data){
                         var selectRowsStatus = $scope.widgetdata.widgetSettings.configuration.selectRowsStatus;
                         if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
-                            data.display = count <= 2 ? true:false;
+                            data.display = count <= 4 ? true:false;
                         }else{
                             var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
                                 return data.euid === row.euid
                             })[0];
-                            if(obj != null){
-                                data.display = !obj.display && count <= 2 && !selectRowsStatus ? true : obj.display;
+                            if(obj != null && obj.euid != ''){
+                                data.display = (!obj.display || obj.display == undefined) && count <= 4 && !selectRowsStatus ? true : obj.display;
                             }else{
                                 data.display = false;
                             }

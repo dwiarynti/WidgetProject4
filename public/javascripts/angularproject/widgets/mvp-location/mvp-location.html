@@ -1,6 +1,7 @@
 
 <div style="overflow:auto;width: 100%;height: 100%;">
 <!--<div>-->
+    <center><label>LOCATION</label></center>
     <table ng-table-dynamic="demo.tableParams with cols" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="row in $data" ng-if="row['display'] == true && row['uuid'] != ''">
           <td  ng-repeat="col in $columns">{{row[col.field]}}</td>
