@@ -362,7 +362,7 @@ angular.module('psDashboard').directive('psWidgetBodyV2',
                 scope.reinitializeWidget = function(){
                     // scope.applicationObj
                     var othersWidget = $filter('filter')(scope.applicationObj.widget,function(widget){
-                        return widget.widgetSettings.name !== 'site'
+                        return widget.widgetSettings.name !== 'site' || widget.widgetSettings.name != 'device'
                     });
                     angular.forEach(othersWidget, function(widget) {
                         widget.widgetSettings.configuration.initializeStatus = true;
