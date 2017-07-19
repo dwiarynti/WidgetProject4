@@ -6,12 +6,15 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.cols = [];
             $scope.locationwidgets = [];
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
+            $scope.backuplist = [];
 
             $scope.widgetdata = $scope.$parent.item; 
             $scope.getAllDevice = function(){
+                $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                 roomdevresource.$getAll(function(data){
                     if(data.success)
                         $scope.listobj = data.obj;
+                        $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);                    
                         $scope.showSeveralLocationRows(data.obj);
                         $scope.setTable();
                 });
@@ -111,6 +114,15 @@ angular.module('app').controller('mpv-devicecontroller',
                 return selectedLocationRow;
             }
 
+            $scope.filterdevicebydevicetype = function(){
+                var datatype = $scope.widgetdata.widgetSettings.configuration.devicetype;
+                var newobj = [];
+                $scope.listobj = $filter('filter')($scope.listobj, function(obj){
+                                    return obj.type === datatype
+                                });
+                console.log($scope.listobj);
+            }
+
             $scope.init = function(){
                 var getselectedLocation = $scope.getLocationWidget();
                 if(getselectedLocation.length > 0){
@@ -118,19 +130,26 @@ angular.module('app').controller('mpv-devicecontroller',
                     $scope.$watchCollection(
                         function () {return $scope.listobj;}
                     ,  function (newValue,oldValue) {
+                        if($scope.listobj.length > 0){
+                            $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);
+                        }
+                        if($scope.widgetdata.widgetSettings.configuration.devicetype != ''){
+                            $scope.filterdevicebydevicetype();
+                        }
                         $scope.showSeveralLocationRows($scope.listobj);
                         $scope.setTable();
                     });
                 }else{
-                    $scope.getAllDevice();                    
+                    $scope.getAllDevice();   
+                                     
                 }
-                
             }
 
             $scope.$watchCollection(
                 function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
                 // console.log(newValue);
+                console.log($scope.widgetdata.widgetSettings.configuration.devicetype);
                 if($scope.widgetdata.widgetSettings.configuration.initializeStatus){
                     $scope.init();
                 }

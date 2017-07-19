@@ -26,7 +26,7 @@
     <div class="form-group">
         <div>
             <label>Device Type :</label>
-            <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.devicetype">
+            <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="configuration.devicetype" ng-change="test(configuration.devicetype)">
                 <option ng-repeat="obj in devicetype" ng-value="obj" ng-selected="isSelectedItem(obj,configuration.devicetype)">{{obj}}</option>
             </select>
         </div>
