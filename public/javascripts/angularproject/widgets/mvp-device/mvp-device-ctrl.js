@@ -14,7 +14,8 @@ angular.module('app').controller('mpv-devicecontroller',
                 roomdevresource.$getAll(function(data){
                     if(data.success)
                         $scope.listobj = data.obj;
-                        $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);                    
+                        $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj); 
+                         $scope.putDashforEmptyValue();                   
                         $scope.showSeveralLocationRows(data.obj);
                         $scope.setTable();
                 });
@@ -77,6 +78,22 @@ angular.module('app').controller('mpv-devicecontroller',
                 }
             }
 
+            $scope.putDashforEmptyValue = function(){
+                // if($scope.listobj.length > 0 ){
+                //     if($scope.listobj[0].euid != ''){
+                //         var fieldname = Object.keys($scope.listobj[0]);
+                //         angular.forEach(fieldname, function(dta){
+                //             angular.forEach($scope.listobj, function(obj){
+                //                 if(obj[dta] != 0 || obj[dta] != ''){
+                //                     console.log(obj[dta] != 0 || obj[dta] != '');
+                //                 }
+                //                 obj[dta] = obj[dta] != 0 || obj[dta] != '' ?obj[dta]:"-";
+                //             });
+                //         });
+                //     }
+                // }
+            }
+
             $scope.showSeveralLocationRows = function(newLocationData){
                 var count  = 0;
                     angular.forEach(newLocationData, function(data){
@@ -136,6 +153,7 @@ angular.module('app').controller('mpv-devicecontroller',
                         if($scope.widgetdata.widgetSettings.configuration.devicetype != ''){
                             $scope.filterdevicebydevicetype();
                         }
+                         $scope.putDashforEmptyValue();
                         $scope.showSeveralLocationRows($scope.listobj);
                         $scope.setTable();
                     });
