@@ -80,17 +80,14 @@ angular.module('app').controller('mpv-locationcontroller',
 
             $scope.putDashforEmptyValue = function(){
                 if($scope.listobj.length > 0){
-                    if( $scope.listobj[0].uuid != ''){
-                        var fieldname = Object.keys($scope.listobj[0]);
-                        angular.forEach(fieldname, function(dta){
-                            angular.forEach($scope.listobj, function(obj){
-                                if(obj[dta] != 0 || obj[dta] != ''){
-                                    console.log(obj[dta] != 0 || obj[dta] != '');
-                                }
+                    var fieldname = Object.keys($scope.listobj[0]);
+                    angular.forEach(fieldname, function(dta){
+                        angular.forEach($scope.listobj, function(obj){
+                            if(obj.uuid != ''){
                                 obj[dta] = obj[dta] != 0 || obj[dta] != '' ?obj[dta]:"-";
-                            });
+                            }
                         });
-                    }
+                    });
 
                 }
 

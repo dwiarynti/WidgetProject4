@@ -15,7 +15,7 @@ angular.module('app').controller('mpv-devicecontroller',
                     if(data.success)
                         $scope.listobj = data.obj;
                         $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj); 
-                         $scope.putDashforEmptyValue();                   
+                         $scope.putDashforEmptyValue($scope.listobj);                   
                         $scope.showSeveralLocationRows(data.obj);
                         $scope.setTable();
                 });
@@ -78,20 +78,17 @@ angular.module('app').controller('mpv-devicecontroller',
                 }
             }
 
-            $scope.putDashforEmptyValue = function(){
-                // if($scope.listobj.length > 0 ){
-                //     if($scope.listobj[0].euid != ''){
-                //         var fieldname = Object.keys($scope.listobj[0]);
-                //         angular.forEach(fieldname, function(dta){
-                //             angular.forEach($scope.listobj, function(obj){
-                //                 if(obj[dta] != 0 || obj[dta] != ''){
-                //                     console.log(obj[dta] != 0 || obj[dta] != '');
-                //                 }
-                //                 obj[dta] = obj[dta] != 0 || obj[dta] != '' ?obj[dta]:"-";
-                //             });
-                //         });
-                //     }
-                // }
+            $scope.putDashforEmptyValue = function(data){
+                if(data.length > 0 ){
+                    var fieldname = Object.keys(data[0]);
+                    angular.forEach(fieldname, function(dta){
+                        angular.forEach(data, function(obj){
+                            if(obj.euid != ''){
+                                obj[dta] = obj[dta] != 0 || obj[dta] != '' ?obj[dta]:"-";
+                            }
+                        });
+                    });
+                }
             }
 
             $scope.showSeveralLocationRows = function(newLocationData){
@@ -153,7 +150,7 @@ angular.module('app').controller('mpv-devicecontroller',
                         if($scope.widgetdata.widgetSettings.configuration.devicetype != ''){
                             $scope.filterdevicebydevicetype();
                         }
-                         $scope.putDashforEmptyValue();
+                         $scope.putDashforEmptyValue($scope.listobj);
                         $scope.showSeveralLocationRows($scope.listobj);
                         $scope.setTable();
                     });
