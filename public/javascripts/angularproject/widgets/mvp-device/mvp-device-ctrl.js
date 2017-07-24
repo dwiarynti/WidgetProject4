@@ -102,9 +102,10 @@ angular.module('app').controller('mpv-devicecontroller',
                                 return data.euid === row.euid
                             })[0];
                             if(obj != null && obj.euid != ''){
+                                // obj.display = 
                                 data.display = (!obj.display || obj.display == undefined) && count <= 4 && !selectRowsStatus ? true : obj.display;
                             }else{
-                                data.display = false;
+                                data.display = count <= 4 ? true : false;
                             }
                         }
                         count = data.display == true ? count +1:count;
