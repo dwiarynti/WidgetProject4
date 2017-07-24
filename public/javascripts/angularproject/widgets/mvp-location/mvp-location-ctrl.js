@@ -152,7 +152,7 @@ angular.module('app').controller('mpv-locationcontroller',
                                 return data.uuid === row.uuid
                             })[0];
                             if(obj != null){
-                                data.display = !obj.display && count <= 2 && !selectRowsStatus ? true : obj.display;
+                                data.display = !obj.display && count <= 4 && !selectRowsStatus ? true : obj.display;
                             }else{
                                 data.display = false;
                             }
