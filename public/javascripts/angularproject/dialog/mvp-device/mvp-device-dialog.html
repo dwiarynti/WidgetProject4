@@ -45,7 +45,7 @@
             </thead>
              <tbody>
                 <!-- device type = "" -->
-                <tr ng-repeat="obj in configuration.rows" ng-if="obj.euid != '' && configuration.devicetype == ''">
+                <tr ng-repeat="obj in configuration.rows" ng-if="obj.euid != '' && configuration.devicetype == '' || configuration.devicetype == 'all'">
                     <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display" ng-change="selectSingleRow()"/></td>
                     <td>{{obj.euid}}</td>
                     <td>{{obj.type}}</td>

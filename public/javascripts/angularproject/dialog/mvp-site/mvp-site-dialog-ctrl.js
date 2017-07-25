@@ -49,7 +49,7 @@ angular.module('app').controller('mvp-sitedialogcontroller',
                 //     return widget.widgetSettings.name === 'site'
                 // });
                 var othersWidget = $filter('filter')($scope.listapplicationwidget,function(widget){
-                    return widget.widgetSettings.name !== 'site'
+                    return widget.widgetSettings.name == 'location'
                 });
                 angular.forEach(othersWidget, function(widget) {
                     widget.widgetSettings.configuration.initializeStatus = true;

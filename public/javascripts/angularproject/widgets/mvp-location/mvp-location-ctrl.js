@@ -153,7 +153,11 @@ angular.module('app').controller('mpv-locationcontroller',
                             })[0];
                             if(obj != null){
                                 data.display = !obj.display && count <= 4 && !selectRowsStatus ? true : obj.display;
-                            }else{
+                            }
+                            else if(obj == null || obj == undefined){
+                                data.display = count <= 4 ? true : false;
+                            }
+                            else{
                                 data.display = false;
                             }
                             // data.display = obj != null ? obj.display:false;

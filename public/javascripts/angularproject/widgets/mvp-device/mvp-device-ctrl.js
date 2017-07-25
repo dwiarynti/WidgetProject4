@@ -40,7 +40,7 @@ angular.module('app').controller('mpv-devicecontroller',
                             });
                     });
                 });
-                console.log($scope.listobj);
+                // console.log($scope.listobj);
             }
 
             var self = this;
@@ -105,7 +105,8 @@ angular.module('app').controller('mpv-devicecontroller',
                                 // obj.display = 
                                 data.display = (!obj.display || obj.display == undefined) && count <= 4 && !selectRowsStatus ? true : obj.display;
                             }else{
-                                data.display = count <= 4 ? true : false;
+                                data.display = false;
+                                // data.display = count <= 4 ? true : false;
                             }
                         }
                         count = data.display == true ? count +1:count;
@@ -135,7 +136,7 @@ angular.module('app').controller('mpv-devicecontroller',
                 $scope.listobj = $filter('filter')($scope.listobj, function(obj){
                                     return obj.type === datatype
                                 });
-                console.log($scope.listobj);
+                // console.log($scope.listobj);
             }
 
             $scope.init = function(){
@@ -165,7 +166,7 @@ angular.module('app').controller('mpv-devicecontroller',
                 function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
                 // console.log(newValue);
-                console.log($scope.widgetdata.widgetSettings.configuration.devicetype);
+                // console.log($scope.widgetdata.widgetSettings.configuration.devicetype);
                 if($scope.widgetdata.widgetSettings.configuration.initializeStatus){
                     $scope.init();
                 }

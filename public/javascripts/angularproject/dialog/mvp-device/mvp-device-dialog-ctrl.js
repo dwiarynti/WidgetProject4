@@ -12,9 +12,9 @@ angular.module('app').controller('mvp-devicedialogcontroller',
             "devicetype": $scope.item.widgetSettings.configuration.devicetype,
         };
 
-        $scope.devicetype = ["fixed", "mobile"];
+        $scope.devicetype = ["all","fixed", "mobile"];
 
-        console.log($scope.configuration);
+        // console.log($scope.configuration);
 
         $scope.saveSettings = function () {
             // $scope.configuration.siteid = parseInt($scope.configuration.siteid);
@@ -45,9 +45,15 @@ angular.module('app').controller('mvp-devicedialogcontroller',
 
         $scope.test = function(datatype){
             console.log($scope.configuration.backuplist);
-            $scope.configuration.rows = $filter('filter')($scope.configuration.backuplist, function(obj){
-                                    return obj.type === datatype
-            });
+            if(datatype == 'fixed' || datatype == 'mobile'){
+                $scope.configuration.rows = $filter('filter')($scope.configuration.backuplist, function(obj){
+                    return obj.type === datatype
+                });
+            }else{
+                $scope.configuration.rows = $scope.configuration.backuplist;
+                // console.log($scope.configuration.rows);
+            }
+
         }
     }]);
 
