@@ -349,7 +349,7 @@ angular.module('psDashboard').directive('psWidgetBodyV2',
                 scope.widgetviewmode = scope.$parent.$parent.$root.widgetviewmode;
                 element.append(newElement);
                 $compile(newElement)(scope);
-                // console.log(scope.$parent.$parent.$root.widgetviewmode);
+                console.log(scope.item.widgetSettings.configuration.name);
                 scope.close = function () {
                     // $scope.widgetdata.widgetSettings.configuration.initializeStatus
                     // $rootScope.initwidget.location = scope.item.widgetSettings.name == "site" ? true:false;
@@ -361,8 +361,15 @@ angular.module('psDashboard').directive('psWidgetBodyV2',
 
                 scope.reinitializeWidget = function(){
                     // scope.applicationObj
+                    initwidget = "";
+                    if(scope.item.widgetSettings.name == "site"){
+                        initwidget = "location";
+                    }else if(scope.item.widgetSettings.name == "location"){
+                        initwidget = "device";
+                    }
+                    
                     var othersWidget = $filter('filter')(scope.applicationObj.widget,function(widget){
-                        return widget.widgetSettings.name !== 'site' || widget.widgetSettings.name != 'device'
+                        return widget.widgetSettings.name === initwidget
                     });
                     angular.forEach(othersWidget, function(widget) {
                         widget.widgetSettings.configuration.initializeStatus = true;

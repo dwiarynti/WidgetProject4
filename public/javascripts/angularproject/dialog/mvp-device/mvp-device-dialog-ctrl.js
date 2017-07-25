@@ -12,7 +12,7 @@ angular.module('app').controller('mvp-devicedialogcontroller',
             "devicetype": $scope.item.widgetSettings.configuration.devicetype,
         };
 
-        $scope.devicetype = ["all","fixed", "mobile"];
+        $scope.devicetype = ['all',"fixed", "mobile"];
 
         // console.log($scope.configuration);
 

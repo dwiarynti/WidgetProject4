@@ -7,6 +7,7 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.locationwidgets = [];
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
             $scope.backuplist = [];
+            $scope.numberofgetdevicebylocation = 0;
 
             $scope.widgetdata = $scope.$parent.item; 
             $scope.getAllDevice = function(){
@@ -30,6 +31,7 @@ angular.module('app').controller('mpv-devicecontroller',
                     // console.log(location);
                     roomdevresource.$getbylocation({_id:locdata.uuid},function(data){
                         if(data.success)
+                        {       
                             angular.forEach(data.obj, function(obj){
                                 var isDataExisted = $filter('filter')($scope.listobj, function(existedobj){
                                     return obj.euid === existedobj.euid
@@ -38,9 +40,11 @@ angular.module('app').controller('mpv-devicecontroller',
                                     $scope.listobj.push(obj);
                                 }
                             });
+                            $scope.numberofgetdevicebylocation = $scope.numberofgetdevicebylocation + 1;
+                        }
                     });
                 });
-                // console.log($scope.listobj);
+                console.log(locationList)
             }
 
             var self = this;
@@ -133,28 +137,34 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.filterdevicebydevicetype = function(){
                 var datatype = $scope.widgetdata.widgetSettings.configuration.devicetype;
                 var newobj = [];
-                $scope.listobj = $filter('filter')($scope.listobj, function(obj){
-                                    return obj.type === datatype
-                                });
-                // console.log($scope.listobj);
+                // $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);
+                if(datatype != 'all'){
+                    $scope.listobj = $filter('filter')($scope.listobj, function(obj){
+                        return obj.type === datatype
+                    });
+                }
             }
 
             $scope.init = function(){
                 var getselectedLocation = $scope.getLocationWidget();
                 if(getselectedLocation.length > 0){
-                    $scope.getDevicebyLocation(getselectedLocation);
+                    var a = angular.copy(getselectedLocation);
+                    $scope.getDevicebyLocation(a);
                     $scope.$watchCollection(
-                        function () {return $scope.listobj;}
+                        function () {return $scope.numberofgetdevicebylocation;}
                     ,  function (newValue,oldValue) {
-                        if($scope.listobj.length > 0){
+                        console.log(getselectedLocation.length);
+                        if($scope.numberofgetdevicebylocation == getselectedLocation.length){
+                            $scope.numberofgetdevicebylocation = 0;
                             $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);
+                            if($scope.widgetdata.widgetSettings.configuration.devicetype != ""){
+                                $scope.filterdevicebydevicetype();
+                            }
+                            $scope.putDashforEmptyValue($scope.listobj);
+                            $scope.showSeveralLocationRows($scope.listobj);
+                            $scope.setTable();
                         }
-                        if($scope.widgetdata.widgetSettings.configuration.devicetype != ''){
-                            $scope.filterdevicebydevicetype();
-                        }
-                         $scope.putDashforEmptyValue($scope.listobj);
-                        $scope.showSeveralLocationRows($scope.listobj);
-                        $scope.setTable();
+
                     });
                 }else{
                     $scope.getAllDevice();   
