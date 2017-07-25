@@ -109,8 +109,8 @@ angular.module('app').controller('mpv-devicecontroller',
                                 // obj.display = 
                                 data.display = (!obj.display || obj.display == undefined) && count <= 4 && !selectRowsStatus ? true : obj.display;
                             }else{
-                                data.display = false;
-                                // data.display = count <= 4 ? true : false;
+                                // data.display = false;
+                                data.display = count <= 4 ? true : false;
                             }
                         }
                         count = data.display == true ? count +1:count;
@@ -148,13 +148,13 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.init = function(){
                 var getselectedLocation = $scope.getLocationWidget();
                 if(getselectedLocation.length > 0){
-                    var a = angular.copy(getselectedLocation);
-                    $scope.getDevicebyLocation(a);
+                    $scope.getDevicebyLocation(getselectedLocation);
                     $scope.$watchCollection(
                         function () {return $scope.numberofgetdevicebylocation;}
                     ,  function (newValue,oldValue) {
                         console.log(getselectedLocation.length);
-                        if($scope.numberofgetdevicebylocation == getselectedLocation.length){
+                        var newdata = $scope.getLocationWidget();
+                        if($scope.numberofgetdevicebylocation == newdata.length){
                             $scope.numberofgetdevicebylocation = 0;
                             $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);
                             if($scope.widgetdata.widgetSettings.configuration.devicetype != ""){
