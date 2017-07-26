@@ -18,7 +18,7 @@ angular.module('app').controller('mpv-devicecontroller',
                         $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj); 
                          $scope.putDashforEmptyValue($scope.listobj);                   
                         $scope.showSeveralLocationRows(data.obj);
-                        $scope.setTable();
+                        $scope.setTable($scope.listobj);
                 });
             }
 
@@ -27,35 +27,39 @@ angular.module('app').controller('mpv-devicecontroller',
                 $scope.listobj = $scope.widgetdata.widgetSettings.configuration.initializeStatus ? []:$scope.listobj;
                 $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                 angular.forEach(locationList, function(locdata){
-                    //getroomdev by location
-                    // console.log(location);
-                    roomdevresource.$getbylocation({_id:locdata.uuid},function(data){
-                        if(data.success)
-                        {       
-                            angular.forEach(data.obj, function(obj){
-                                var isDataExisted = $filter('filter')($scope.listobj, function(existedobj){
-                                    return obj.euid === existedobj.euid
+                    // if(locdata.uuid != ""){
+                        roomdevresource.$getbylocation({_id:locdata.uuid},function(data){
+                            if(data.success)
+                            {       
+                                angular.forEach(data.obj, function(obj){
+                                    var isDataExisted = $filter('filter')($scope.listobj, function(existedobj){
+                                        return obj.euid === existedobj.euid
+                                    });
+                                    if(isDataExisted.length == 0){
+                                        $scope.listobj.push(obj);
+                                    }
                                 });
-                                if(isDataExisted.length == 0){
-                                    $scope.listobj.push(obj);
-                                }
-                            });
-                            $scope.numberofgetdevicebylocation = $scope.numberofgetdevicebylocation + 1;
-                        }
-                    });
+                                $scope.numberofgetdevicebylocation = $scope.numberofgetdevicebylocation + 1;
+                            }
+                        });
+                    // }                    
                 });
                 console.log(locationList)
             }
 
             var self = this;
-            $scope.setTable = function(){
+            $scope.setTable = function(data){
                 self.tableParams = new NgTableParams({
-                    count: $scope.listobj.length
+                    count: data.length
                 }, {
                     counts: [],
-                    dataset: $scope.listobj
+                    dataset: data
                 });
                 $scope.getcolumn();
+                if(data.length == 0){
+                    $scope.listobj = [];
+                    $scope.widgetdata.widgetSettings.configuration.rows = [];
+                }
             }
 
             $scope.getcolumn = function(){
@@ -74,7 +78,6 @@ angular.module('app').controller('mpv-devicecontroller',
                                     $scope.cols.push({field:fieldName, title: fieldName, show:false});
                                 count = count +1;
                             }
-
                         });
                         $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
                     }
@@ -137,7 +140,6 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.filterdevicebydevicetype = function(){
                 var datatype = $scope.widgetdata.widgetSettings.configuration.devicetype;
                 var newobj = [];
-                // $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj);
                 if(datatype != 'all'){
                     $scope.listobj = $filter('filter')($scope.listobj, function(obj){
                         return obj.type === datatype
@@ -147,7 +149,8 @@ angular.module('app').controller('mpv-devicecontroller',
 
             $scope.init = function(){
                 var getselectedLocation = $scope.getLocationWidget();
-                if(getselectedLocation.length > 0){
+                if(getselectedLocation.length == 1 && getselectedLocation[0].uuid != "" ||
+                    getselectedLocation.length > 1){
                     $scope.getDevicebyLocation(getselectedLocation);
                     $scope.$watchCollection(
                         function () {return $scope.numberofgetdevicebylocation;}
@@ -162,10 +165,13 @@ angular.module('app').controller('mpv-devicecontroller',
                             }
                             $scope.putDashforEmptyValue($scope.listobj);
                             $scope.showSeveralLocationRows($scope.listobj);
-                            $scope.setTable();
+                            $scope.setTable($scope.listobj);
                         }
 
                     });
+                }else if(getselectedLocation.length == 1 && getselectedLocation[0].uuid == ""){
+                    $scope.setTable([]);
+                    $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                 }else{
                     $scope.getAllDevice();   
                                      
@@ -175,8 +181,6 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.$watchCollection(
                 function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
-                // console.log(newValue);
-                // console.log($scope.widgetdata.widgetSettings.configuration.devicetype);
                 if($scope.widgetdata.widgetSettings.configuration.initializeStatus){
                     $scope.init();
                 }
