@@ -829,7 +829,10 @@ router.post('/roomdev/delete',function(req,res)
 
 router.post('/roomdev/update',function(req,res)
 {
-    var devices = req.body.deviceobj; 
+    var devices = req.body.deviceobj;
+    var listobj = [];
+    var listroom = [];
+    var result = [];
     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
     {
         if(err)
@@ -841,84 +844,154 @@ router.post('/roomdev/update',function(req,res)
         }
         else
         {
-          var listobj = [];
-          var listroom = [];
-          var result = [];
-          for(var j = 0 ; j < roomdev.length;j++)
-          {
-            if(roomdev[j].euid == devices.euid)
+            for(var j = 0 ; j < roomdev.length;j++)
             {
-              roomdev[j].room = devices.room;
-              roomdev[j].type = devices.type;
-              roomdev[j].person = devices.person;
-            
-            }
-          }
-          roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
-          {
-            if(err)
-                res.json(500,err);
-            else
-
-            if(devices.type == "fixed")
-            {
-                roomdevroomdb.get('roomdevroom',function(err,roomroom)
+                if(roomdev[j].euid == devices.euid)
                 {
-               
-                   if(roomroom.length > 0)
-                    {
-                        for(var i = 0 ; i < roomroom.length; i++)
-                        {
-                            if(roomroom[i].room == devices.room)
-                            {
-                                for(var j = 0 ; j < roomroom[i].device.length;j++)
-                                {
-                                    if(roomroom[i].device[j] == devices.euid)
-                                    {
-                                        roomroom[i].device[j] = devices.euid;
-                                    }
-                                }
-                            }
-                        }
-
-                        
+                roomdev[j].room = devices.room;
+                roomdev[j].type = devices.type;
+                roomdev[j].person = devices.person;
+                
+                }
+            }
+            roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
+            {
+                if(err)
+                {
+                res.json(500,err);
                 }
                 else
                 {
-                    if(roomroom.room == devices.room)
+                    if(devices.type == "fixed")
                     {
-                        for(var i  = 0 ; i < roomroom.device.length;i++)
+                        roomdevroomdb.get('roomdevroom',function(err,roomroom)
                         {
-                                if(roomroom.device[i] == devices.euid)
-                                  {
-                                      roomroom.device[i] = devices.euid;
-                                  }
-                        
-                        }
+                            if(roomroom.length > 0)
+                            {
+                                for(var i = 0 ; i < roomroom.length; i++)
+                                {
+                                    if(roomroom[i].room == devices.room)
+                                    {
+                                        for(var j = 0 ; j < roomroom[i].device.length;j++)
+                                        {
+                                            if(roomroom[i].device[j] == devices.euid)
+                                            {
+                                                roomroom[i].device[j] = devices.euid;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if(roomroom.room == devices.room)
+                                {
+                                    for(var i  = 0 ; i < roomroom.device.length;i++)
+                                    {
+                                            if(roomroom.device[i] == devices.euid)
+                                            {
+                                                roomroom.device[i] = devices.euid;
+                                            }
+                                    
+                                    }
+                                }
+                            }
+
+                            roomdevroomdb.put('roomdevroom',roomroom,function(err)
+                                {
+                                    if(err)
+                                    res.json(500,err);
+                                    else
+                                    res.json({"success": true })
+                                });
+                        });
+                    }
+                    else
+                    {
+                        var checkerror = false;
+                        decowndevicedb.get('decowndevice',function(err,owndevice)
+                        {
+                            if(err)
+                            {
+                                if(err.message == "Key not found in database")
+                                {
+                                    checkerror = true;
+                                }
+                                else
+                                {
+                                     res.json(500,err);
+                                }
+                            }
+                            else
+                            {
+                                for(var i = 0 ; i < owndevice.length;i++)
+                                {
+                                    if(owndevice[i].uuid == devices.prevdeviceobj.euid)
+                                    {
+                                        owndevice[i].uuid == devices.euid;
+                                        owndevice[i].person = devices.person;
+                                    }
+                                }
+                                 checkerror = false;
+                            }
+                            decownpersondb.get('decownperson',function(err,ownperson)
+                            {
+                                if(err)
+                                    {
+                                        if(err.message == "Key not found in database")
+                                            {
+                                                checkerror = true;
+                                            }
+                                        else{
+                                            res.json(500,err);
+                                        }
+                                    }
+                                else{
+
+                                   for(var i = 0; i < ownperson.length;i++)
+                                    {
+                                        if(ownperson[i].person == devices.prevdeviceobj.person)
+                                        {
+                                            var result = "";
+                                            result = ownperson[i].device.filter(x => x === devices.euid)
+                                            if(result == "")
+                                            {
+                                               ownperson[i].device.push(devices.euid); 
+                                            }
+                                        }
+                                    }
+
+                                    decowndevicedb.put('decowndevice',owndevice,function(err)
+                                    {
+                                        if(err)
+                                            {
+                                                res.json(500,err);
+                                            }
+                                        else
+                                            {
+                                                decownpersondb.put('decownperson',ownperson,function(err)
+                                                {
+                                                    if(err)
+                                                        {
+                                                            res.json(500,err);
+                                                        }
+                                                    else
+                                                        {
+                                                            res.json({"success": true })
+                                                        }
+                                                });            
+
+                                            }
+                                    });
+                                    
+                                }
+                            });
+
+                        });
                     }
                 }
-                
-                roomdevroomdb.put('roomdevroom',roomroom,function(err)
-                    {
-                        if(err)
-                        res.json(500,err);
-                        else
-                        res.json({"success": true })
-                    });
-
-                });
-            }
-            else
-            {
-                res.json({"success":true});
-            }
-
-          });
-          
-
+            });
         }
-        
-        
     });
 });
 
