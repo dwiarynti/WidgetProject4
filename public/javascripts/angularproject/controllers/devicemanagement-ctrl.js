@@ -8,7 +8,7 @@ angular.module('app').controller('devicemanagementcontroller',
             $scope.devicetypes = ["fixed", "mobile"];
             $scope.deviceslist = [];
             $scope.deviceobj = {
-                euid:0,
+                euid:"",
                 type:"",
                 room:0,
                 person:0
@@ -23,6 +23,7 @@ angular.module('app').controller('devicemanagementcontroller',
                     if(data.success)
                         $scope.deviceslist = data.obj;
                         $scope.getroom();
+                        $scope.getperson();
                 });
             }
 
@@ -31,8 +32,6 @@ angular.module('app').controller('devicemanagementcontroller',
             $scope.btnAddClick = function()
             {
                 $scope.action = "Add";
-                $scope.getroom();
-                $scope.getperson();
                 $scope.errormessage = "";
                 $("#modal-add").modal('show');
             }
@@ -52,19 +51,23 @@ angular.module('app').controller('devicemanagementcontroller',
                 });
             }
 
+            $scope.closemodal = function(){
+                $("#modal-add").modal('hide');
+                $scope.deviceobj = {
+                    euid:"",
+                    type:"",
+                    room:0,
+                    person:0
+                };
+            }
+
             $scope.Save = function(){
                 roomdevresource.deviceobj = $scope.deviceobj;
                 roomdevresource.$create(function(data){
                     console.log(data);
                     if(data.success){
                         $scope.init();
-                        $("#modal-add").modal('hide'); 
-                        $scope.deviceobj = {
-                            euid:0,
-                            type:"",
-                            room:0,
-                            person:0
-                        };
+                        $scope.closemodal();
                     }else{
                         $scope.errormessage = data.messages;
                     }
@@ -83,13 +86,7 @@ angular.module('app').controller('devicemanagementcontroller',
                 roomdevresource.$update(function(data){
                     if(data.success){
                         $scope.init();
-                        $("#modal-add").modal('hide'); 
-                        $scope.deviceobj = {
-                            euid:0,
-                            type:"",
-                            room:0,
-                            person:0
-                        };
+                        $scope.closemodal();
                     }
                 });
             }
@@ -113,5 +110,7 @@ angular.module('app').controller('devicemanagementcontroller',
                     }
                 });
             }
+
+
         }
     ]);
