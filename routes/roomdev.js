@@ -850,6 +850,7 @@ router.post('/roomdev/update',function(req,res)
             {
               roomdev[j].room = devices.room;
               roomdev[j].type = devices.type;
+              roomdev[j].person = devices.person;
             
             }
           }
