@@ -252,6 +252,7 @@ router.post('/roomdev/create',function(req,res)
     });
 });
 
+
 router.get('/roomdev/getall',function(req,res)
 {
     var listobj = [];
@@ -828,8 +829,7 @@ router.post('/roomdev/delete',function(req,res)
 
 router.post('/roomdev/update',function(req,res)
 {
-    var devices = req.body.deviceobj;
-   
+    var devices = req.body.deviceobj; 
     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
     {
         if(err)
@@ -853,7 +853,7 @@ router.post('/roomdev/update',function(req,res)
             
             }
           }
-          roomdevdevicedb.push('roomdevdevice',roomdev,function(err)
+          roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
           {
             if(err)
                 res.json(500,err);
