@@ -953,6 +953,7 @@ router.post('/roomdev/update',function(req,res)
                                         if(ownperson[i].person == devices.prevdeviceobj.person)
                                         {
                                             var result = "";
+                                            ownperson[i].person = devices.person;
                                             result = ownperson[i].device.filter(x => x === devices.euid)
                                             if(result == "")
                                             {
