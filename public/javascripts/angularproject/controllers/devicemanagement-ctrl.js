@@ -75,6 +75,7 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.btnEditClick = function(obj){
+                obj.prevdeviceobj = angular.copy(obj);
                 $scope.deviceobj = obj;
                 $scope.action = "Edit";        
                 $scope.errormessage = "";        
