@@ -11,7 +11,8 @@ angular.module('app').controller('devicemanagementcontroller',
                 euid:"",
                 type:"",
                 room:0,
-                person:0
+                person:0,
+                device : [{euid:""}]
             };
             $scope.roomlist =[];
             $scope.personlist =[];
@@ -51,13 +52,25 @@ angular.module('app').controller('devicemanagementcontroller',
                 });
             }
 
-            $scope.closemodal = function(){
+            $scope.closemodaladd = function(){
                 $("#modal-add").modal('hide');
                 $scope.deviceobj = {
                     euid:"",
                     type:"",
                     room:0,
-                    person:0
+                    person:0,
+                    device : [{euid:""}]
+                };
+            }
+
+            $scope.closemodaledit = function(){
+                $("#modal-edit").modal('hide');
+                $scope.deviceobj = {
+                    euid:"",
+                    type:"",
+                    room:0,
+                    person:0,
+                    device : [{euid:""}]
                 };
             }
 
@@ -79,7 +92,7 @@ angular.module('app').controller('devicemanagementcontroller',
                 $scope.deviceobj = obj;
                 $scope.action = "Edit";        
                 $scope.errormessage = "";        
-                $("#modal-add").modal('show');                
+                $("#modal-edit").modal('show');                
             }
 
             $scope.Update = function(){
@@ -110,6 +123,10 @@ angular.module('app').controller('devicemanagementcontroller',
                         $("#modal-delete").modal('hide');
                     }
                 });
+            }
+
+            $scope.adddevice = function(){
+                $scope.deviceobj.device.push({euid:""});
             }
 
 
