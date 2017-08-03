@@ -32,6 +32,7 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.btnAddClick = function()
             {
+                $scope.deviceobj.type = "fixed";
                 $scope.action = "Add";
                 $scope.errormessage = "";
                 $("#modal-add").modal('show');
@@ -75,6 +76,7 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.Save = function(){
+                
                 roomdevresource.deviceobj = $scope.deviceobj;
                 roomdevresource.$create(function(data){
                     console.log(data);
