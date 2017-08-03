@@ -1,6 +1,6 @@
 angular.module('app').controller('mpv-locationcontroller',
-    ['$scope', '$rootScope', '$filter','deviceResource', 'roomResource', "NgTableParams",
-        function ($scope, $rootScope, $filter, deviceResource, roomResource,NgTableParams) {
+    ['$scope', '$rootScope', '$filter','deviceResource', 'roomResource', "NgTableParams", "DTOptionsBuilder", "DTColumnBuilder", "$resource",
+        function ($scope, $rootScope, $filter, deviceResource, roomResource,NgTableParams, DTOptionsBuilder, DTColumnBuilder, $resource) {
             $scope.deviceList = [];
             var roomresource = new roomResource();
             var deviceresource = new deviceResource();
@@ -13,7 +13,8 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.tableParams = {};
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
-            $scope.widgetdata = $scope.$parent.item;            
+            $scope.widgetdata = $scope.$parent.item;      
+            
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
@@ -24,9 +25,9 @@ angular.module('app').controller('mpv-locationcontroller',
                     angular.forEach(getListFieldName, function(fieldName){
                         if(fieldName != 'display'){
                             if(count < 5)
-                                $scope.cols.push({field:fieldName, title: fieldName, show:true});
+                                $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
                             else
-                                $scope.cols.push({field:fieldName, title: fieldName, show:false});
+                                $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
                             count = count +1;
                         }
 
@@ -71,7 +72,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 self.tableParams = new NgTableParams({
                     count: $scope.listobj.length
                 }, {
-                    counts: [],
+                    // counts: [],
                     dataset: $scope.listobj
                 });
                 $scope.getcolumn();

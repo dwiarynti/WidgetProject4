@@ -76,13 +76,13 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.Save = function(){
-                
+                console.log($scope.deviceobj);
                 roomdevresource.deviceobj = $scope.deviceobj;
                 roomdevresource.$create(function(data){
                     console.log(data);
                     if(data.success){
                         $scope.init();
-                        $scope.closemodal();
+                        $scope.closemodaladd();
                     }else{
                         $scope.errormessage = data.messages;
                     }
@@ -102,7 +102,7 @@ angular.module('app').controller('devicemanagementcontroller',
                 roomdevresource.$update(function(data){
                     if(data.success){
                         $scope.init();
-                        $scope.closemodal();
+                        $scope.closemodaledit();
                     }
                 });
             }

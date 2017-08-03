@@ -2,31 +2,11 @@
 <div style="overflow:auto;width: 100%;height: 100%;">
 <!--<div>-->
     <center><label>LOCATION</label></center>
-    <table ng-table-dynamic="demo.tableParams with cols" class="table table-condensed table-bordered table-striped">
+
+    <table  ng-table-dynamic="demo.tableParams with cols" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="row in $data" ng-if="row['display'] == true && row['uuid'] != ''">
           <td  ng-repeat="col in $columns">{{row[col.field]}}</td>
         </tr>
-    </table>
-<!--
-            <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th></th>                                        
-                    <th>uuid</th>                    
-                    <th>name</th>
-                    <th>parentname</th>
-                    <th>areatype</th>
+    </table> 
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="obj in listobj">
-                    <td><input type="checkbox" ng-model="obj.display"/></td>
-                    <td>{{obj.uuid}}</td>
-                    <td>{{obj.name}}</td>
-                    <td>{{obj.parentname}}</td>
-                    <td>{{obj.areatype}}</td>
-                </tr>
-            </tbody>
-        </table>  -->
 </div>

@@ -6,6 +6,7 @@ angular.module("app", [
     "psFramework", 
     "ngStorage",
     "common.services",
+    "datatables",
     "ui.bootstrap",
     "ngTable",
     "anguFixedHeaderTable"]);
