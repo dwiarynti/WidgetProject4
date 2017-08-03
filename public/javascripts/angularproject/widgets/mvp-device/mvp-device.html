@@ -4,11 +4,5 @@
         <tr ng-repeat="row in $data" ng-if="row['display'] == true && row['euid'] != ''"> 
           <td ng-repeat="col in $columns">{{row[col.field]}}</td>
         </tr>
-        <!-- <tr ng-repeat="row in $data" ng-if="row['display'] == true && row['euid'] != '' && widgetdata.widgetSettings.configuration.devicetype == 'mobile' && row['type'] == 'mobile'"> 
-          <td ng-repeat="col in $columns">{{row[col.field]}}</td>
-        </tr>
-        <tr ng-repeat="row in $data" ng-if="row['display'] == true && row['euid'] != '' && widgetdata.widgetSettings.configuration.devicetype == 'fixed' && row['type'] == 'fixed'"> 
-          <td ng-repeat="col in $columns">{{row[col.field]}}</td>
-        </tr> -->
     </table>
 </div>

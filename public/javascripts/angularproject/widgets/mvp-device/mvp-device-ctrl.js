@@ -1,6 +1,6 @@
 angular.module('app').controller('mpv-devicecontroller',
-    ['$scope', '$rootScope', '$filter','roomdevResource', 'roomResource', "NgTableParams",
-        function ($scope, $rootScope, $filter, roomdevResource, roomResource,NgTableParams) {
+    ['$scope', '$rootScope', '$filter','roomdevResource', 'roomResource', "NgTableParams", "DTOptionsBuilder", "DTColumnBuilder",
+        function ($scope, $rootScope, $filter, roomdevResource, roomResource,NgTableParams, DTOptionsBuilder, DTColumnBuilder) {
             var roomdevresource = new roomdevResource();
             $scope.listobj = [];
             $scope.cols = [];
@@ -52,7 +52,7 @@ angular.module('app').controller('mpv-devicecontroller',
                 self.tableParams = new NgTableParams({
                     count: data.length
                 }, {
-                    counts: [],
+                    // counts: [],
                     dataset: data
                 });
                 $scope.getcolumn();
@@ -73,9 +73,9 @@ angular.module('app').controller('mpv-devicecontroller',
                         angular.forEach(getListFieldName, function(fieldName){
                             if(fieldName != 'display'){
                                 if(count < 5)
-                                    $scope.cols.push({field:fieldName, title: fieldName, show:true});
+                                    $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
                                 else
-                                    $scope.cols.push({field:fieldName, title: fieldName, show:false});
+                                    $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
                                 count = count +1;
                             }
                         });
