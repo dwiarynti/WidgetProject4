@@ -1116,39 +1116,41 @@ router.post('/roomdev/create',function(req,res)
             }
             else
             {
-                var checkroom = "";
-                checkroom = rooms.filter(x=>x.room === obj.room);
-                if(checkroom == "")
+                var selectroom = "";
+                for(var i = 0 ; i < rooms.length;i++)
                 {
-                     roomdevobj.room = obj.room;
-                     for(var i = 0 ; i < obj.device.length;i++)
-                     {
-                        roomdevobj.device.push(obj.device[i].euid);
-                     }
+                    if(rooms[i].room == obj.room)
+                    {
+                        selectroom = rooms[i];
+                    }
+                }
+                if(selectroom != "")
+                {
+                    for(var i = 0 ; i < obj.device.length;i++)
+                    {
+                        var selected ="";
+                        selected = selectroom.device.filter(x=>x === obj.device[i].euid);
+                        if(selected == "" || selected.length == 0)
+                        {
+                            selectroom.device.push(obj.device[i].euid);
+                        }
+                    }
+                    roomdevobj = selectroom;
                 }
                 else
                 {
-                   
-                    roomdevobj = checkroom;
-                    for(var o = 0 ; o < obj.device.length;o++)
-                    {
-                        for(var i = 0 ; i  < checkroom.length;i++)
-                        {
-                        var checkdevice = "";
-                        checkdevice =  checkroom[i].device.filter(x=>x === obj.device[i].euid);
-                        if(checkdevice == "")
-                        {
-                            roomdevobj.device.push(checkdevice);
-                        }
-                        }
-                    }
+                    roomdevobj.room = obj.room;
+                    for(var i = 0 ; i < obj.device.length;i++)
+                     {
+                        roomdevobj.device.push(obj.device[i].euid);
+                     }
                 }
 
                 for(var i = 0 ; i < rooms.length;i++)
                 {
                     if(rooms[i].room == roomdevobj.room)
                     {
-                        room[i].device = roomdevobj.device;
+                        rooms[i].device = roomdevobj.device;
                     }
                 }
                 listroomresult = rooms;
