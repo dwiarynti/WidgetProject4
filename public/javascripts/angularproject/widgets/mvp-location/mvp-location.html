@@ -3,10 +3,11 @@
 <!--<div>-->
     <center><label>LOCATION</label></center>
 
-    <table  ng-table-dynamic="demo.tableParams with cols" class="table table-condensed table-bordered table-striped">
+    <!-- current -->
+      <table id="data-tables" ng-table-dynamic="demo.tableParams with cols" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="row in $data" ng-if="row['display'] == true && row['uuid'] != ''">
           <td  ng-repeat="col in $columns">{{row[col.field]}}</td>
         </tr>
-    </table> 
+    </table>   
 
 </div>

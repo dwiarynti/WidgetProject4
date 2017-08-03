@@ -70,9 +70,9 @@ angular.module('app').controller('mpv-locationcontroller',
             var self = this;
             $scope.setTable = function(){
                 self.tableParams = new NgTableParams({
-                    count: $scope.listobj.length
+                    count: 5
                 }, {
-                    // counts: [],
+                    counts: [],
                     dataset: $scope.listobj
                 });
                 $scope.getcolumn();

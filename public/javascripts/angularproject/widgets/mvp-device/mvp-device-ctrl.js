@@ -50,9 +50,9 @@ angular.module('app').controller('mpv-devicecontroller',
             var self = this;
             $scope.setTable = function(data){
                 self.tableParams = new NgTableParams({
-                    count: data.length
+                    count: 5
                 }, {
-                    // counts: [],
+                    counts: [],
                     dataset: data
                 });
                 $scope.getcolumn();
