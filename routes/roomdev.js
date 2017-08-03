@@ -29,228 +29,228 @@ router.post('/roomdev/cleanup',function(req,res)
     });
 })
 
-router.post('/roomdev/create',function(req,res)
-{
-    var listobj = [];
-    var listroom = [];
-    var selectdevice = "";
-    var select = "";
-    var devices  = {
-        euid : req.body.deviceobj.euid,
-        room : req.body.deviceobj.room,
-        type : req.body.deviceobj.type,
-        person : req.body.deviceobj.person
-    }
+// router.post('/roomdev/create',function(req,res)
+// {
+//     var listobj = [];
+//     var listroom = [];
+//     var selectdevice = "";
+//     var select = "";
+//     var devices  = {
+//         euid : req.body.deviceobj.euid,
+//         room : req.body.deviceobj.room,
+//         type : req.body.deviceobj.type,
+//         person : req.body.deviceobj.person
+//     }
 
-    roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
-    {
-        if(err)
-        {
-            if(err.message == "Key not found in database")
-            listobj.push(devices);
-            else
-            res.json(500,err);
+//     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
+//     {
+//         if(err)
+//         {
+//             if(err.message == "Key not found in database")
+//             listobj.push(devices);
+//             else
+//             res.json(500,err);
             
-        }
-        else
-        {
-           if(roomdev.length > 0)
-           {
-                for(var a = 0 ;a< roomdev.length;a++)
-                {
-                    if(roomdev[a].euid == devices.euid)
-                    {
-                        select =  roomdev[a].euid;
-                    }
-                }
-               listobj = roomdev;
-               listobj.push(devices);
-           }
-           else
-           {
-               if(roomdev.euid == devices.euid)
-               {
-                   select =  roomdev.euid
-               }
-               listobj.push(devices);
-           }
-        }
+//         }
+//         else
+//         {
+//            if(roomdev.length > 0)
+//            {
+//                 for(var a = 0 ;a< roomdev.length;a++)
+//                 {
+//                     if(roomdev[a].euid == devices.euid)
+//                     {
+//                         select =  roomdev[a].euid;
+//                     }
+//                 }
+//                listobj = roomdev;
+//                listobj.push(devices);
+//            }
+//            else
+//            {
+//                if(roomdev.euid == devices.euid)
+//                {
+//                    select =  roomdev.euid
+//                }
+//                listobj.push(devices);
+//            }
+//         }
        
       
-        if(select == "")
-        {
-        roomdevdevicedb.put('roomdevdevice',listobj,function(err)
-        {
-            if(err)
-            res.json(500,err);
-            else
-            if(devices.type == "fixed")
-            {
-                var room = {
-                    room : devices.room,
-                    version : 1,
-                    device  :[]
-                }
-                room.device.push(devices.euid);
-                roomdevroomdb.get('roomdevroom',function(err,roomroom)
-                {
-                    var result = [];
+//         if(select == "")
+//         {
+//         roomdevdevicedb.put('roomdevdevice',listobj,function(err)
+//         {
+//             if(err)
+//             res.json(500,err);
+//             else
+//             if(devices.type == "fixed")
+//             {
+//                 var room = {
+//                     room : devices.room,
+//                     version : 1,
+//                     device  :[]
+//                 }
+//                 room.device.push(devices.euid);
+//                 roomdevroomdb.get('roomdevroom',function(err,roomroom)
+//                 {
+//                     var result = [];
                     
-                    if(err)
-                    {
-                        if(err.message == "Key not found in database")
-                        {
-                            listroom.push(room);
-                        }
-                        else
-                        {
-                            res.json(500,err);
-                        }
-                    }
-                    else
-                    {
-                        if(roomroom.length > 0)
-                        {
-                        for(var i = 0 ; i < roomroom.length; i++)
-                        {
-                            if(roomroom[i].room == devices.room)
-                            {
-                                roomroom[i].device.push(devices.euid);
-                                selectdevice = roomroom[i];
-                            }
-                        }
-                        }
-                        else
-                        {
-                            if(roomroom.room == devices.room)
-                            {
-                                roomroom.device.push(devices.euid);
-                                result.push(roomroom);
-                            }
-                            else
-                            {
-                                result[0] = roomroom;
-                                result.push(room);
-                            }
+//                     if(err)
+//                     {
+//                         if(err.message == "Key not found in database")
+//                         {
+//                             listroom.push(room);
+//                         }
+//                         else
+//                         {
+//                             res.json(500,err);
+//                         }
+//                     }
+//                     else
+//                     {
+//                         if(roomroom.length > 0)
+//                         {
+//                         for(var i = 0 ; i < roomroom.length; i++)
+//                         {
+//                             if(roomroom[i].room == devices.room)
+//                             {
+//                                 roomroom[i].device.push(devices.euid);
+//                                 selectdevice = roomroom[i];
+//                             }
+//                         }
+//                         }
+//                         else
+//                         {
+//                             if(roomroom.room == devices.room)
+//                             {
+//                                 roomroom.device.push(devices.euid);
+//                                 result.push(roomroom);
+//                             }
+//                             else
+//                             {
+//                                 result[0] = roomroom;
+//                                 result.push(room);
+//                             }
                             
-                            selectdevice = roomroom;
-                        }
-                    }
-                    if(selectdevice != "")
-                    {
-                        listroom = result;
-                    }
-                    else
-                    {
-                        listroom = room;
-                    }
-                    roomdevroomdb.put('roomdevroom',listroom,function(err)
-                    {
-                        if(err)
-                        res.json(500,err);
-                        else
-                        res.json({"success": true })
-                    });
+//                             selectdevice = roomroom;
+//                         }
+//                     }
+//                     if(selectdevice != "")
+//                     {
+//                         listroom = result;
+//                     }
+//                     else
+//                     {
+//                         listroom = room;
+//                     }
+//                     roomdevroomdb.put('roomdevroom',listroom,function(err)
+//                     {
+//                         if(err)
+//                         res.json(500,err);
+//                         else
+//                         res.json({"success": true })
+//                     });
 
-                })
-            }
-            else
-            {
-            var listownperson = [];
-            var person  = {
-                    person : devices.person,
-                    version: 1,
-                    device : []
-            }
-            person.device.push(devices.euid);
-            decowndevicedb.get('decowndevice',function(err,owndevice)
-            {
-                var listowndev = [];
-                var devown ={
-                    uuid : devices.euid,
-                    person: devices.person
-                }
-                if(err)
-                    {
-                        if(err.message == "Key not found in database")
-                            {
-                                listowndev.push(devown);
-                            }
-                        else
-                            {
-                                res.json(500,err);
-                            }
-                    }
-                else
-                    {
-                        if(owndevice.length > 0)
-                            {
-                                listowndev = owndevice;
-                                listowndev.push(devown);
-                            }
-                        else
-                            {
-                                  listowndev.push(devown);
-                            }
-                    }
-            decownpersondb.get('decownperson',function(err,ownperson)
-            {
-                if(err)
-                    {
-                        if(err.message == "Key not found in database")
-                            {
-                                listownperson.push(person);
-                            }
-                        else{
-                            res.json(500,err);
-                        }
-                    }
-                else{
-                    if(ownperson.length > 0 )
-                        {
-                            listownperson = ownperson;
-                            listownperson.push(person);
-                        }
-                    else
-                        {
-                            listownperson.push(person);
-                        }
-                   }
-            decowndevicedb.put('decowndevice',listowndev,function(err)
-            {
-                if(err)
-                    {
-                        res.json(500,err);
-                    }
-                else
-                    {
-                        decownpersondb.put('decownperson',listownperson,function(err)
-                        {
-                            if(err)
-                                {
-                                    res.json(500,err);
-                                }
-                            else
-                                {
-                                     res.json({"success": true })
-                                }
-                        });
-                    }
-            });
+//                 })
+//             }
+//             else
+//             {
+//             var listownperson = [];
+//             var person  = {
+//                     person : devices.person,
+//                     version: 1,
+//                     device : []
+//             }
+//             person.device.push(devices.euid);
+//             decowndevicedb.get('decowndevice',function(err,owndevice)
+//             {
+//                 var listowndev = [];
+//                 var devown ={
+//                     uuid : devices.euid,
+//                     person: devices.person
+//                 }
+//                 if(err)
+//                     {
+//                         if(err.message == "Key not found in database")
+//                             {
+//                                 listowndev.push(devown);
+//                             }
+//                         else
+//                             {
+//                                 res.json(500,err);
+//                             }
+//                     }
+//                 else
+//                     {
+//                         if(owndevice.length > 0)
+//                             {
+//                                 listowndev = owndevice;
+//                                 listowndev.push(devown);
+//                             }
+//                         else
+//                             {
+//                                   listowndev.push(devown);
+//                             }
+//                     }
+//             decownpersondb.get('decownperson',function(err,ownperson)
+//             {
+//                 if(err)
+//                     {
+//                         if(err.message == "Key not found in database")
+//                             {
+//                                 listownperson.push(person);
+//                             }
+//                         else{
+//                             res.json(500,err);
+//                         }
+//                     }
+//                 else{
+//                     if(ownperson.length > 0 )
+//                         {
+//                             listownperson = ownperson;
+//                             listownperson.push(person);
+//                         }
+//                     else
+//                         {
+//                             listownperson.push(person);
+//                         }
+//                    }
+//             decowndevicedb.put('decowndevice',listowndev,function(err)
+//             {
+//                 if(err)
+//                     {
+//                         res.json(500,err);
+//                     }
+//                 else
+//                     {
+//                         decownpersondb.put('decownperson',listownperson,function(err)
+//                         {
+//                             if(err)
+//                                 {
+//                                     res.json(500,err);
+//                                 }
+//                             else
+//                                 {
+//                                      res.json({"success": true })
+//                                 }
+//                         });
+//                     }
+//             });
                 
-            });
+//             });
                 
-            });
+//             });
                
-            }
-        })
-        }
-        else
-        {
-            res.json({"success" : false ,"messages": "mac address already exist"  })
-        }
-    });
-});
+//             }
+//         })
+//         }
+//         else
+//         {
+//             res.json({"success" : false ,"messages": "mac address already exist"  })
+//         }
+//     });
+// });
 
 
 router.get('/roomdev/getall',function(req,res)
@@ -995,6 +995,193 @@ router.post('/roomdev/update',function(req,res)
         }
     });
 });
+
+var setdevice = function(obj,callback)
+{
+    var listdevice = [];
+    
+    for(var i = 0 ; i < obj.device.length;i++)
+    {
+        var deviceobj = {
+        "euid" : "",
+        "room" : "",
+        "type" : ""
+        }
+        deviceobj.euid =  obj.device[i].euid;
+        deviceobj.room = obj.room;
+        deviceobj.type = obj.type;
+        listdevice.push(deviceobj);
+    }
+    return callback(listdevice);
+}
+
+router.post('/roomdev/create',function(req,res)
+{
+    var obj = req.body.deviceobj;
+    var listdevice = [];
+    var listdeviceresult = [];
+    var listroomresult = [];
+    var deviceobj = {
+        "euid" : "",
+        "room" : "",
+        "type" : ""
+    }
+    var roomdevobj = {
+        "room" : "",
+        "version" : 1,
+        "device" : []
+    }
+    roomdevdevicedb.get('roomdevdevice',function(err,devices)
+    {
+       if(err)
+        {
+            if(err.message == "Key not found in database")
+            {
+               var data = setdevice(obj,function(responsedata)
+               {
+                   if(responsedata !=null)
+                    {
+                        listdevice = responsedata;
+                    }
+               });
+   
+            }
+            else
+            {
+                var data = setdevice(obj,function(responsedata)
+               {
+                   if(responsedata !=null)
+                    {
+                        listdevice = responsedata;
+                    }
+               });
+            }
+        }
+        else
+        {
+            var data = setdevice(obj,function(responsedata)
+            {
+                   if(responsedata !=null)
+                    {
+                        listdevice = responsedata;
+                    }
+            });
+        }
+
+        if(devices != null)
+        {
+            for(var i = 0 ; i < listdevice.length;i++)
+            {
+                var result = "";
+                result = devices.filter(x => x.room === listdevice[i].room && x.euid === listdevice[i].euid);
+                if(result == "")
+                {
+                    devices.push(listdevice[i]);
+                }
+            }
+            
+        }
+        else
+        {
+            for(var i = 0 ; i < listdevice.length;i++)
+            {
+               
+                devices.push(listdevice[i]);
+                
+            }
+        }
+        
+        roomdevroomdb.get('roomdevroom',function(err,rooms)
+        {
+            if(err)
+            {
+                if(err.message == "Key not found in database")
+                {
+                    roomdevobj.room = obj.room;
+                    for(var i = 0 ; i < obj.device.length;i++)
+                    {
+                        roomdevobj.device.push(obj.device[i].euid);
+                    }
+                    listroomresult.push(roomdevobj);
+                }
+                else
+                {
+                    roomdevobj.room = obj.room;
+                    for(var i = 0 ; i < obj.device.length;i++)
+                    {
+                        roomdevobj.device.push(obj.device[i].euid);
+                    }
+                    listroomresult.push(roomdevobj);
+                }
+            }
+            else
+            {
+                var checkroom = "";
+                checkroom = rooms.filter(x=>x.room === obj.room);
+                if(checkroom == "")
+                {
+                     roomdevobj.room = obj.room;
+                     for(var i = 0 ; i < obj.device.length;i++)
+                     {
+                        roomdevobj.device.push(obj.device[i].euid);
+                     }
+                }
+                else
+                {
+                   
+                    roomdevobj = checkroom;
+                    for(var o = 0 ; o < obj.device.length;o++)
+                    {
+                        for(var i = 0 ; i  < checkroom.length;i++)
+                        {
+                        var checkdevice = "";
+                        checkdevice =  checkroom[i].device.filter(x=>x === obj.device[i].euid);
+                        if(checkdevice == "")
+                        {
+                            roomdevobj.device.push(checkdevice);
+                        }
+                        }
+                    }
+                }
+
+                for(var i = 0 ; i < rooms.length;i++)
+                {
+                    if(rooms[i].room == roomdevobj.room)
+                    {
+                        room[i].device = roomdevobj.device;
+                    }
+                }
+                listroomresult = rooms;
+            }
+
+        
+        roomdevdevicedb.put('roomdevdevice',devices,function(err)
+        {
+            if(err)
+            {
+                res.json(500,err)
+            }
+            else
+            {
+                 roomdevroomdb.put('roomdevroom',listroomresult,function(err)
+                 {
+                    if(err)
+                    {
+                        res.json(500,err);
+                    }
+                    else
+                        {
+                            res.json({"success":true});
+                        }
+                 });
+            }
+        })
+        })
+    });
+
+});
+
+
 
 
 module.exports = router;
