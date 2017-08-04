@@ -14,24 +14,41 @@ angular.module('app').controller('mpv-locationcontroller',
             $rootScope.sitelist = [];
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;      
+
+            // $scope.initfieldname = ["name", "parentname", "fulladdress"];
+            $scope.initfieldname = [
+                {field:"name", filter: { name: "text" }, title: "name", sortable: "name", show:true},
+                {field:"areatype", filter: { areatype: "text" }, title: "areatype", sortable: "areatype", show:true},
+                {field:"parentname", filter: { parentname: "text" }, title: "parentname", sortable: "parentname", show:true},
+                {field:"shortaddress", filter: { shortaddress: "text" }, title: "shortaddress", sortable: "shortaddress", show:true},
+                {field:"fulladdress", filter: { fulladdress: "text" }, title: "fulladdress", sortable: "fulladdress", show:true},
+                {field:"Location", filter: { Location: "text" }, title: "Location", sortable: "Location", show:false},
+                {field:"changeby", filter: { changeby: "text" }, title: "changeby", sortable: "changeby", show:false},
+                {field:"changebyname", filter: { changebyname: "text" }, title: "changebyname", sortable: "changebyname", show:false},
+                {field:"datemodified", filter: { datemodified: "text" }, title: "datemodified", sortable: "datemodified", show:false},
+                {field:"disable", filter: { disable: "text" }, title: "disable", sortable: "disable", show:false},
+                {field:"parent", filter: { parent: "text" }, title: "parent", sortable: "parent", show:false},
+                {field:"uuid", filter: { uuid: "text" }, title: "uuid", sortable: "uuid", show:false},
+
+            ];
             
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
                 }
                 else{
-                    var getListFieldName = Object.keys($scope.listobj[0]);
-                    var count  = 0;
-                    angular.forEach(getListFieldName, function(fieldName){
-                        if(fieldName != 'display'){
-                            if(count < 5)
-                                $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
-                            else
-                                $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
-                            count = count +1;
-                        }
-
-                    });
+                    // var getListFieldName = Object.keys($scope.listobj[0]);
+                    // var count  = 0;
+                    // angular.forEach(getListFieldName, function(fieldName){
+                    //     if(fieldName != 'display'){
+                    //         if(count < 5)
+                    //             $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
+                    //         else
+                    //             $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
+                    //         count = count +1;
+                    //     }
+                    // });
+                    $scope.cols = $scope.initfieldname;
                     $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
                 }
             }
