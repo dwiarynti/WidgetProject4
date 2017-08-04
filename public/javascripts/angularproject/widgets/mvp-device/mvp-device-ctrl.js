@@ -9,6 +9,15 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.backuplist = [];
             $scope.numberofgetdevicebylocation = 0;
 
+            $scope.initfieldname = [
+                {field:"euid", filter: { euid: "text" }, title: "euid", sortable: "euid", show:true},
+                {field:"type", filter: { type: "text" }, title: "type", sortable: "type", show:true},                
+                {field:"personname", filter: { personname: "text" }, title: "personname", sortable: "personname", show:true},                
+                {field:"roomname", filter: { roomname: "text" }, title: "roomname", sortable: "roomname", show:true},
+                {field:"room", filter: { room: "text" }, title: "room", sortable: "room", show:false},
+                {field:"person", filter: { person: "text" }, title: "person", sortable: "person", show:false},
+            ];
+
             $scope.widgetdata = $scope.$parent.item; 
             $scope.getAllDevice = function(){
                 $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
@@ -44,7 +53,6 @@ angular.module('app').controller('mpv-devicecontroller',
                         });
                     // }                    
                 });
-                console.log(locationList)
             }
 
             var self = this;
@@ -68,18 +76,20 @@ angular.module('app').controller('mpv-devicecontroller',
                 }
                 else{
                     if($scope.listobj.length > 0){
-                        var getListFieldName = Object.keys($scope.listobj[0]);
-                        var count  = 0;
-                        angular.forEach(getListFieldName, function(fieldName){
-                            if(fieldName != 'display'){
-                                if(count < 5)
-                                    $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
-                                else
-                                    $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
-                                count = count +1;
-                            }
-                        });
+                        // var getListFieldName = Object.keys($scope.listobj[0]);
+                        // var count  = 0;
+                        // angular.forEach(getListFieldName, function(fieldName){
+                        //     if(fieldName != 'display'){
+                        //         if(count < 5)
+                        //             $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
+                        //         else
+                        //             $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
+                        //         count = count +1;
+                        //     }
+                        // });
+                        $scope.cols = $scope.initfieldname;
                         $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
+                        console.log($scope.listobj);
                     }
 
                 }
@@ -155,7 +165,6 @@ angular.module('app').controller('mpv-devicecontroller',
                     $scope.$watchCollection(
                         function () {return $scope.numberofgetdevicebylocation;}
                     ,  function (newValue,oldValue) {
-                        console.log(getselectedLocation.length);
                         var newdata = $scope.getLocationWidget();
                         if($scope.numberofgetdevicebylocation == newdata.length){
                             $scope.numberofgetdevicebylocation = 0;
