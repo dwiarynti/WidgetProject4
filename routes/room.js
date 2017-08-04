@@ -136,7 +136,8 @@ router.get('/room/getall',function(req,res)
         shortaddress: "",
         fulladdress:"",
         Location :"",
-        disable : ""
+        disable : "",
+        children: []
     }
     roomdb.get('room',function(err,rooms)
     {
