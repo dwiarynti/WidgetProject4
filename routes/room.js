@@ -188,20 +188,20 @@ router.get('/room/getall',function(req,res)
             if(listobj[i].areatype == "site")
             {
                 var selectedsite = listobj[i];
-                selectedsite.Area = [];
+                selectedsite.children = [];
                 result.push(selectedsite);
             }
         }
 
-       for(var i = 0 ; i < listobj.length;i++)
+        for(var i = 0 ; i < listobj.length;i++)
         {
             for(var j = 0; j < result.length;j++)
             {
                 if(listobj[i].parent == result[j].uuid)
                 {
                     var selectedArea = listobj[i];
-                    selectedArea.Building = [];
-                    result[j].Area.push(selectedArea);
+                    selectedArea.children = [];
+                    result[j].children.push(selectedArea);
                 }
             }
         }
@@ -210,13 +210,13 @@ router.get('/room/getall',function(req,res)
         {
             for(var j = 0; j < result.length;j++)
             {
-                for(var r = 0 ; r < result[j].Area.length; r++)
+                for(var r = 0 ; r < result[j].children.length; r++)
                 {
-                if(listobj[i].parent == result[j].Area[r].uuid)
+                if(listobj[i].parent == result[j].children[r].uuid)
                 {
                     var selectedBuilding = listobj[i];
-                    selectedBuilding.Floor = [];
-                    result[j].Area[r].Building.push(selectedBuilding);
+                    selectedBuilding.children = [];
+                    result[j].children[r].children.push(selectedBuilding);
                 }
                 }
             }
@@ -226,15 +226,15 @@ router.get('/room/getall',function(req,res)
         {
             for(var j = 0; j < result.length;j++)
             {
-                for(var r = 0 ; r < result[j].Area.length; r++)
+                for(var r = 0 ; r < result[j].children.length; r++)
                 {
-                    for(var s = 0; s < result[j].Area[r].Building.length; s++ )
+                    for(var s = 0; s < result[j].children[r].children.length; s++ )
                     {
-                        if(listobj[i].parent == result[j].Area[r].Building[s].uuid)
+                        if(listobj[i].parent == result[j].children[r].children[s].uuid)
                         {
                             var selectedFloor = listobj[i];
-                            selectedFloor.Room = [];
-                            result[j].Area[r].Building[s].Floor.push(selectedFloor);
+                            selectedFloor.children = [];
+                            result[j].children[r].children[s].children.push(selectedFloor);
                         }
                     }
                 }
@@ -245,17 +245,17 @@ router.get('/room/getall',function(req,res)
         {
             for(var j = 0; j < result.length;j++)
             {
-                for(var r = 0 ; r < result[j].Area.length; r++)
+                for(var r = 0 ; r < result[j].children.length; r++)
                 {
-                    for(var s = 0; s < result[j].Area[r].Building.length; s++ )
+                    for(var s = 0; s < result[j].children[r].children.length; s++ )
                     {
-                        for(var t = 0; t < result[j].Area[r].Building[s].Floor.length;t++)
+                        for(var t = 0; t < result[j].children[r].children[s].children.length;t++)
                         {
-                            if(listobj[i].parent == result[j].Area[r].Building[s].Floor[t].uuid)
+                            if(listobj[i].parent == result[j].children[r].children[s].children[t].uuid)
                             {
                                 var selectedRoom = listobj[i];
-                                selectedRoom.Closet = [];
-                                result[j].Area[r].Building[s].Floor[t].Room.push(selectedRoom);
+                                selectedRoom.children = [];
+                                result[j].children[r].children[s].children[t].children.push(selectedRoom);
                             }
                         }
                         
@@ -268,19 +268,19 @@ router.get('/room/getall',function(req,res)
         {
             for(var j = 0; j < result.length;j++)
             {
-                for(var r = 0 ; r < result[j].Area.length; r++)
+                for(var r = 0 ; r < result[j].children.length; r++)
                 {
-                    for(var s = 0; s < result[j].Area[r].Building.length; s++ )
+                    for(var s = 0; s < result[j].children[r].children.length; s++ )
                     {
-                        for(var t = 0; t < result[j].Area[r].Building[s].Floor.length;t++)
+                        for(var t = 0; t < result[j].children[r].children[s].children.length;t++)
                         {
-                            for(var x = 0 ; x < result[j].Area[r].Building[s].Floor[t].Room.length;x++ )
+                            for(var x = 0 ; x < result[j].children[r].children[s].children[t].children.length;x++ )
                             {
-                                if(listobj[i].parent == result[j].Area[r].Building[s].Floor[t].Room[x].uuid)
+                                if(listobj[i].parent == result[j].children[r].children[s].children[t].children[x].uuid)
                                 {
                                     var selectedCloset= listobj[i];
                                 
-                                    result[j].Area[r].Building[s].Floor[t].Room[x].Closet.push(selectedCloset);
+                                     result[j].children[r].children[s].children[t].children[x].children.push(selectedCloset);
                                 }
                             }
                             
