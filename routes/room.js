@@ -181,11 +181,124 @@ router.get('/room/getall',function(req,res)
                 }
             }
         }
-        if(listobj.length == 0)
+       
+        var result = [];
+        for(var i = 0 ; i < listobj.length;i++)
         {
-            listobj.push(room);
+            if(listobj[i].areatype == "site")
+            {
+                var selectedsite = listobj[i];
+                selectedsite.Area = [];
+                result.push(selectedsite);
+            }
         }
-            res.json({"success": true , "obj": listobj});
+
+       for(var i = 0 ; i < listobj.length;i++)
+        {
+            for(var j = 0; j < result.length;j++)
+            {
+                if(listobj[i].parent == result[j].uuid)
+                {
+                    var selectedArea = listobj[i];
+                    selectedArea.Building = [];
+                    result[j].Area.push(selectedArea);
+                }
+            }
+        }
+
+        for(var i = 0 ; i < listobj.length;i++)
+        {
+            for(var j = 0; j < result.length;j++)
+            {
+                for(var r = 0 ; r < result[j].Area.length; r++)
+                {
+                if(listobj[i].parent == result[j].Area[r].uuid)
+                {
+                    var selectedBuilding = listobj[i];
+                    selectedBuilding.Floor = [];
+                    result[j].Area[r].Building.push(selectedBuilding);
+                }
+                }
+            }
+        }
+
+        for(var i = 0 ; i < listobj.length;i++)
+        {
+            for(var j = 0; j < result.length;j++)
+            {
+                for(var r = 0 ; r < result[j].Area.length; r++)
+                {
+                    for(var s = 0; s < result[j].Area[r].Building.length; s++ )
+                    {
+                        if(listobj[i].parent == result[j].Area[r].Building[s].uuid)
+                        {
+                            var selectedFloor = listobj[i];
+                            selectedFloor.Room = [];
+                            result[j].Area[r].Building[s].Floor.push(selectedFloor);
+                        }
+                    }
+                }
+            }
+        }
+
+        for(var i = 0 ; i < listobj.length;i++)
+        {
+            for(var j = 0; j < result.length;j++)
+            {
+                for(var r = 0 ; r < result[j].Area.length; r++)
+                {
+                    for(var s = 0; s < result[j].Area[r].Building.length; s++ )
+                    {
+                        for(var t = 0; t < result[j].Area[r].Building[s].Floor.length;t++)
+                        {
+                            if(listobj[i].parent == result[j].Area[r].Building[s].Floor[t].uuid)
+                            {
+                                var selectedRoom = listobj[i];
+                                selectedRoom.Closet = [];
+                                result[j].Area[r].Building[s].Floor[t].Room.push(selectedRoom);
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        for(var i = 0 ; i < listobj.length;i++)
+        {
+            for(var j = 0; j < result.length;j++)
+            {
+                for(var r = 0 ; r < result[j].Area.length; r++)
+                {
+                    for(var s = 0; s < result[j].Area[r].Building.length; s++ )
+                    {
+                        for(var t = 0; t < result[j].Area[r].Building[s].Floor.length;t++)
+                        {
+                            for(var x = 0 ; x < result[j].Area[r].Building[s].Floor[t].Room.length;x++ )
+                            {
+                                if(listobj[i].parent == result[j].Area[r].Building[s].Floor[t].Room[x].uuid)
+                                {
+                                    var selectedCloset= listobj[i];
+                                
+                                    result[j].Area[r].Building[s].Floor[t].Room[x].Closet.push(selectedCloset);
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+
+
+
+        if(result.length == 0)
+        {
+            result.push(room);
+        }
+        res.json({"success": true , "obj": result});
         }
     })
 })
