@@ -214,6 +214,11 @@ angular.module('app').controller('locationmanagementcontroller',
       displayName: "Action",
       cellTemplate: '<a ng-click="treeControl.edit(row.branch)" class="link" style="cursor: pointer">Edit</a> | <a ng-click="treeControl.btnDeleteClick(row.branch)" class="link" style="cursor: pointer">Delete</a>'
     }];
+    $scope.expandingProperty = {
+        field: "name",
+        displayName: "Name",
+        filterable: true
+    };
     
     // $scope.expandingProperty = {};  //Create a scope object to hold custom property to first column
 
