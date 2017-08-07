@@ -9,4 +9,5 @@ angular.module("app", [
     "datatables",
     "ui.bootstrap",
     "ngTable",
-    "anguFixedHeaderTable"]);
+    "anguFixedHeaderTable",
+    "treeGrid"]);

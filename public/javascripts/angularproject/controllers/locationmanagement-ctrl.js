@@ -15,6 +15,25 @@ angular.module('app').controller('locationmanagementcontroller',
             $scope.parentList = [];
             $scope.selectedareatype = "";
             $scope.errormessage = "";
+            $scope.action = "";
+            $scope.locationobj = locationobj();
+
+            function locationobj() {
+                return {
+                    uuid :"",
+                    name:"",
+                    parent:0,
+                    datecreated:date,
+                    datemodified : "",
+                    changeby : "",
+                    changebyname :"",
+                    areatype : "",
+                    shortaddress: "",
+                    fulladdress:"",
+                    Location :"",
+                    disable : false
+                };
+            }
             
             var date = new Date();
 
@@ -28,20 +47,14 @@ angular.module('app').controller('locationmanagementcontroller',
             $scope.init();
 
             $scope.Add = function(){
-                $scope.roomList.push({
-                    uuid :"",
-                    name:"",
-                    parent:0,
-                    datecreated:date,
-                    datemodified : "",
-                    changeby : "",
-                    changebyname :"",
-                    areatype : "",
-                    shortaddress: "",
-                    fulladdress:"",
-                    Location :"",
-                    disable : false
-                });
+                $scope.action = "Add";
+                $("#modal-add").modal('show');
+                
+            }
+
+            $scope.closemodal = function(){
+                $("#modal-add").modal('hide');
+                $scope.locationobj = locationobj();
             }
 
             $scope.Save = function(obj){
@@ -55,6 +68,7 @@ angular.module('app').controller('locationmanagementcontroller',
                     roomresource.roomobj = obj;
                     roomresource.$create(function(data){
                         if(data.success)
+                            $scope.closemodal();
                             $scope.init();
                             
                     });
@@ -87,7 +101,8 @@ angular.module('app').controller('locationmanagementcontroller',
                 roomresource.roomobj = obj;
                 roomresource.$update(function(data){
                     if(data.success)
-                        $scope.init();
+                        $scope.closemodal();
+                        // $scope.init();
                     
                 });
             }
@@ -166,5 +181,48 @@ angular.module('app').controller('locationmanagementcontroller',
                 }
                 // obj.fulladdress = obj.shortaddress +" - "+ obj.fulladdress;
             }
+
+
+
+///sample 1
+    $scope.locmanagementcontrol = {};
+
+    $scope.locmanagementcontrol.edit = function(obj){
+        $scope.action = "Edit";
+        $scope.locationobj = obj;
+        var areatypelevel = $scope.getAreatypeLevel(obj.areatype);
+        $scope.getParent(areatypelevel);
+        $("#modal-add").modal('show');
+
+    }
+
+    $scope.locmanagementcontrol.btnDeleteClick = function(obj){
+        $("#modal-delete").modal('show');
+        $scope.deleteuuid = obj.uuid;
+    }
+
+    $scope.locmanagementcontrol.scope = this;
+
+    $scope.colDefs = [
+    // { field: "name", displayName: "Name" },
+    { field: "areatype", displayName: "Area Type" },
+    { field: "parentname", displayName: "Parent" },
+    { field: "shortaddress", displayName: "Short Address" },
+    { field: "fulladdress", displayName: "Full Address" },
+    {
+      field: "Action",
+      displayName: "Action",
+      cellTemplate: '<a ng-click="treeControl.edit(row.branch)" class="link" style="cursor: pointer">Edit</a> | <a ng-click="treeControl.btnDeleteClick(row.branch)" class="link" style="cursor: pointer">Delete</a>'
+    }];
+    
+    // $scope.expandingProperty = {};  //Create a scope object to hold custom property to first column
+
+
+///end sample 1
+
+
+
+
+  //end
         }
     ]);
