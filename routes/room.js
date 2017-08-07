@@ -302,6 +302,21 @@ router.get('/room/getall',function(req,res)
         res.json({"success": true , "obj": result});
         }
     })
+});
+
+router.get('/room/getalldata',function(req,res)
+{
+    roomdb.get('room',function(err,data)
+    {
+     if(err)
+     {
+        res.json(err,500);
+     }
+    else
+        {
+            res.json(data);
+        }
+    })
 })
 
 router.get('/room/get/:_id',function(req,res)
@@ -415,15 +430,44 @@ router.post('/room/delete',function(req,res)
         }
         else
         {
+            var listdeleted = [];
+            var listresult = [];
             for(var i = 0; i < rooms.length;i++)
             {
                 if(rooms[i].uuid == req.body.roomobj.uuid)
                 {
-                    rooms[i].disable = true;
+                    listdeleted.push(rooms[i]);
+                }
+            }
+            
+            for(var i = 0 ; i < rooms.length;i++)
+            {
+                for(var j = 0 ; j < listdeleted.length;j++)
+                {
+                    if(rooms[i].parent == listdeleted[j].uuid)
+                    {
+                        listdeleted.push(rooms[i]);
+                       
+                    }
                 }
             }
 
-            roomdb.put('room',rooms,function(err)
+            for(var i = 0 ; i < rooms.length;i++)
+            {
+                for(var j = 0 ; j < listdeleted.length;j++)
+                {
+                    if(rooms[i].uuid == listdeleted[j].uuid)
+                    {
+                      
+                       rooms.splice(i,1);
+                    }
+                }
+               
+            }
+           
+
+            var result = rooms;
+            roomdb.put('room',result,function(err)
             {
                 if(err)
                 {
