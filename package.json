@@ -13,6 +13,7 @@
     "express-session": "^1.15.3",
     "level": "^1.7.0",
     "level-sublevel": "^6.6.1",
+    "list-to-tree": "^1.0.0",
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.8.1",
