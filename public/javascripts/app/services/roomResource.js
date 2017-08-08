@@ -15,7 +15,9 @@
                     delete: {method:'POST', params:{action:'delete'}},  
                     getsite: {method:'GET', params:{action:'getsite'}},                                                  
                     getloc: {method:'GET', params:{action:'getloc'}},   
-                    getdevice: {method:'GET', params:{action:'getdevice'}},                                               
+                    getdevice: {method:'GET', params:{action:'getdevice'}},     
+                    getlocflatdata: {method:'GET', params:{action:'getlocflatdata'}},     
+                                                              
                });
     }
 }());

@@ -16,6 +16,7 @@ angular.module('app').controller('locationmanagementcontroller',
             $scope.selectedareatype = "";
             $scope.errormessage = "";
             $scope.action = "";
+            $scope.getlocflatdata_obj = [];
             $scope.locationobj = locationobj();
 
             function locationobj() {
@@ -37,10 +38,18 @@ angular.module('app').controller('locationmanagementcontroller',
             
             var date = new Date();
 
+            $scope.getlocflatdata = function(){
+                roomresource.$getlocflatdata(function(data){
+                    if(data.success)
+                        $scope.getlocflatdata_obj = data.obj;
+                });
+            }
+
             $scope.init = function(){
                 roomresource.$getall(function(data){
                     console.log(data.obj);
                     $scope.roomList = data.obj;
+                    $scope.getlocflatdata();
                 });
             }
 
@@ -122,19 +131,22 @@ angular.module('app').controller('locationmanagementcontroller',
                 });
             }
 
-            $scope.getParent = function(uuid){
-                console.log(uuid);
-                $scope.parentList = [];
-                uuid = parseInt(uuid);
-                var list = $filter('filter')($scope.areatype, function (type) { return type.level == uuid-1 });
-                    angular.forEach(list,function(item) {
-                        var data = $filter('filter')($scope.roomList, function (room) { return room.areatype === item.name });
-                        if(data.length != 0){
-                            $scope.parentList.push.apply($scope.parentList, data);
-                        }
-                    });
 
-                // $scope.concatShortAddress(uuid);
+
+            $scope.getParent = function(level){
+                $scope.parentList = [];
+                level = parseInt(level);
+                var getparentlevel = $filter('filter')($scope.areatype, function (type) { return type.level == level-1 })[0];
+                if(getparentlevel != undefined){
+                    // $scope.getlocflatdata();
+                    var data = $filter('filter')($scope.getlocflatdata_obj, function (room) { return room.areatype === getparentlevel.name });
+                    console.log(data);
+                    if(data.length != 0){
+                        $scope.parentList.push.apply($scope.parentList, data);
+                    }
+                }
+
+                // $scope.concatShortAddress(level);
             }
             
             $scope.isSelectedItem =function(itemA, itemB){
