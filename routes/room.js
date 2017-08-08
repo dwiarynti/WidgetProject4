@@ -696,7 +696,7 @@ var getloc = function(id,callback)
                                     {
                                         var selectedCloset = rooms[i];
                                         selectedCloset.parentname = listresult[j].children[k].children[l].children[m].name;
-                                        listresult[j].children[k].children[l].children[m].push(selectedCloset);
+                                        listresult[j].children[k].children[l].children[m].children.push(selectedCloset);
                                     }   
                                 }
                             
@@ -922,5 +922,5 @@ router.get('/room/getlocflatdata',function(req,res)
         res.json({"success": true , "obj": listobj});
         }
     })
-})
+});
 module.exports = router;
