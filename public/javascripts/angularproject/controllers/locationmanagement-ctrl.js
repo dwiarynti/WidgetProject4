@@ -2,7 +2,7 @@ angular.module('app').controller('locationmanagementcontroller',
     ['$scope', '$filter', '$rootScope', 'roomResource',
         function ($scope, $filter, $rootScope, roomResource) {
             var roomresource = new roomResource();
-            $scope.roomList = [];
+            $scope.roomList = {flat:[], tree:[]};
             $scope.deleteuuid = "";
             $scope.areatype = [
                 {level:1, name:"site"},
@@ -38,18 +38,29 @@ angular.module('app').controller('locationmanagementcontroller',
             
             var date = new Date();
 
-            $scope.getlocflatdata = function(){
-                roomresource.$getlocflatdata(function(data){
-                    if(data.success)
-                        $scope.getlocflatdata_obj = data.obj;
+            $scope.convertlisttotree = function(data){
+                var ltt = new LTT(data, {
+                    key_id: 'uuid',
+                    key_parent: 'parent',
+                    key_child : 'children'
                 });
+                var tree = ltt.GetTree();
+                return tree;
             }
+
+            // $scope.getlocflatdata = function(){
+            //     roomresource.$getlocflatdata(function(data){
+            //         if(data.success)
+            //             $scope.getlocflatdata_obj = data.obj;
+            //     });
+            // }
 
             $scope.init = function(){
                 roomresource.$getall(function(data){
                     console.log(data.obj);
-                    $scope.roomList = data.obj;
-                    $scope.getlocflatdata();
+                    $scope.roomList.flat = data.obj;
+                    $scope.roomList.tree = $scope.convertlisttotree(data.obj);
+                    // $scope.getlocflatdata();
                 });
             }
 
@@ -86,9 +97,9 @@ angular.module('app').controller('locationmanagementcontroller',
                 
             }
 
-            $scope.turnoffaddmode = function(index){
-                $scope.roomList.splice(index,1);
-            }
+            // $scope.turnoffaddmode = function(index){
+            //     $scope.roomList.splice(index,1);
+            // }
 
             $scope.Edit=function(obj){
                 obj.editmode = true;
@@ -139,7 +150,7 @@ angular.module('app').controller('locationmanagementcontroller',
                 var getparentlevel = $filter('filter')($scope.areatype, function (type) { return type.level == level-1 })[0];
                 if(getparentlevel != undefined){
                     // $scope.getlocflatdata();
-                    var data = $filter('filter')($scope.getlocflatdata_obj, function (room) { return room.areatype === getparentlevel.name });
+                    var data = $filter('filter')($scope.roomList.flat, function (room) { return room.areatype === getparentlevel.name });
                     console.log(data);
                     if(data.length != 0){
                         $scope.parentList.push.apply($scope.parentList, data);
@@ -158,7 +169,7 @@ angular.module('app').controller('locationmanagementcontroller',
             }
 
             $scope.getParentData = function(parentuuid){
-                var getParent = $filter('filter')($scope.roomList, function (room) { return room.uuid === parseInt(parentuuid) })[0];
+                var getParent = $filter('filter')($scope.roomList.flat, function (room) { return room.uuid === parseInt(parentuuid) })[0];
                 var getlevel = $filter('filter')($scope.areatype, function (areatype) { return areatype.name === getParent.areatype })[0];
                 return {parentobj:getParent, level:getlevel.level};
             }
