@@ -15,40 +15,27 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;      
 
-            // $scope.initfieldname = ["name", "parentname", "fulladdress"];
-            $scope.initfieldname = [
-                {field:"name", filter: { name: "text" }, title: "name", sortable: "name", show:true},
-                {field:"areatype", filter: { areatype: "text" }, title: "areatype", sortable: "areatype", show:true},
-                {field:"parentname", filter: { parentname: "text" }, title: "parentname", sortable: "parentname", show:true},
-                {field:"shortaddress", filter: { shortaddress: "text" }, title: "shortaddress", sortable: "shortaddress", show:true},
-                {field:"fulladdress", filter: { fulladdress: "text" }, title: "fulladdress", sortable: "fulladdress", show:true},
-                {field:"Location", filter: { Location: "text" }, title: "Location", sortable: "Location", show:false},
-                {field:"changeby", filter: { changeby: "text" }, title: "changeby", sortable: "changeby", show:false},
-                {field:"changebyname", filter: { changebyname: "text" }, title: "changebyname", sortable: "changebyname", show:false},
-                {field:"datemodified", filter: { datemodified: "text" }, title: "datemodified", sortable: "datemodified", show:false},
-                {field:"disable", filter: { disable: "text" }, title: "disable", sortable: "disable", show:false},
-                {field:"parent", filter: { parent: "text" }, title: "parent", sortable: "parent", show:false},
-                {field:"uuid", filter: { uuid: "text" }, title: "uuid", sortable: "uuid", show:false},
-
-            ];
+            $scope.colDefs = $scope.widgetdata.widgetSettings.configuration.cols.length > 0 ? 
+                $scope.widgetdata.widgetSettings.configuration.cols : 
+                [
+                    { field: "areatype", displayName: "Area Type" },
+                    { field: "parentname", displayName: "Parent" },
+                    { field: "shortaddress", displayName: "Short Address" },
+                    { field: "fulladdress", displayName: "Full Address" }
+                ];
+            $scope.expandingProperty = {
+                field: "name",
+                displayName: "Name",
+                filterable: true
+            };
             
             $scope.getcolumn = function(){
                 if( $scope.widgetdata.widgetSettings.configuration.cols.length > 0){
                     $scope.cols = $scope.widgetdata.widgetSettings.configuration.cols;
+                    $scope.colDefs = $scope.widgetdata.widgetSettings.configuration.cols;
                 }
                 else{
-                    // var getListFieldName = Object.keys($scope.listobj[0]);
-                    // var count  = 0;
-                    // angular.forEach(getListFieldName, function(fieldName){
-                    //     if(fieldName != 'display'){
-                    //         if(count < 5)
-                    //             $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:true});
-                    //         else
-                    //             $scope.cols.push({field:fieldName, filter: { [fieldName]: "text" }, title: fieldName, sortable: fieldName, show:false});
-                    //         count = count +1;
-                    //     }
-                    // });
-                    $scope.cols = $scope.initfieldname;
+                    $scope.cols = $scope.colDefs;
                     $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
                 }
             }
@@ -84,17 +71,6 @@ angular.module('app').controller('mpv-locationcontroller',
                 });
             }
             
-            var self = this;
-            $scope.setTable = function(){
-                self.tableParams = new NgTableParams({
-                    count: 5
-                }, {
-                    counts: [],
-                    dataset: $scope.listobj
-                });
-                $scope.getcolumn();
-                $scope.reinitDeviceWidget();
-            }
 
             $scope.putDashforEmptyValue = function(){
                 if($scope.listobj.length > 0){
@@ -110,13 +86,21 @@ angular.module('app').controller('mpv-locationcontroller',
                 }
 
             }
+            //promise sample
+            // $scope.getAllLocation = function(){
+            //     roomResource.getall().$promise.then(function(data){
+            //         $scope.listobj = data.obj;
+            //         $scope.showSeveralLocationRows(data.obj);
+            //     });
+            // }
 
             $scope.getAllLocation = function(){
                 roomresource.$getall(function(data){
                     $scope.listobj = data.obj;
                     $scope.putDashforEmptyValue();
                     $scope.showSeveralLocationRows(data.obj);
-                    $scope.setTable();
+                    $scope.getcolumn();
+                    $scope.reinitDeviceWidget();
                 });
             }
 
@@ -126,7 +110,8 @@ angular.module('app').controller('mpv-locationcontroller',
                         $scope.listobj = data.obj;
                         $scope.putDashforEmptyValue();
                         $scope.showSeveralLocationRows(data.obj);
-                        $scope.setTable();
+                        $scope.getcolumn();
+                        $scope.reinitDeviceWidget();
                     }
                 });
             }
@@ -137,9 +122,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     return widget.widgetSettings.name === 'site'
                 });
 
-                // if($scope.sitewidgets.length != 0){
-                    $rootScope.sitelist = [];
-                // }
+                $rootScope.sitelist = [];
                 angular.forEach($scope.sitewidgets, function(widget) {
                     if(widget.widgetSettings.configuration.datasource != undefined){
                     roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
@@ -156,60 +139,50 @@ angular.module('app').controller('mpv-locationcontroller',
                 });
             }
 
+            $scope.convertlisttotree = function(data){
+                var ltt = new LTT(data, {
+                    key_id: 'uuid',
+                    key_parent: 'parent',
+                    key_child : 'children'
+                });
+                var tree = ltt.GetTree();
+                return tree;
+            }
+
             $scope.showSeveralLocationRows = function(newLocationData){
-                var count  = 0;
-                // if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
+                if($scope.widgetdata.widgetSettings.configuration.selectedrows.length > 0){
+                    $scope.listobj = $scope.convertlisttotree($scope.widgetdata.widgetSettings.configuration.selectedrows);  
                     angular.forEach(newLocationData, function(data){
-                        var selectRowsStatus = $scope.widgetdata.widgetSettings.configuration.selectRowsStatus;
-                        if($scope.widgetdata.widgetSettings.configuration.rows.length == 0){
-                            
-                            // data.display = false;
-                            data.display = count <= 4 ? true:false;
-                        }else{
-                            var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
-                                return data.uuid === row.uuid
-                            })[0];
-                            if(obj != null){
-                                data.display = !obj.display && count <= 4 && !selectRowsStatus ? true : obj.display;
-                            }
-                            else if(obj == null || obj == undefined){
-                                data.display = count <= 4 ? true : false;
-                            }
-                            else{
-                                data.display = false;
-                            }
-                            // data.display = obj != null ? obj.display:false;
-                        }
-                        // $scope.$parent.item.widgetSettings.configuration.selectRowsStatus
-                        count = data.display == true ? count +1:count;
+                        var getselectedrows = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows,function(row){
+                            return data.uuid === row.uuid
+                        })[0];
+                        data.display = getselectedrows != undefined ? getselectedrows.display : false;
                     }); 
-                // }else {
-                //     angular.forEach(newLocationData, function(data){
-                //         var obj = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows, function(row){
-                //             return data.uuid === row.uuid
-                //         })[0];
-                //         data.display = obj != null ? obj.display:false;
-                //     }); 
-                // }
-                $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
-                // console.log(newLocationData);
+                    $scope.widgetdata.widgetSettings.configuration.rows = newLocationData
+                }else{
+                    angular.forEach(newLocationData, function(data){
+                        data.display = true;
+                    });
+                    $scope.listobj = $scope.convertlisttotree(newLocationData);                
+                    $scope.widgetdata.widgetSettings.configuration.selectedrows = newLocationData;
+                    $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
+                }
+                console.log($scope.widgetdata.widgetSettings.configuration.rows);
             }
 
             $scope.$watchCollection(
                 function () {return $scope.widgetdata.widgetSettings.configuration.initializeStatus;}
             ,  function (newValue,oldValue) {
-                $scope.init();
-                $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
+                if($scope.widgetdata.widgetSettings.configuration.initializeStatus){
+                    $scope.init();
+                    $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
+                }
             });
-
 
             $scope.init = function(){
                 $scope.getSites();
                 $scope.getLocationData();
-                
             }
-
-            
 
             $scope.init();
         }

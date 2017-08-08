@@ -33,7 +33,8 @@
     </div>
     <div class="form-group">
         <label>Row :</label>
-        <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover" fixed-header>
+         <tree-grid tree-data="convertedrows" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expanding_property_files"></tree-grid>   
+         <!-- <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover" fixed-header>
             <thead>
                 <tr>
                     <th><button ng-click="selectAllRows()">All</button></th>                                        
@@ -53,14 +54,14 @@
                     <td>{{obj.areatype}}</td>
                 </tr>
             </tbody>
-        </table>  
+        </table>    -->
     </div>    
     <div class="form-group">
         <label>Column :</label>
         <div class="row">
-            <div class="col-md-6" ng-repeat="col in configuration.cols">
+            <div class="col-md-6" ng-repeat="col in colsoption">
                 <label class="checkbox-inline" >
-                    <input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="col.show"/> {{col.title}}
+                    <input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="col.show" ng-change="updatecolumn(col)"/> {{col.title}}
                 </label>
             </div>
         </div>

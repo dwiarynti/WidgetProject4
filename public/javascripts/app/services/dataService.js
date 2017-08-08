@@ -146,6 +146,7 @@ angular.module('app').factory('dataService',
                                 siteid:0,
                                 cols : [],
                                 rows : [],
+                                selectedrows : [],
                                 selectRowsStatus : false,
                                 initializeStatus : false
                             },

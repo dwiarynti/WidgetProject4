@@ -48,13 +48,6 @@ angular.module('app').controller('locationmanagementcontroller',
                 return tree;
             }
 
-            // $scope.getlocflatdata = function(){
-            //     roomresource.$getlocflatdata(function(data){
-            //         if(data.success)
-            //             $scope.getlocflatdata_obj = data.obj;
-            //     });
-            // }
-
             $scope.init = function(){
                 roomresource.$getall(function(data){
                     console.log(data.obj);
