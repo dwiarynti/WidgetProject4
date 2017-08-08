@@ -280,8 +280,7 @@ router.get('/room/getall',function(req,res)
                                 if(listobj[i].parent == result[j].children[r].children[s].children[t].children[x].uuid)
                                 {
                                     var selectedCloset= listobj[i];
-                                
-                                     result[j].children[r].children[s].children[t].children[x].children.push(selectedCloset);
+                                    result[j].children[r].children[s].children[t].children[x].children.push(selectedCloset);
                                 }
                             }
                             
@@ -304,20 +303,7 @@ router.get('/room/getall',function(req,res)
     })
 });
 
-router.get('/room/getalldata',function(req,res)
-{
-    roomdb.get('room',function(err,data)
-    {
-     if(err)
-     {
-        res.json(err,500);
-     }
-    else
-        {
-            res.json(data);
-        }
-    })
-})
+
 
 router.get('/room/get/:_id',function(req,res)
 {
@@ -619,224 +605,110 @@ var getloc = function(id,callback)
         }
         else
         {
-            var listarea = [];
+           
             var listresult = [];
             var parentname = "";
            
          
             for(var i = 0 ; i < rooms.length; i++)
             {
-                if(rooms[i].disable == false)
+                if(rooms[i].uuid == id)
                 {
-
-                    if(rooms[i].uuid == id)
-                    {
                         parentname = rooms[i].name;
-                    }
-                    if(rooms[i].parent == id)
-                    {
-                    rooms[i].parentname = parentname;
-                    listresult.push(rooms[i]);
-                    rooms[i].Building = [];
-                    listarea.push(rooms[i]);
-                    }
                 }
+                if(rooms[i].parent == id)
+                {
+                    rooms[i].parentname = parentname;
+                    rooms[i].children = [];
+                    listresult.push(rooms[i]);
+                }
+                
             }
 
-            if(listarea.length == 0)
+            if(listresult.length == 0)
             {
                 var result = "0";
                 return callback(result);
             }
             else
-            {
-                for(var j = 0 ; j < rooms.length; j++)
+            {   
+                for(var i = 0; i < rooms.length;i++)
                 {
-                    for(var i = 0 ; i < listarea.length; i++)
+                    for(var j = 0 ; j < listresult.length;j++)
                     {
-                        if(rooms[j].disable == false)
+                        if(listresult[j].uuid == rooms[i].parent)
                         {
-                            if(rooms[j].parent != 0)
+                            var selectedBuilding = rooms[i];
+                            selectedBuilding.children = [];
+                            selectedBuilding.parentname = listresult[j].name;
+                            listresult[j].children.push(selectedBuilding);
+                        }
+                    }
+                }
+                for(var i = 0; i < rooms.length;i++)
+                {
+                    for(var j = 0 ; j < listresult.length;j++)
+                    {
+                        for(var k = 0 ; k < listresult[j].children.length;k++)
+                        {
+                            if(listresult[j].children[k].uuid == rooms[i].parent)
                             {
-                                if(rooms[j].parent == listarea[i].uuid)
-                                {
-                                    rooms[j].parentname = listarea[i].name;
-                                    listresult.push(rooms[j]);
-                                    rooms[j].Floor = [];
-                                    listarea[i].Building.push(rooms[j]);
-                                }
+                                var selectedFloor = rooms[i];
+                                selectedFloor.children = [];
+                                selectedFloor.parentname = listresult[j].children[k].name;
+                                listresult[j].children[k].children.push(selectedFloor);
                             }
                         }
                     }
                 }
 
-                for(var j = 0 ; j < rooms.length; j++)
+                for(var i = 0; i < rooms.length;i++)
                 {
-                    for(var i = 0 ; i < listarea.length; i++)
+                    for(var j = 0 ; j < listresult.length;j++)
                     {
-                        for(var k = 0 ; k < listarea[i].Building.length;k++)
+                        for(var k = 0 ; k < listresult[j].children.length;k++)
                         {
-                        if(rooms[j].disable == false)
-                        {
-                            if(rooms[j].parent != 0)
+                            for(var l = 0 ; l < listresult[j].children[k].children.length;l++)
                             {
-                            if(rooms[j].parent == listarea[i].Building[k].uuid)
+                            if(listresult[j].children[k].children[l].uuid == rooms[i].parent)
                             {
-                                rooms[j].parentname = listarea[i].name;
-                                listresult.push(rooms[j]);
-                                rooms[j].Zone = [];
-                                listarea[i].Building[k].Floor.push(rooms[j]);
-                            }
-                            }
-                        }
-                        }
-                    }
-                }
-
-                for(var j = 0 ; j < rooms.length; j++)
-                {
-                    for(var i = 0 ; i < listarea.length; i++)
-                    {
-                        for(var k = 0 ; k < listarea[i].Building.length;k++)
-                        {
-                            for(var l = 0 ; l < listarea[i].Building[k].Floor.length; l++)
-                            {
-                            if(rooms[j].disable == false)
-                            {
-                                if(rooms[j].parent != 0)
-                                {
-                                if(rooms[j].parent == listarea[i].Building[k].Floor[l].uuid)
-                                {
-                                    rooms[j].parentname = listarea[i].name;
-                                    listresult.push(rooms[j]);
-                                    rooms[j].Room = [];
-                                    listarea[i].Building[k].Floor[l].Zone.push(rooms[j]);
-                                }
-                                }
+                                var selectedRoom = rooms[i];
+                                selectedRoom.children = [];
+                                selectedRoom.parentname = listresult[j].children[k].children[l].name;
+                                listresult[j].children[k].children[l].children.push(selectedRoom);
                             }
                             }
                         }
                     }
                 }
 
-                for(var j = 0 ; j < rooms.length; j++)
+                for(var i = 0; i < rooms.length;i++)
                 {
-                    for(var i = 0 ; i < listarea.length; i++)
+                    for(var j = 0 ; j < listresult.length;j++)
                     {
-                        for(var k = 0 ; k < listarea[i].Building.length;k++)
+                        for(var k = 0 ; k < listresult[j].children.length;k++)
                         {
-                            for(var l = 0 ; l < listarea[i].Building[k].Floor.length; l++)
+                            for(var l = 0 ; l < listresult[j].children[k].children.length;l++)
                             {
-                                for(var m = 0 ; m < listarea[i].Building[k].Floor[l].Zone.length;m++)
+                                for(var m = 0 ;  m < listresult[j].children[k].children[l].children.length;m++)
                                 {
-                                    if(rooms[j].disable == false)
+                                    if(listresult[j].children[k].children[l].children[m].uuid == rooms[i].parent)
                                     {
-                                        if(rooms[j].parent != 0)
-                                        {
-                                        if(rooms[j].parent == listarea[i].Building[k].Floor[l].Zone[m].uuid)
-                                        {
-                                            rooms[j].parentname = listarea[i].name;
-                                            listresult.push(rooms[j]);
-                                            rooms[j].Section = [];
-                                            listarea[i].Building[k].Floor[l].Zone[m].Room.push(rooms[j]);
-                                        }
-                                        }
-                                    }
+                                        var selectedCloset = rooms[i];
+                                        selectedCloset.parentname = listresult[j].children[k].children[l].children[m].name;
+                                        listresult[j].children[k].children[l].children[m].push(selectedCloset);
+                                    }   
                                 }
+                            
                             }
                         }
                     }
                 }
 
-                for(var j = 0 ; j < rooms.length; j++)
-                {
-                    for(var i = 0 ; i < listarea.length; i++)
-                    {
-                        for(var k = 0 ; k < listarea[i].Building.length;k++)
-                        {
-                            for(var l = 0 ; l < listarea[i].Building[k].Floor.length; l++)
-                            {
-                                for(var m = 0 ; m < listarea[i].Building[k].Floor[l].Zone.length;m++)
-                                {
-                                    for(var n = 0 ; n < listarea[i].Building[k].Floor[l].Zone[m].Room.length; n++)
-                                    {
-                                    if(rooms[j].disable == false)
-                                    {
-                                        if(rooms[j].parent != 0)
-                                        {
-                                        if(rooms[j].parent == listarea[i].Building[k].Floor[l].Zone[m].Room[n].uuid)
-                                        {
-                                            rooms[j].parentname = listarea[i].name;
-                                            listresult.push(rooms[j]);
-                                            rooms[j].Closet = [];
-                                            listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section.push(rooms[j]);
-                                        }
-                                        }
-                                    }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
 
-                for(var j = 0 ; j < rooms.length; j++)
-                {
-                    for(var i = 0 ; i < listarea.length; i++)
-                    {
-                        for(var k = 0 ; k < listarea[i].Building.length;k++)
-                        {
-                            for(var l = 0 ; l < listarea[i].Building[k].Floor.length; l++)
-                            {
-                                for(var m = 0 ; m < listarea[i].Building[k].Floor[l].Zone.length;m++)
-                                {
-                                    for(var n = 0 ; n < listarea[i].Building[k].Floor[l].Zone[m].Room.length; n++)
-                                    {
-                                        for(var o = 0 ; o < listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section.length; o++)
-                                        {
-                                        if(rooms[j].disable == false)
-                                        {
-                                            if(rooms[j].parent != 0)
-                                            {
-                                            if(rooms[j].parent == listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section[o].uuid)
-                                            {
-                                                rooms[j].parentname = listarea[i].name;
-                                                listresult.push(rooms[j]);
-                                                listarea[i].Building[k].Floor[l].Zone[m].Room[n].Section[o].Closet.push(rooms[j]);
-                                            }
-                                            }
-                                        }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                var result = [];
-                for(var i = 0 ; i < listresult.length; i++)
-                {
-                    var selected = {
-                        uuid : listresult[i].uuid,
-                        name:  listresult[i].name,
-                        parent : listresult[i].parent,
-                        parentname : listresult[i].parentname,
-                        datecreated :  listresult[i].datacreated,
-                        datemodified : listresult[i].datemodified,
-                        changeby :  listresult[i].changeby,
-                        changebyname :listresult[i].changebyname,
-                        areatype :  listresult[i].areatype,
-                        shortaddress: listresult[i].shortaddress,
-                        fulladdress: listresult[i].fulladdress,
-                        Location : listresult[i].Location,
-                        disable :  listresult[i].disable
-
-                    }
-                    result.push(selected);
-                }
-
-                return callback(result);
+                
+            
+                return callback(listresult);
 
             }
         }
@@ -979,4 +851,76 @@ router.get('/room/getdevice/:_id',function(req,res)
      }
 });
 });
+
+router.get('/room/getlocflatdata',function(req,res)
+{
+    var listobj = [];
+     var room = {
+        uuid :"",
+        name: "",
+        parent :"",
+        datecreated : "",
+        datemodified : "",
+        changeby : "",
+        changebyname :"",
+        areatype :"",
+        shortaddress: "",
+        fulladdress:"",
+        Location :"",
+        disable : "",
+        children: []
+    }
+    roomdb.get('room',function(err,rooms)
+    {
+        if(err)
+        {
+            if(err.message == "Key not found in database" )
+            {
+                listobj.push(room);
+                res.json({"success": true , "obj": listobj});
+            }
+            else
+            {
+                res.json(500,err);
+            }
+        }
+        else
+        {
+            
+            for(var i = 0 ; i < rooms.length; i++)
+            {
+                if(rooms[i].disable == false)
+                {
+                    rooms[i].parentname = "";
+                    listobj.push(rooms[i]);
+                }
+            }
+
+            for(var a = 0 ; a < listobj.length;a++)
+            {
+            for(var i = 0 ; i < listobj.length;i++)
+            {
+                if(listobj[i].parent != 0)
+                {
+                    if(listobj[i].parent == listobj[a].uuid)
+                    {
+                        listobj[i].parentname = listobj[a].name;
+                    }
+                }
+                else
+                {
+                     listobj[i].parentname = "-";
+                }
+            }
+        }
+       
+       
+        if(listobj.length == 0)
+        {
+            listobj.push(room);
+        }
+        res.json({"success": true , "obj": listobj});
+        }
+    })
+})
 module.exports = router;
