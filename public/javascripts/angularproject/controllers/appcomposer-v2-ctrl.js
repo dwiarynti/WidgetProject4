@@ -11,6 +11,7 @@ angular.module('app').controller('appcomposer-v2controller',
             $rootScope.isSingleSiteUpdated = false;
 
             $rootScope.initwidget = {location:false};
+            $scope.errmsg = '';
 
             $scope.gridsterOpts = {
                 columns: 13,
@@ -51,18 +52,24 @@ angular.module('app').controller('appcomposer-v2controller',
             }
 
             $scope.Save = function(){
-                widgetmanagementresource.appname = $scope.applicationObj.appname;
-                widgetmanagementresource.appstatus = $scope.applicationObj.appstatus;
-                widgetmanagementresource.widget = $scope.applicationObj.widget;
+                if($scope.applicationObj.appname == ''){
+                    $scope.errmsg = 'Application name is required';
+                }else{
+                    $scope.errmsg = '';
+                    widgetmanagementresource.appname = $scope.applicationObj.appname;
+                    widgetmanagementresource.appstatus = $scope.applicationObj.appstatus;
+                    widgetmanagementresource.widget = $scope.applicationObj.widget;
 
-                widgetmanagementresource.$create(function(data){
-                    if(data.success){
-                        $scope.applicationObj = data.obj;
-                        $window.alert("Data saved successfully");
-                    }
-                    //Reinit menu
-                    $rootScope.addedNewApp = true;
-                });
+                    widgetmanagementresource.$create(function(data){
+                        if(data.success){
+                            $scope.applicationObj = data.obj;
+                            $window.alert("Data saved successfully");
+                        }
+                        //Reinit menu
+                        $rootScope.addedNewApp = true;
+                    });
+                }
+                
             }
 
             $scope.Update = function(){

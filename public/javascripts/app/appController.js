@@ -196,15 +196,14 @@ angular.module('app').controller('appController',
             }
 
             $scope.menuSetting = function(){
-                var obj = { label: 'Settings', href: '', icon: 'fa-gears', isGroup: true, submenuItems: [
-                        // {label: item.appname, href: '/application/' + item.euid, icon: 'fa-dashboard'},
-                        { label: 'User Management', href: '/usermanagement', icon: 'fa-user' },
+                var obj = { label: 'Settings', href: '', icon: 'fa-gears', isGroup: true, 
+                submenuItems: [
                         { label: 'Auth Setting', href: '/authsetting', icon: 'fa-wrench'},
-                        // { label: 'Notif Management', href: '/notificationmanagement', icon: 'fa-wrench'},
+                        { label: 'Device Management', href: '/devicemanagement', icon: 'fa-wrench'},  
                         { label: 'Loc Management', href: '/locationmanagement', icon: 'fa-wrench'},
                         { label: 'People Management', href: '/peoplemanagement', icon: 'fa-wrench'},
-                        { label: 'Device Management', href: '/devicemanagement', icon: 'fa-wrench'},
-                        { label: 'Personloc Management', href: '/personlocmanagement', icon: 'fa-wrench'},
+                        { label: 'Personloc Management', href: '/personlocmanagement', icon: 'fa-wrench'},                                                                  
+                        { label: 'User Management', href: '/usermanagement', icon: 'fa-user' },
                     ] };
                 $scope.menuItems.push(obj);    
             }

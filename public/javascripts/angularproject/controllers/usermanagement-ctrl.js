@@ -99,11 +99,11 @@ angular.module('app').controller('usermanagementcontroller',
                 $("#modal-edit").modal('show');
                 
                 angular.forEach($scope.pagelistEditMode, function (pageobj) {
-                    var qwe = $filter('filter')(obj.pages,function(item){
+                    var selectedpages = $filter('filter')(obj.pages,function(item){
                         return pageobj.id === item
                     })[0];
                     
-                    pageobj.selected = qwe != undefined ? true:false;
+                    pageobj.selected = selectedpages != undefined ? true:false;
                 });
                 $scope.selecteduser = obj;
             }
@@ -141,6 +141,11 @@ angular.module('app').controller('usermanagementcontroller',
                         
                     }
                 });
+            }
+
+            $scope.closemodaledit = function(){
+                $("#modal-edit").modal('hide');
+                $scope.init();
             }
 
         }

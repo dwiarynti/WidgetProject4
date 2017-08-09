@@ -51,6 +51,7 @@ angular.module('app').controller('peoplemanagementcontroller',
             
             $scope.turnoffeditmode = function(obj){
                 obj.editmode = false;
+                $scope.init();
             }
 
             $scope.Update = function(obj){
