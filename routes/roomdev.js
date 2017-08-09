@@ -631,7 +631,7 @@ router.post('/roomdev/update',function(req,res)
                               
                 if(roomdev[j].euid == devices.prevdeviceobj.euid)
                 {
-                    checkeuid = roomdev.filter(p=>p.euid === devices.euid && p.room === devices.room);
+                    checkeuid = roomdev.filter(p=>p.euid === devices.euid);
                     roomdev[j].euid = devices.euid;
                     roomdev[j].room = devices.room;
                     roomdev[j].type = devices.type;
@@ -786,7 +786,13 @@ router.post('/roomdev/update',function(req,res)
                                 }
                                 roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
                                 {
-                                decowndevicedb.put('decowndevice',owndevice,function(err)
+                                if(err)
+                                {
+                                    res.json(500,err)
+                                }
+                                else
+                                {
+                                    decowndevicedb.put('decowndevice',owndevice,function(err)
                                 {
                                     if(err)
                                     {
@@ -805,11 +811,10 @@ router.post('/roomdev/update',function(req,res)
                                                 res.json({"success": true })
                                             }
                                         });            
-
                                     }
-                                });
-                                });
-
+                                });                            
+                                }
+                              });   
                             }
                         });
                     });
