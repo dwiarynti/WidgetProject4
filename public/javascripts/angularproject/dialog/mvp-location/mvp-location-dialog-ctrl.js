@@ -49,16 +49,22 @@ angular.module('app').controller('mvp-locationdialogcontroller',
         }
 
         $scope.colDefs = [
-            {
-                // field: "",
-                displayName: "All",
-                cellTemplate: '<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="row.branch.display" ng-change="treeControl.selectSingleRow(row.branch, row.branch.display)"/></td>'
-            },
+            // {
+            //     // field: "",
+            //     displayName: "All",
+            //     cellTemplate: '<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="row.branch.display" ng-change="treeControl.selectSingleRow(row.branch, row.branch.display)"/></td>'
+            // },
             // { field: "uuid", displayName: "UUID" },
-            { field: "name", displayName: "Name" },
+            // { field: "name", displayName: "Name" },
             { field: "areatype", displayName: "Area Type" },
             { field: "parentname", displayName: "Parent" },
         ];
+        $scope.expandingProperty = {
+            field: "name",
+            displayName: "Name",
+            cellTemplate: '<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="row.branch.display" ng-change="treeControl.selectSingleRow(row.branch, row.branch.display)"/> <span>{{ row.branch.name }}</span>',
+            // filterable: true
+        };
         $scope.columnlist = [
             {field:"name", show:true},
             {field:"areatype", show:true},
@@ -80,16 +86,19 @@ angular.module('app').controller('mvp-locationdialogcontroller',
                 var getdisplayedcolumn = $filter('filter')($scope.item.widgetSettings.configuration.cols,function(obj){
                     return obj.field === columnobj.field
                 })[0];
-                if(getdisplayedcolumn != undefined){
-                    $scope.colsoption.push({field:getdisplayedcolumn.field, title:getdisplayedcolumn.field , show:true});                    
-                }else{
-                    $scope.colsoption.push({field:columnobj.field, title:columnobj.field , show:false});
+                if(columnobj.field != 'name'){
+                    if(getdisplayedcolumn != undefined){
+                        $scope.colsoption.push({field:getdisplayedcolumn.field, title:getdisplayedcolumn.field , show:true});                    
+                    }else{
+                        $scope.colsoption.push({field:columnobj.field, title:columnobj.field , show:false});
+                    }
                 }
+
             });
         }
         $scope.cols();
 
-        $scope.expandingProperty = {};  //Create a scope object to hold custom property to first column
+        // $scope.expandingProperty = {};  //Create a scope object to hold custom property to first column
         
         $scope.saveSettings = function () {
             $scope.configuration.siteid = parseInt($scope.configuration.siteid);

@@ -60,9 +60,9 @@ angular.module('app').controller('locationmanagementcontroller',
             $scope.init();
 
             $scope.Add = function(){
+                console.log($scope.colDefs);
                 $scope.action = "Add";
                 $("#modal-add").modal('show');
-                
             }
 
             $scope.closemodal = function(){
@@ -83,16 +83,9 @@ angular.module('app').controller('locationmanagementcontroller',
                         if(data.success)
                             $scope.closemodal();
                             $scope.init();
-                            
                     });
                 }
-
-                
             }
-
-            // $scope.turnoffaddmode = function(index){
-            //     $scope.roomList.splice(index,1);
-            // }
 
             $scope.Edit=function(obj){
                 obj.editmode = true;
@@ -115,8 +108,7 @@ angular.module('app').controller('locationmanagementcontroller',
                 roomresource.$update(function(data){
                     if(data.success)
                         $scope.closemodal();
-                        // $scope.init();
-                    
+                        $scope.init();
                 });
             }
             
@@ -131,11 +123,8 @@ angular.module('app').controller('locationmanagementcontroller',
                     if(data.success)
                         $scope.init();
                         $("#modal-delete").modal('hide');
-                    
                 });
             }
-
-
 
             $scope.getParent = function(level){
                 $scope.parentList = [];
@@ -149,8 +138,6 @@ angular.module('app').controller('locationmanagementcontroller',
                         $scope.parentList.push.apply($scope.parentList, data);
                     }
                 }
-
-                // $scope.concatShortAddress(level);
             }
             
             $scope.isSelectedItem =function(itemA, itemB){
@@ -205,11 +192,10 @@ angular.module('app').controller('locationmanagementcontroller',
 
     $scope.locmanagementcontrol.edit = function(obj){
         $scope.action = "Edit";
-        $scope.locationobj = obj;
+        $scope.locationobj = angular.copy(obj);
         var areatypelevel = $scope.getAreatypeLevel(obj.areatype);
         $scope.getParent(areatypelevel);
         $("#modal-add").modal('show');
-
     }
 
     $scope.locmanagementcontrol.btnDeleteClick = function(obj){
@@ -221,7 +207,7 @@ angular.module('app').controller('locationmanagementcontroller',
 
     $scope.colDefs = [
     // { field: "name", displayName: "Name" },
-    { field: "areatype", displayName: "Area Type" },
+    { field: "areatype", displayName: "Area Type",  },
     { field: "parentname", displayName: "Parent" },
     { field: "shortaddress", displayName: "Short Address" },
     { field: "fulladdress", displayName: "Full Address" },
@@ -240,9 +226,29 @@ angular.module('app').controller('locationmanagementcontroller',
 
 
 ///end sample 1
+$scope.tree_file = [
+    {Path:"aa", size: 12, mtime:"qqqe"},
+    {Path:"aa", size: 12, mtime:"qqqe"},
+    {Path:"aa", size: 12, mtime:"qqqe"},
+    {Path:"aa", size: 12, mtime:"qqqe"},
+];
 
-
-
+$scope.expanding_property_files = {
+      field: "Path",
+      displayName: "Path",
+      cellTemplate: "<span title='{{row.branch.RealPath}}' >{{ row.branch[expandingProperty.field] }}</span>"
+};
+$scope.col_defs_files = [
+        {
+          field: "size",
+          displayName: "Size",
+        //   cellTemplate: "<span width='40' >{{ row.branch[col.field] }}</span>"
+        },
+        {
+          field: "mtime",
+          displayName: "Date"
+        }
+ ];
 
   //end
         }

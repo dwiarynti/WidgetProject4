@@ -12,8 +12,15 @@
                 <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p>  
                 <button ng-click="locmanagementcontrol.expand_all()" class="btn btn-default btn-sm">Expand All</button>
                 <button ng-click="locmanagementcontrol.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
-                <tree-grid tree-data="roomList.tree" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty"></tree-grid>   
+                <tree-grid tree-data="roomList.tree" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty" ></tree-grid>   
                 <!-- <tree-grid tree-data="roomList" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expanding_property_files"></tree-grid>   -->
+            
+            
+            <script type="text/ng-template" id="path/to/treegrid/template.html">
+<div class="table-responsive">
+
+</div>
+</script>            
             </div>
         </div>
     </div>
