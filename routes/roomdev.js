@@ -29,230 +29,6 @@ router.post('/roomdev/cleanup',function(req,res)
     });
 })
 
-// router.post('/roomdev/create',function(req,res)
-// {
-//     var listobj = [];
-//     var listroom = [];
-//     var selectdevice = "";
-//     var select = "";
-//     var devices  = {
-//         euid : req.body.deviceobj.euid,
-//         room : req.body.deviceobj.room,
-//         type : req.body.deviceobj.type,
-//         person : req.body.deviceobj.person
-//     }
-
-//     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
-//     {
-//         if(err)
-//         {
-//             if(err.message == "Key not found in database")
-//             listobj.push(devices);
-//             else
-//             res.json(500,err);
-            
-//         }
-//         else
-//         {
-//            if(roomdev.length > 0)
-//            {
-//                 for(var a = 0 ;a< roomdev.length;a++)
-//                 {
-//                     if(roomdev[a].euid == devices.euid)
-//                     {
-//                         select =  roomdev[a].euid;
-//                     }
-//                 }
-//                listobj = roomdev;
-//                listobj.push(devices);
-//            }
-//            else
-//            {
-//                if(roomdev.euid == devices.euid)
-//                {
-//                    select =  roomdev.euid
-//                }
-//                listobj.push(devices);
-//            }
-//         }
-       
-      
-//         if(select == "")
-//         {
-//         roomdevdevicedb.put('roomdevdevice',listobj,function(err)
-//         {
-//             if(err)
-//             res.json(500,err);
-//             else
-//             if(devices.type == "fixed")
-//             {
-//                 var room = {
-//                     room : devices.room,
-//                     version : 1,
-//                     device  :[]
-//                 }
-//                 room.device.push(devices.euid);
-//                 roomdevroomdb.get('roomdevroom',function(err,roomroom)
-//                 {
-//                     var result = [];
-                    
-//                     if(err)
-//                     {
-//                         if(err.message == "Key not found in database")
-//                         {
-//                             listroom.push(room);
-//                         }
-//                         else
-//                         {
-//                             res.json(500,err);
-//                         }
-//                     }
-//                     else
-//                     {
-//                         if(roomroom.length > 0)
-//                         {
-//                         for(var i = 0 ; i < roomroom.length; i++)
-//                         {
-//                             if(roomroom[i].room == devices.room)
-//                             {
-//                                 roomroom[i].device.push(devices.euid);
-//                                 selectdevice = roomroom[i];
-//                             }
-//                         }
-//                         }
-//                         else
-//                         {
-//                             if(roomroom.room == devices.room)
-//                             {
-//                                 roomroom.device.push(devices.euid);
-//                                 result.push(roomroom);
-//                             }
-//                             else
-//                             {
-//                                 result[0] = roomroom;
-//                                 result.push(room);
-//                             }
-                            
-//                             selectdevice = roomroom;
-//                         }
-//                     }
-//                     if(selectdevice != "")
-//                     {
-//                         listroom = result;
-//                     }
-//                     else
-//                     {
-//                         listroom = room;
-//                     }
-//                     roomdevroomdb.put('roomdevroom',listroom,function(err)
-//                     {
-//                         if(err)
-//                         res.json(500,err);
-//                         else
-//                         res.json({"success": true })
-//                     });
-
-//                 })
-//             }
-//             else
-//             {
-//             var listownperson = [];
-//             var person  = {
-//                     person : devices.person,
-//                     version: 1,
-//                     device : []
-//             }
-//             person.device.push(devices.euid);
-//             decowndevicedb.get('decowndevice',function(err,owndevice)
-//             {
-//                 var listowndev = [];
-//                 var devown ={
-//                     uuid : devices.euid,
-//                     person: devices.person
-//                 }
-//                 if(err)
-//                     {
-//                         if(err.message == "Key not found in database")
-//                             {
-//                                 listowndev.push(devown);
-//                             }
-//                         else
-//                             {
-//                                 res.json(500,err);
-//                             }
-//                     }
-//                 else
-//                     {
-//                         if(owndevice.length > 0)
-//                             {
-//                                 listowndev = owndevice;
-//                                 listowndev.push(devown);
-//                             }
-//                         else
-//                             {
-//                                   listowndev.push(devown);
-//                             }
-//                     }
-//             decownpersondb.get('decownperson',function(err,ownperson)
-//             {
-//                 if(err)
-//                     {
-//                         if(err.message == "Key not found in database")
-//                             {
-//                                 listownperson.push(person);
-//                             }
-//                         else{
-//                             res.json(500,err);
-//                         }
-//                     }
-//                 else{
-//                     if(ownperson.length > 0 )
-//                         {
-//                             listownperson = ownperson;
-//                             listownperson.push(person);
-//                         }
-//                     else
-//                         {
-//                             listownperson.push(person);
-//                         }
-//                    }
-//             decowndevicedb.put('decowndevice',listowndev,function(err)
-//             {
-//                 if(err)
-//                     {
-//                         res.json(500,err);
-//                     }
-//                 else
-//                     {
-//                         decownpersondb.put('decownperson',listownperson,function(err)
-//                         {
-//                             if(err)
-//                                 {
-//                                     res.json(500,err);
-//                                 }
-//                             else
-//                                 {
-//                                      res.json({"success": true })
-//                                 }
-//                         });
-//                     }
-//             });
-                
-//             });
-                
-//             });
-               
-//             }
-//         })
-//         }
-//         else
-//         {
-//             res.json({"success" : false ,"messages": "mac address already exist"  })
-//         }
-//     });
-// });
-
-
 router.get('/roomdev/getall',function(req,res)
 {
     var listobj = [];
@@ -833,83 +609,141 @@ router.post('/roomdev/update',function(req,res)
     var listobj = [];
     var listroom = [];
     var result = [];
+
     roomdevdevicedb.get('roomdevdevice',function(err,roomdev)
     {
         if(err)
         {
-            if(err.message ==  "Key not found in database")
-            res.json({success:true,"obj": {}});
+            if(err.message == "Key not found in database")
+            {
+                res.json({"success": false, "obj": {}});
+            }
             else
-            res.json(500,err);
+            {
+                res.json(500,err);
+            }
         }
         else
         {
+            var checkeuid = "";
             for(var j = 0 ; j < roomdev.length;j++)
             {
-                if(roomdev[j].euid == devices.euid)
+                              
+                if(roomdev[j].euid == devices.prevdeviceobj.euid)
                 {
-                roomdev[j].room = devices.room;
-                roomdev[j].type = devices.type;
-                roomdev[j].person = devices.person;
-                
-                }
+                    checkeuid = roomdev.filter(p=>p.euid === devices.euid && p.room === devices.room);
+                    roomdev[j].euid = devices.euid;
+                    roomdev[j].room = devices.room;
+                    roomdev[j].type = devices.type;
+                    roomdev[j].person = devices.person;
+                    
+                }   
             }
-            roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
+            if(checkeuid.length > 0)
             {
-                if(err)
+                res.json({"success": false,"message":"mac address already exists"})
+            }
+            else
+            {
+                if(devices.type == "fixed")
                 {
-                res.json(500,err);
-                }
-                else
-                {
-                    if(devices.type == "fixed")
+                    roomdevroomdb.get('roomdevroom',function(err,roomroom)
                     {
-                        roomdevroomdb.get('roomdevroom',function(err,roomroom)
+                        if(err)
+                        {
+                            if(err.message == "Key not found in database")
+                            {
+                                res.json({"success": false, "obj": {}});
+                            }
+                            else
+                            {
+                                res.json(500,err);
+                            }
+                        }
+                        else
                         {
                             if(roomroom.length > 0)
-                            {
-                                for(var i = 0 ; i < roomroom.length; i++)
                                 {
-                                    if(roomroom[i].room == devices.room)
+                                    for(var i = 0 ; i < roomroom.length; i++)
                                     {
-                                        for(var j = 0 ; j < roomroom[i].device.length;j++)
+                                        if(roomroom[i].room == devices.room)
                                         {
-                                            if(roomroom[i].device[j] == devices.euid)
+                                            for(var j = 0 ; j < roomroom[i].device.length;j++)
                                             {
-                                                roomroom[i].device[j] = devices.euid;
+                                                if(roomroom[i].device[j] == devices.euid)
+                                                {
+                                                    roomroom[i].device[j] = devices.euid;
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                else
+                                {
+                                    if(roomroom.room == devices.room)
+                                    {
+                                        for(var i  = 0 ; i < roomroom.device.length;i++)
+                                        {
+                                                if(roomroom.device[i] == devices.euid)
+                                                {
+                                                    roomroom.device[i] = devices.euid;
+                                                }
+                                        
+                                        }
+                                    }
+                                }
+
+                            roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
+                            {
+                                if(err)
+                                {
+                                    res.json(500,err);
+                                }
+                                else
+                                {
+                                    roomdevroomdb.put('roomdevroom',roomroom,function(err)
+                                    {
+                                        if(err)
+                                        res.json(500,err);
+                                        else
+                                        res.json({"success": true })
+                                    });
+                                }
+                            });
+                        }
+                        
+                    });
+                }
+                else
+                {
+                    var checkerror = false;
+                    decowndevicedb.get('decowndevice',function(err,owndevice)
+                    {
+                        if(err)
+                        {
+                            if(err.message == "Key not found in database")
+                            {
+                                checkerror = true;
                             }
                             else
                             {
-                                if(roomroom.room == devices.room)
-                                {
-                                    for(var i  = 0 ; i < roomroom.device.length;i++)
-                                    {
-                                            if(roomroom.device[i] == devices.euid)
-                                            {
-                                                roomroom.device[i] = devices.euid;
-                                            }
-                                    
-                                    }
-                                }
+                                res.json(500,err);
                             }
+                        }
+                        else
+                        {
+                            for(var i = 0 ; i < owndevice.length;i++)
+                                    {
+                                        if(owndevice[i].uuid == devices.prevdeviceobj.euid)
+                                        {
+                                            owndevice[i].uuid == devices.euid;
+                                            owndevice[i].person = devices.person;
+                                        }
+                                }
+                            checkerror = false;
+                        }
 
-                            roomdevroomdb.put('roomdevroom',roomroom,function(err)
-                                {
-                                    if(err)
-                                    res.json(500,err);
-                                    else
-                                    res.json({"success": true })
-                                });
-                        });
-                    }
-                    else
-                    {
-                        var checkerror = false;
-                        decowndevicedb.get('decowndevice',function(err,owndevice)
+                        decownpersondb.get('decownperson',function(err,ownperson)
                         {
                             if(err)
                             {
@@ -919,81 +753,73 @@ router.post('/roomdev/update',function(req,res)
                                 }
                                 else
                                 {
-                                     res.json(500,err);
+                                    res.json(500,err);
                                 }
                             }
                             else
                             {
-                                for(var i = 0 ; i < owndevice.length;i++)
+                                for(var i = 0; i < ownperson.length;i++)
                                 {
-                                    if(owndevice[i].uuid == devices.prevdeviceobj.euid)
+                                    if(ownperson[i].person == devices.prevdeviceobj.person)
                                     {
-                                        owndevice[i].uuid == devices.euid;
-                                        owndevice[i].person = devices.person;
+                                                var result = "";
+                                                ownperson[i].person = devices.person;
+                                                result = ownperson[i].device.filter(x => x === devices.euid)
+                                                if(result == "")
+                                                {
+                                                ownperson[i].device.push(devices.euid); 
+                                                }
                                     }
                                 }
-                                 checkerror = false;
-                            }
-                            decownpersondb.get('decownperson',function(err,ownperson)
-                            {
-                                if(err)
+                                for(var i = 0; i < ownperson.length;i++)
+                                {
+                                    if(ownperson[i].person == devices.prevdeviceobj.person)
                                     {
-                                        if(err.message == "Key not found in database")
-                                            {
-                                                checkerror = true;
-                                            }
-                                        else{
-                                            res.json(500,err);
-                                        }
+                                                var result = "";
+                                                ownperson[i].person = devices.person;
+                                                result = ownperson[i].device.filter(x => x === devices.euid)
+                                                if(result == "")
+                                                {
+                                                ownperson[i].device.push(devices.euid); 
+                                                }
                                     }
-                                else{
+                                }
 
-                                   for(var i = 0; i < ownperson.length;i++)
+                                decowndevicedb.put('decowndevice',owndevice,function(err)
+                                {
+                                    if(err)
                                     {
-                                        if(ownperson[i].person == devices.prevdeviceobj.person)
+                                        res.json(500,err);
+                                    }
+                                    else
+                                    {
+                                        decownpersondb.put('decownperson',ownperson,function(err)
                                         {
-                                            var result = "";
-                                            ownperson[i].person = devices.person;
-                                            result = ownperson[i].device.filter(x => x === devices.euid)
-                                            if(result == "")
-                                            {
-                                               ownperson[i].device.push(devices.euid); 
-                                            }
-                                        }
-                                    }
-
-                                    decowndevicedb.put('decowndevice',owndevice,function(err)
-                                    {
-                                        if(err)
+                                            if(err)
                                             {
                                                 res.json(500,err);
                                             }
-                                        else
+                                            else
                                             {
-                                                decownpersondb.put('decownperson',ownperson,function(err)
-                                                {
-                                                    if(err)
-                                                        {
-                                                            res.json(500,err);
-                                                        }
-                                                    else
-                                                        {
-                                                            res.json({"success": true })
-                                                        }
-                                                });            
-
+                                                res.json({"success": true })
                                             }
-                                    });
-                                    
-                                }
-                            });
+                                        });            
 
+                                    }
+                                });
+
+                            }
                         });
-                    }
+                    });
                 }
-            });
+            }
+
+
+           
+
         }
     });
+
 });
 
 var setdevice = function(obj,callback)
@@ -1177,7 +1003,7 @@ router.post('/roomdev/create',function(req,res)
                         }
                  });
             }
-        })
+            })
         })
     });
 
