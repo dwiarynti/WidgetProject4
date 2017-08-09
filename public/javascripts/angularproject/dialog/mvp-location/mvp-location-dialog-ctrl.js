@@ -29,9 +29,20 @@ angular.module('app').controller('mvp-locationdialogcontroller',
 
 
         $scope.locmanagementcontrol = {};
-        $scope.locmanagementcontrol.selectSingleRow = function(){
+        $scope.locmanagementcontrol.selectSingleRow = function(obj, checked){
             $scope.configuration.selectRowsStatus = true;
+            $scope.resursionloop(obj,checked);
         }
+
+        $scope.resursionloop = function(source, checked){
+            angular.forEach(source.children, function(obj){
+                obj.display = checked;
+                if(obj.children.length > 0){
+                    $scope.test(obj, checked);
+                }
+            });
+        }
+
         $scope.locmanagementcontrol.scope = this;
         $scope.locmanagementcontrol.filterselectedrows = function(){
              $scope.configuration.selectedrows =  $filter('filter')($scope.configuration.rows, function(row){return row.display === true});
@@ -41,7 +52,7 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             {
                 // field: "",
                 displayName: "All",
-                cellTemplate: '<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="row.branch.display" ng-change="treeControl.selectSingleRow()"/></td>'
+                cellTemplate: '<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="row.branch.display" ng-change="treeControl.selectSingleRow(row.branch, row.branch.display)"/></td>'
             },
             // { field: "uuid", displayName: "UUID" },
             { field: "name", displayName: "Name" },
