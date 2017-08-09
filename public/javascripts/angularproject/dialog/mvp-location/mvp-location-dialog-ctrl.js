@@ -38,7 +38,7 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             angular.forEach(source.children, function(obj){
                 obj.display = checked;
                 if(obj.children.length > 0){
-                    $scope.test(obj, checked);
+                    $scope.resursionloop(obj, checked);
                 }
             });
         }
