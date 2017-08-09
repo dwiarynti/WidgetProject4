@@ -784,7 +784,8 @@ router.post('/roomdev/update',function(req,res)
                                                 }
                                     }
                                 }
-
+                                roomdevdevicedb.put('roomdevdevice',roomdev,function(err)
+                                {
                                 decowndevicedb.put('decowndevice',owndevice,function(err)
                                 {
                                     if(err)
@@ -806,6 +807,7 @@ router.post('/roomdev/update',function(req,res)
                                         });            
 
                                     }
+                                });
                                 });
 
                             }
