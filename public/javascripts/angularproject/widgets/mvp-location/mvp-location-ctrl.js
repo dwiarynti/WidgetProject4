@@ -103,6 +103,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.showSeveralLocationRows(data.obj);
                     $scope.getcolumn();
                     $scope.reinitDeviceWidget();
+                    $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                 });
             }
 
@@ -114,6 +115,7 @@ angular.module('app').controller('mpv-locationcontroller',
                         $scope.showSeveralLocationRows(data.obj);
                         $scope.getcolumn();
                         $scope.reinitDeviceWidget();
+                        $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                     }
                 });
             }
@@ -152,7 +154,7 @@ angular.module('app').controller('mpv-locationcontroller',
             }
 
             $scope.showSeveralLocationRows = function(newLocationData){
-                if($scope.widgetdata.widgetSettings.configuration.selectedrows.length > 0){
+                if($scope.widgetdata.widgetSettings.configuration.selectedrows.length > 0 && !$scope.widgetdata.widgetSettings.configuration.initializeStatus){
                     $scope.listobj = $scope.convertlisttotree($scope.widgetdata.widgetSettings.configuration.selectedrows);  
                     angular.forEach(newLocationData, function(data){
                         var getselectedrows = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows,function(row){
@@ -169,6 +171,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.widgetdata.widgetSettings.configuration.selectedrows = newLocationData;
                     $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
                 }
+                
                 console.log($scope.widgetdata.widgetSettings.configuration.rows);
             }
 
@@ -177,7 +180,7 @@ angular.module('app').controller('mpv-locationcontroller',
             ,  function (newValue,oldValue) {
                 if($scope.widgetdata.widgetSettings.configuration.initializeStatus){
                     $scope.init();
-                    $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
+                    
                 }
             });
 

@@ -32,7 +32,9 @@
         <label>Row :</label><br>
         <button ng-click="locmanagementcontrol.expand_all()" class="btn btn-default btn-sm">Expand All</button>
         <button ng-click="locmanagementcontrol.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
-        <tree-grid tree-data="convertedrows" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty"></tree-grid>   
+        <tree-grid tree-data="convertedrows" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty">
+        <table fixed-header></table>    
+        </tree-grid>   
     </div>    
     <div class="form-group">
         <label>Column :</label>
