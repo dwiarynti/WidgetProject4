@@ -27,34 +27,12 @@
             <label>Site :</label>
             <label>All Sites</label>
         </div>
-
-        
-
     </div>
     <div class="form-group">
-        <label>Row :</label>
-         <tree-grid tree-data="convertedrows" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty"></tree-grid>   
-         <!-- <table id="data-table" datatable="ng" dt-options="dtOptions" width="100%" class="table table-striped table-bordered table-hover" fixed-header>
-            <thead>
-                <tr>
-                    <th><button ng-click="selectAllRows()">All</button></th>                                        
-                    <th>uuid</th>                    
-                    <th>name</th>
-                    <th>parentname</th>
-                    <th>areatype</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="obj in configuration.rows" ng-if="obj.uuid != ''">
-                    <td><input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="obj.display" ng-change="selectSingleRow()"/></td>
-                    <td>{{obj.uuid}}</td>
-                    <td>{{obj.name}}</td>
-                    <td>{{obj.parentname}}</td>
-                    <td>{{obj.areatype}}</td>
-                </tr>
-            </tbody>
-        </table>    -->
+        <label>Row :</label><br>
+        <button ng-click="locmanagementcontrol.expand_all()" class="btn btn-default btn-sm">Expand All</button>
+        <button ng-click="locmanagementcontrol.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
+        <tree-grid tree-data="convertedrows" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty"></tree-grid>   
     </div>    
     <div class="form-group">
         <label>Column :</label>

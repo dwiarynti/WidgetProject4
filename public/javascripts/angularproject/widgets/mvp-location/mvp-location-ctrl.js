@@ -15,6 +15,8 @@ angular.module('app').controller('mpv-locationcontroller',
             $scope.sitewidgets = [];
             $scope.widgetdata = $scope.$parent.item;      
 
+            $scope.locmanagementcontrol = {};
+
             $scope.colDefs = $scope.widgetdata.widgetSettings.configuration.cols.length > 0 ? 
                 $scope.widgetdata.widgetSettings.configuration.cols : 
                 [

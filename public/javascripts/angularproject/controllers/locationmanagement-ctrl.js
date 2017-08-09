@@ -185,70 +185,39 @@ angular.module('app').controller('locationmanagementcontroller',
                 // obj.fulladdress = obj.shortaddress +" - "+ obj.fulladdress;
             }
 
+        ///treegrid
+            $scope.locmanagementcontrol = {};
 
+            $scope.locmanagementcontrol.edit = function(obj){
+                $scope.action = "Edit";
+                $scope.locationobj = angular.copy(obj);
+                var areatypelevel = $scope.getAreatypeLevel(obj.areatype);
+                $scope.getParent(areatypelevel);
+                $("#modal-add").modal('show');
+            }
 
-///sample 1
-    $scope.locmanagementcontrol = {};
+            $scope.locmanagementcontrol.btnDeleteClick = function(obj){
+                $("#modal-delete").modal('show');
+                $scope.deleteuuid = obj.uuid;
+            }
 
-    $scope.locmanagementcontrol.edit = function(obj){
-        $scope.action = "Edit";
-        $scope.locationobj = angular.copy(obj);
-        var areatypelevel = $scope.getAreatypeLevel(obj.areatype);
-        $scope.getParent(areatypelevel);
-        $("#modal-add").modal('show');
-    }
+            $scope.locmanagementcontrol.scope = this;
 
-    $scope.locmanagementcontrol.btnDeleteClick = function(obj){
-        $("#modal-delete").modal('show');
-        $scope.deleteuuid = obj.uuid;
-    }
-
-    $scope.locmanagementcontrol.scope = this;
-
-    $scope.colDefs = [
-    // { field: "name", displayName: "Name" },
-    { field: "areatype", displayName: "Area Type",  },
-    { field: "parentname", displayName: "Parent" },
-    { field: "shortaddress", displayName: "Short Address" },
-    { field: "fulladdress", displayName: "Full Address" },
-    {
-      field: "Action",
-      displayName: "Action",
-      cellTemplate: '<a ng-click="treeControl.edit(row.branch)" class="link" style="cursor: pointer">Edit</a> | <a ng-click="treeControl.btnDeleteClick(row.branch)" class="link" style="cursor: pointer">Delete</a>'
-    }];
-    $scope.expandingProperty = {
-        field: "name",
-        displayName: "Name",
-        filterable: true
-    };
-    
-    // $scope.expandingProperty = {};  //Create a scope object to hold custom property to first column
-
-
-///end sample 1
-$scope.tree_file = [
-    {Path:"aa", size: 12, mtime:"qqqe"},
-    {Path:"aa", size: 12, mtime:"qqqe"},
-    {Path:"aa", size: 12, mtime:"qqqe"},
-    {Path:"aa", size: 12, mtime:"qqqe"},
-];
-
-$scope.expanding_property_files = {
-      field: "Path",
-      displayName: "Path",
-      cellTemplate: "<span title='{{row.branch.RealPath}}' >{{ row.branch[expandingProperty.field] }}</span>"
-};
-$scope.col_defs_files = [
-        {
-          field: "size",
-          displayName: "Size",
-        //   cellTemplate: "<span width='40' >{{ row.branch[col.field] }}</span>"
-        },
-        {
-          field: "mtime",
-          displayName: "Date"
-        }
- ];
+            $scope.colDefs = [
+                { field: "areatype", displayName: "Area Type",  },
+                { field: "parentname", displayName: "Parent" },
+                { field: "shortaddress", displayName: "Short Address" },
+                { field: "fulladdress", displayName: "Full Address" },
+                {
+                field: "Action",
+                displayName: "Action",
+                cellTemplate: '<a ng-click="treeControl.edit(row.branch)" class="link" style="cursor: pointer">Edit</a> | <a ng-click="treeControl.btnDeleteClick(row.branch)" class="link" style="cursor: pointer">Delete</a>'
+            }];
+            $scope.expandingProperty = { //Create a scope object to hold custom property to first column
+                field: "name",
+                displayName: "Name",
+                filterable: true
+            };
 
   //end
         }
