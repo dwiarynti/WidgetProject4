@@ -12,7 +12,11 @@
                 <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p>  
                 <button ng-click="locmanagementcontrol.expand_all()" class="btn btn-default btn-sm">Expand All</button>
                 <button ng-click="locmanagementcontrol.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
-                <tree-grid tree-data="roomList.tree" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty" ></tree-grid>   
+                
+                <tree-grid tree-data="roomList.tree" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty"></tree-grid>   
+                <!-- create treegrid with custome template -->
+                <!-- <tree-grid tree-data="roomList.tree" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expandingProperty" template-url="path/to/treegrid/template.html"></tree-grid>-->
+                
                 <!-- <tree-grid tree-data="roomList" tree-control="locmanagementcontrol" col-defs="colDefs" expand-on="expanding_property_files"></tree-grid>   -->
                    
             </div>
@@ -89,4 +93,22 @@
             </div>
         </div>
     </div>
+    <!-- create treegrid with custome template -->
+    <!-- <script type="text/ng-template" id="path/to/treegrid/template.html"> 
+        <div class="table-responsive"> 
+            <table class="table tree-grid"> 
+                <thead> 
+                    <tr> 
+                        <th><a ng-if="expandingProperty.sortable" ng-click="sortBy(expandingProperty)">{{expandingProperty.displayName || expandingProperty.field || expandingProperty}}</a><span ng-if="!expandingProperty.sortable">{{expandingProperty.displayName || expandingProperty.field || expandingProperty}}</span><i ng-if="expandingProperty.sorted" class="{{expandingProperty.sortingIcon}} pull-right"></i></th> 
+                        <th ng-repeat="col in colDefinitions"><a ng-if="col.sortable" ng-click="sortBy(col)">{{col.displayName || col.field}}</a><span ng-if="!col.sortable">{{col.displayName || col.field}}</span><i ng-if="col.sorted" class="{{col.sortingIcon}} pull-right"></i></th> 
+                    </tr> 
+                </thead> 
+                <tbody> 
+                    <tr ng-repeat="row in tree_rows | searchFor:$parent.filterString:expandingProperty:colDefinitions:true track by row.branch.uuid" ng-class="'level-' + {{ row.level }} + (row.branch.selected ? ' active':'')" class="tree-grid-row"> <td><a ng-click="user_clicks_branch(row.branch)"><i ng-class="row.tree_icon" ng-click="row.branch.expanded = !row.branch.expanded" class="indented tree-icon"></i></a><span class="indented tree-label" ng-click="on_user_click(row.branch)"> {{row.branch[expandingProperty.field] || row.branch[expandingProperty]}}</span> </td> 
+                        <td ng-repeat="col in colDefinitions"> <div ng-if="col.cellTemplate" compile="col.cellTemplate" cell-template-scope="col.cellTemplateScope"></div> <div ng-if="!col.cellTemplate">{{row.branch[col.field]}}</div> </td> 
+                    </tr> 
+                </tbody> 
+            </table> 
+        </div> 
+    </script> -->
 </div>
