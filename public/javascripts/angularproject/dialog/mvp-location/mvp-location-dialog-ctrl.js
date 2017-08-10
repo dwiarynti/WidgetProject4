@@ -60,8 +60,8 @@ angular.module('app').controller('mvp-locationdialogcontroller',
             { field: "parentname", displayName: "Parent" },
         ];
         $scope.expandingProperty = {
-            field: "name",
-            displayName: "Name",
+            field: 'name',
+            displayName: 'Name',
             cellTemplate: '<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="row.branch.display" ng-change="treeControl.selectSingleRow(row.branch, row.branch.display)"/> <span>{{ row.branch.name }}</span>',
             // filterable: true
         };

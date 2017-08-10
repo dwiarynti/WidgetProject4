@@ -163,12 +163,22 @@ angular.module('app').controller('mpv-locationcontroller',
                         })[0];
                         data.display = getselectedrows != undefined ? getselectedrows.display : false;
                     }); 
-                    // $scope.listobj =  $scope.convertlisttotree(newLocationData);
-                    $scope.listobj = selectedrows.length > 0 && initializeStatus && !selectRowsStatus ? $scope.convertlisttotree(newLocationData) : $scope.convertlisttotree(selectedrows);  
-                    
+                     
+                    var getDisplayedRows = $filter('filter')(newLocationData,function(data){
+                            return data.display === true
+                        });
+                    if(getDisplayedRows.length == 0){
+                        angular.forEach(newLocationData, function(data){
+                            data.display = true
+                        });
+                    }
+
+                    $scope.listobj = getDisplayedRows.length == 0 ?  $scope.convertlisttotree(newLocationData) : $scope.convertlisttotree(getDisplayedRows);
+                    $scope.widgetdata.widgetSettings.configuration.selectedrows = newLocationData;
                     $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
                     $scope.widgetdata.widgetSettings.configuration.selectRowsStatus = false;
-                }else{
+                }
+                else{
                     angular.forEach(newLocationData, function(data){
                         data.display = true;
                     });
@@ -176,8 +186,6 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.widgetdata.widgetSettings.configuration.selectedrows = newLocationData;
                     $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
                 }
-                
-                console.log($scope.widgetdata.widgetSettings.configuration.rows);
             }
 
             $scope.$watchCollection(
