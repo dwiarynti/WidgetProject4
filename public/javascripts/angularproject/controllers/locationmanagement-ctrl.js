@@ -50,7 +50,6 @@ angular.module('app').controller('locationmanagementcontroller',
 
             $scope.init = function(){
                 roomresource.$getall(function(data){
-                    console.log(data.obj);
                     $scope.roomList.flat = data.obj;
                     $scope.roomList.tree = $scope.convertlisttotree(data.obj);
                     // $scope.getlocflatdata();
@@ -60,7 +59,6 @@ angular.module('app').controller('locationmanagementcontroller',
             $scope.init();
 
             $scope.Add = function(){
-                console.log($scope.colDefs);
                 $scope.action = "Add";
                 $("#modal-add").modal('show');
             }
@@ -89,7 +87,6 @@ angular.module('app').controller('locationmanagementcontroller',
 
             $scope.Edit=function(obj){
                 obj.editmode = true;
-                console.log(obj);
                 var areatypelevel = $scope.getAreatypeLevel(obj.areatype);
                 $scope.getParent(areatypelevel);
             }
@@ -133,7 +130,6 @@ angular.module('app').controller('locationmanagementcontroller',
                 if(getparentlevel != undefined){
                     // $scope.getlocflatdata();
                     var data = $filter('filter')($scope.roomList.flat, function (room) { return room.areatype === getparentlevel.name });
-                    console.log(data);
                     if(data.length != 0){
                         $scope.parentList.push.apply($scope.parentList, data);
                     }
@@ -171,7 +167,6 @@ angular.module('app').controller('locationmanagementcontroller',
                     }
                 }
                 obj.fulladdress=fulladdress;
-                console.log(fulladdress);
             }
 
             $scope.concatShortAddress=function(obj){

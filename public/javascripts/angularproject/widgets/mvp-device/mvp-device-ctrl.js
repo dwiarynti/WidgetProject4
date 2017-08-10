@@ -89,7 +89,6 @@ angular.module('app').controller('mpv-devicecontroller',
                         // });
                         $scope.cols = $scope.initfieldname;
                         $scope.widgetdata.widgetSettings.configuration.cols = $scope.cols;
-                        console.log($scope.listobj);
                     }
 
                 }

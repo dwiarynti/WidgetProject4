@@ -9,7 +9,6 @@ angular.module('app').controller('peoplemanagementcontroller',
 
             $scope.init = function(){
                 personresource.$getAll(function(data){
-                    console.log(data.obj);
                     $scope.peopleList = data.obj;
                 });
             }
@@ -32,7 +31,6 @@ angular.module('app').controller('peoplemanagementcontroller',
             }
 
             $scope.Save = function(obj){
-                console.log(obj);
                 personresource.personobj = obj;
                 personresource.$create(function(data){
                     if(data.success)

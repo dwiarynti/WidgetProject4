@@ -47,7 +47,6 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.getperson = function(){
                 personresource.$getAll(function(data){
-                    console.log(data);
                     if(data.success)
                         $scope.personlist = data.obj;                   
                 });
@@ -76,10 +75,8 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.Save = function(){
-                console.log($scope.deviceobj);
                 roomdevresource.deviceobj = $scope.deviceobj;
                 roomdevresource.$create(function(data){
-                    console.log(data);
                     if(data.success){
                         $scope.init();
                         $scope.closemodaladd();
