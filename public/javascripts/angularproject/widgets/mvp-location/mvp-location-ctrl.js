@@ -86,7 +86,6 @@ angular.module('app').controller('mpv-locationcontroller',
                     });
 
                 }
-
             }
             //promise sample
             // $scope.getAllLocation = function(){
