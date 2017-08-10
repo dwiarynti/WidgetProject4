@@ -154,15 +154,21 @@ angular.module('app').controller('mpv-locationcontroller',
             }
 
             $scope.showSeveralLocationRows = function(newLocationData){
-                if($scope.widgetdata.widgetSettings.configuration.selectedrows.length > 0 && !$scope.widgetdata.widgetSettings.configuration.initializeStatus){
-                    $scope.listobj = $scope.convertlisttotree($scope.widgetdata.widgetSettings.configuration.selectedrows);  
+                var selectedrows = $scope.widgetdata.widgetSettings.configuration.selectedrows;
+                var initializeStatus = $scope.widgetdata.widgetSettings.configuration.initializeStatus;
+                var selectRowsStatus = $scope.widgetdata.widgetSettings.configuration.selectRowsStatus;
+                if(selectedrows.length > 0 && initializeStatus || selectedrows.length > 0 && !initializeStatus ){
                     angular.forEach(newLocationData, function(data){
-                        var getselectedrows = $filter('filter')($scope.widgetdata.widgetSettings.configuration.rows,function(row){
+                        var getselectedrows = $filter('filter')(selectedrows,function(row){
                             return data.uuid === row.uuid
                         })[0];
                         data.display = getselectedrows != undefined ? getselectedrows.display : false;
                     }); 
-                    $scope.widgetdata.widgetSettings.configuration.rows = newLocationData
+                    // $scope.listobj =  $scope.convertlisttotree(newLocationData);
+                    $scope.listobj = selectedrows.length > 0 && initializeStatus && !selectRowsStatus ? $scope.convertlisttotree(newLocationData) : $scope.convertlisttotree(selectedrows);  
+                    
+                    $scope.widgetdata.widgetSettings.configuration.rows = newLocationData;
+                    $scope.widgetdata.widgetSettings.configuration.selectRowsStatus = false;
                 }else{
                     angular.forEach(newLocationData, function(data){
                         data.display = true;
