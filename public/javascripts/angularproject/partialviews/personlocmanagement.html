@@ -51,8 +51,8 @@
                     <!-- <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p> -->
 
                     <div class="form-group has-feedback">
+                        <label>Device :</label>
                         <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="personlocobj.uuid">
-                            <option value="">Please Select Device</option>
                             <option value="{{device.euid}}" ng-repeat="device in listdevice" >{{device.euid}}</option>
                         </select>
                     </div>
@@ -62,6 +62,7 @@
                             <option value="">Please Select Room</option>
                             <option value="{{room.uuid}}" ng-repeat="room in roomList" >{{room.name}}</option>
                         </select> -->
+                        <label>Location :</label>
                         <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
 
                     </div>

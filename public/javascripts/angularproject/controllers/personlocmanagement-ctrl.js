@@ -49,7 +49,7 @@ angular.module('app').controller('personlocmanagementcontroller',
                 roomresource.$getall().then(function(data){
                     $scope.roomList = data.obj;
                     $scope.roomlist_tree =  $scope.convertlisttotree(data.obj);
-                    $scope.selected =  $scope.roomlist_tree[0];
+                    // $scope.selected =  $scope.roomlist_tree[0];
                 });
             }
 

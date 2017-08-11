@@ -1,6 +1,6 @@
 angular.module('app').controller('devicemanagementcontroller',
-    ['$scope','roomdevResource', 'roomResource', 'personResource',
-        function ($scope, roomdevResource, roomResource, personResource) {
+    ['$scope', '$filter','roomdevResource', 'roomResource', 'personResource',
+        function ($scope, $filter, roomdevResource, roomResource, personResource) {
             var roomdevresource = new roomdevResource();
             var roomresource = new roomResource();
             var personresource = new personResource();
@@ -55,7 +55,7 @@ angular.module('app').controller('devicemanagementcontroller',
                     if(data.success)
                         $scope.roomlist = data.obj; 
                         $scope.roomlist_tree =  $scope.treeData(data.obj);
-                        $scope.selected =  $scope.roomlist_tree[0];
+                        // $scope.selected =  $scope.roomlist_tree[0];
                 });
             }
 
@@ -89,26 +89,32 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.Save = function(){
-                console.log($scope.selected);
-                // console.log(this.selected);
-                // roomdevresource.deviceobj = $scope.deviceobj;
-                // roomdevresource.$create().then(function(data){
-                //     if(data.success){
-                //         $scope.init();
-                //         $scope.closemodaladd();
-                //     }else{
-                //         $scope.errormessage = data.messages;
-                //     }
-                // });
+                roomdevresource.deviceobj = $scope.deviceobj;
+                roomdevresource.$create().then(function(data){
+                    if(data.success){
+                        $scope.init();
+                        $scope.closemodaladd();
+                    }else{
+                        $scope.errormessage = data.messages;
+                    }
+                });
+            }
+
+            $scope.getselectedroom = function(locationid){
+                // $scope.roomlist_tree
+                return $filter('filter')($scope.roomlist, function(room){return room.uuid === locationid})[0];
+
             }
 
             $scope.btnEditClick = function(obj){
+                console.log($scope.roomlist);
                 obj.prevdeviceobj = angular.copy(obj);
                 // $scope.deviceobj = obj;
                 $scope.deviceobj = angular.copy(obj);
                 $scope.action = "Edit";        
                 $scope.errormessage = "";        
-                $("#modal-edit").modal('show');                
+                $("#modal-edit").modal('show');   
+                $scope.selected = $scope.getselectedroom(parseInt(obj.room));           
             }
 
             $scope.Update = function(){

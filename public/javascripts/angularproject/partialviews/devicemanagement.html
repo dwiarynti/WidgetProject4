@@ -29,7 +29,7 @@
                         <td ng-if="deviceobj.type == 'fixed'">-</td>
                         <td ng-if="deviceobj.type == 'mobile'">{{deviceobj.personname}}</td>
                         <td>
-                            <a ng-click="btnEditClick(deviceobj)" class="link" style="cursor: pointer">Edit</a>|
+                            <a ng-click="btnEditClick(deviceobj)" class="link" style="cursor: pointer">Edit</a> |
                             <a ng-click="btnDeleteClick(deviceobj)" class="link" style="cursor: pointer">Delete</a>
                         </td>
                     </tr>
@@ -47,13 +47,15 @@
                 </div>
                 <div class="modal-body">
                     <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p>
-                    <button type="button" class="btn btn-default btn-width" ng-click="adddevice()">
+                    <!-- <button type="button" class="btn btn-default btn-width" ng-click="adddevice()">
                         <span>Add Device</span>
-                    </button>
-                    <div class="form-group has-feedback" ng-repeat="obj in deviceobj.device">
-                        <input type="text" class="form-control" placeholder="Mac Address" ng-model="obj.euid">
-                         <!-- <span class="glyphicon glyphicons-imac form-control-feedback"></span>  -->
-                         <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
+                    </button> -->
+                    <div class="form-group">
+                        <label>Mac Address  :</label> <span  ng-click="adddevice()" class="glyphicon glyphicon-plus-sign newlead-IconPlus"></span>
+                        <div class="form-group" ng-repeat="obj in deviceobj.device">
+                            <input type="text" class="form-control" placeholder="Mac Address" ng-model="obj.euid"/>
+                            <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
+                        </div>
                     </div>
                     <!-- <div class="form-group has-feedback">
                         <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.type">
@@ -62,11 +64,12 @@
                         </select>
                     </div> -->
                     <!--devicetype = fixed-->
-                    <div ng-if="deviceobj.type == 'fixed'" class="form-group has-feedback">
+                    <div class="form-group" ng-if="deviceobj.type == 'fixed'" class="form-group has-feedback">
                         <!-- <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.room">
                             <option value="">Please Select Room</option>
                             <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
                         </select> -->
+                        <label>Location :</label>
                         <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
                     </div>
                     <!--end-->
@@ -105,28 +108,33 @@
                 <div class="modal-body">
                     <p ng-if="errormessage != ''" class="text-danger">* {{errormessage}}</p>
                     <div class="form-group has-feedback">
+                        <label>Mac Address :</label>
                         <input type="text" class="form-control" placeholder="Mac Address" ng-model="deviceobj.euid">
                         <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
+                        <label>Device Type :</label>
                         <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.type">
-                            <option value="">Please Select Type</option>
+                            <!-- <option value="">Please Select Type</option> -->
                             <option value="{{devicetype}}" ng-repeat="devicetype in devicetypes">{{devicetype}}</option>
                         </select>
                     </div>
                     <!--devicetype = fixed-->
                     <div ng-if="deviceobj.type == 'fixed'" class="form-group has-feedback">
-                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.room">
-                            <option value="">Please Select Room</option>
-                            <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
-                        </select>
+                        <label>Location :</label>
+                        <!-- <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.room"> -->
+                            <!-- <option value="">Please Select Room</option> -->
+                            <!-- <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
+                        </select> -->
+                        <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>                        
                     </div>
                     <!--end-->
 
                     <!--devicetype = mobile-->
                     <div ng-if="deviceobj.type == 'mobile'" class="form-group has-feedback">
+                        <label>Person :</label>
                         <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.person">
-                            <option value="">Please Select Person</option>
+                            <!-- <option value="">Please Select Person</option> -->
                             <option value="{{person.uuid}}" ng-repeat="person in personlist" ng-selected="isSelectedItem(deviceobj.person, person.uuid)">{{person.name}}</option>
                         </select>
                     </div>
