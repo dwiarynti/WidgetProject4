@@ -86,6 +86,7 @@ angular.module('app').controller('devicemanagementcontroller',
                     person:0,
                     device : [{euid:""}]
                 };
+                $scope.selected = {};
             }
 
             $scope.Save = function(){

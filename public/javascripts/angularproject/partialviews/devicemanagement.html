@@ -70,7 +70,7 @@
                             <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
                         </select> -->
                         <label>Location :</label>
-                        <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
+                        <tree-dropdown ng-if="action == 'Add'" class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
                     </div>
                     <!--end-->
 
@@ -126,7 +126,7 @@
                             <!-- <option value="">Please Select Room</option> -->
                             <!-- <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
                         </select> -->
-                        <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>                        
+                        <tree-dropdown ng-if="action == 'Edit'" class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>                        
                     </div>
                     <!--end-->
 
