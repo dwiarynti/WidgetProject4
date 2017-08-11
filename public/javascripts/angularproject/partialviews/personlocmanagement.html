@@ -58,10 +58,12 @@
                     </div>
                     <div class="form-group has-feedback">
                         <!-- <input type="text" placeholder="Room" class="form-control col-md-6" ng-model="personlocobj.room"> -->
-                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="personlocobj.room">
+                        <!-- <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="personlocobj.room">
                             <option value="">Please Select Room</option>
                             <option value="{{room.uuid}}" ng-repeat="room in roomList" >{{room.name}}</option>
-                        </select>
+                        </select> -->
+                        <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
+
                     </div>
                     <!-- <br> -->
                 </div>

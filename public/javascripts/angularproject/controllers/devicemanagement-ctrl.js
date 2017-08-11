@@ -15,9 +15,11 @@ angular.module('app').controller('devicemanagementcontroller',
                 device : [{euid:""}]
             };
             $scope.roomlist =[];
+            $scope.roomlist_tree =[];
             $scope.personlist =[];
             $scope.action = "";
             $scope.errormessage = "";
+            $scope.selected = {};
 
             $scope.init = function(){
                 roomdevresource.$getAll().then(function(data){
@@ -38,10 +40,22 @@ angular.module('app').controller('devicemanagementcontroller',
                 $("#modal-add").modal('show');
             }
 
+            $scope.treeData = function(data){
+                var ltt = new LTT(data, {
+                    key_id: 'uuid',
+                    key_parent: 'parent',
+                    key_child : 'children'
+                });
+                var tree = ltt.GetTree();
+                return tree;
+            }
+
             $scope.getroom = function(){
                 roomresource.$getall().then(function(data){
                     if(data.success)
-                        $scope.roomlist = data.obj;                   
+                        $scope.roomlist = data.obj; 
+                        $scope.roomlist_tree =  $scope.treeData(data.obj);
+                        $scope.selected =  $scope.roomlist_tree[0];
                 });
             }
 
@@ -75,15 +89,17 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.Save = function(){
-                roomdevresource.deviceobj = $scope.deviceobj;
-                roomdevresource.$create().then(function(data){
-                    if(data.success){
-                        $scope.init();
-                        $scope.closemodaladd();
-                    }else{
-                        $scope.errormessage = data.messages;
-                    }
-                });
+                console.log($scope.selected);
+                // console.log(this.selected);
+                // roomdevresource.deviceobj = $scope.deviceobj;
+                // roomdevresource.$create().then(function(data){
+                //     if(data.success){
+                //         $scope.init();
+                //         $scope.closemodaladd();
+                //     }else{
+                //         $scope.errormessage = data.messages;
+                //     }
+                // });
             }
 
             $scope.btnEditClick = function(obj){
@@ -128,7 +144,17 @@ angular.module('app').controller('devicemanagementcontroller',
             $scope.adddevice = function(){
                 $scope.deviceobj.device.push({euid:""});
             }
-
+// $scope.treeData = 
+// [
+//   { "id": 1, "name": "Option 1", "children": [
+//     { "id": 2, "name": "Option 1.1", "children": [
+//       { "id": 3, "name": "Option 1.1.1"},
+//       { "id": 4, "name": "Option 1.1.2"}
+//     ]}
+//   ]},
+//   { "id": 5, "name": "Option 2" },
+//   { "id": 6, "name": "Option 2.1" }
+// ];
 
         }
     ]);

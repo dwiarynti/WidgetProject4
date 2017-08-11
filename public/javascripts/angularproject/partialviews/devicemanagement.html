@@ -63,10 +63,11 @@
                     </div> -->
                     <!--devicetype = fixed-->
                     <div ng-if="deviceobj.type == 'fixed'" class="form-group has-feedback">
-                        <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.room">
+                        <!-- <select class="form-control" style="padding-left:0px; padding-right:0px;" ng-model="deviceobj.room">
                             <option value="">Please Select Room</option>
                             <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
-                        </select>
+                        </select> -->
+                        <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
                     </div>
                     <!--end-->
 

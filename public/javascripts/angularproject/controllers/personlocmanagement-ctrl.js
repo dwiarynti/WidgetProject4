@@ -1,6 +1,6 @@
 angular.module('app').controller('personlocmanagementcontroller',
-    ['$scope', '$rootScope','personlocResource', 'roomdevResource', 'roomResource',
-        function ($scope, $rootScope, personlocResource, roomdevResource, roomResource) {
+    ['$scope', '$rootScope','personlocResource', 'roomdevResource', 'roomResource', 'dataService',
+        function ($scope, $rootScope, personlocResource, roomdevResource, roomResource, dataService) {
             var personlocresource = new personlocResource();
             var roomdevresource = new roomdevResource();
             var roomresource = new roomResource();
@@ -18,6 +18,7 @@ angular.module('app').controller('personlocmanagementcontroller',
                     site : 0,
                     zone : 0
                 };
+            $scope.selected = {};
             
             var date = new Date();
 
@@ -33,9 +34,22 @@ angular.module('app').controller('personlocmanagementcontroller',
                 });
             }
 
+            $scope.convertlisttotree = function(data){
+                var ltt = new LTT(data, {
+                    key_id: 'uuid',
+                    key_parent: 'parent',
+                    key_child : 'children'
+                });
+                var tree = ltt.GetTree();
+                return tree;
+            }
+            
+
             $scope.getRoom = function(){
                 roomresource.$getall().then(function(data){
                     $scope.roomList = data.obj;
+                    $scope.roomlist_tree =  $scope.convertlisttotree(data.obj);
+                    $scope.selected =  $scope.roomlist_tree[0];
                 });
             }
 

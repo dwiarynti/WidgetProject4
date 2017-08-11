@@ -10,4 +10,5 @@ angular.module("app", [
     "ui.bootstrap",
     "ngTable",
     "anguFixedHeaderTable",
-    "treeGrid"]);
+    "treeGrid",
+    "tree.dropdown"]);
