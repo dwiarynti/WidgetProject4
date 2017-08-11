@@ -1,24 +1,26 @@
 body {
   font-size: 14px;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; */
+  font-family: sans-serif;
 }
 
 .tree-dropdown {
    position: relative;
    display: block;
-   font-size: 13px;
+   font-size: 14px;
    width: 100%;
 }
 
 .tree-dropdown .select {
    padding: 0 10px;
-   height: 32px;
+   height: 34px;
    display: block;
    line-height: 14px;
    color: #333333;
    vertical-align: middle;
    background-color: #ffffff;
    border: 1px solid #cccccc;
+   border-radius: 4px;
    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -73,9 +75,9 @@ body {
    background: #eee;
 }
 
-.tree-dropdown .list p.selected{
+/* .tree-dropdown .list p.selected{
    background: #DDDBFF;
-}
+} */
 
 .tree-dropdown .level-0 {
    padding-left: 15px
