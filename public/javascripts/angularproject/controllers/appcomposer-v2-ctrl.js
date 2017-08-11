@@ -60,7 +60,7 @@ angular.module('app').controller('appcomposer-v2controller',
                     widgetmanagementresource.appstatus = $scope.applicationObj.appstatus;
                     widgetmanagementresource.widget = $scope.applicationObj.widget;
 
-                    widgetmanagementresource.$create(function(data){
+                    widgetmanagementresource.$create().then(function(data){
                         if(data.success){
                             $scope.applicationObj = data.obj;
                             $window.alert("Data saved successfully");
@@ -77,7 +77,7 @@ angular.module('app').controller('appcomposer-v2controller',
                 widgetmanagementresource.appname = $scope.applicationObj.appname;
                 widgetmanagementresource.appstatus = $scope.applicationObj.appstatus;
                 widgetmanagementresource.widget = $scope.applicationObj.widget;
-                widgetmanagementresource.$update(function(data){
+                widgetmanagementresource.$update().then(function(data){
                     if(data.success){
                         $window.alert("Data updated successfully");
                     }

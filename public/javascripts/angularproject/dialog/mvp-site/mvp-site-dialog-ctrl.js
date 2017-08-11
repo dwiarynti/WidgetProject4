@@ -30,11 +30,9 @@ angular.module('app').controller('mvp-sitedialogcontroller',
         };
         
         $scope.getDataSource = function(){
-            roomresource.$getsite(function(data){
-                // console.log(data);
+            roomresource.$getsite().then(function(data){
                 if(data.success)
                     $scope.datasourcelist = data.obj
-
             });
         }
 

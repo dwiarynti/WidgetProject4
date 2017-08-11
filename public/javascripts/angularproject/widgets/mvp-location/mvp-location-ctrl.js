@@ -1,9 +1,8 @@
 angular.module('app').controller('mpv-locationcontroller',
-    ['$scope', '$rootScope', '$filter','deviceResource', 'roomResource', "NgTableParams", "DTOptionsBuilder", "DTColumnBuilder", "$resource",
-        function ($scope, $rootScope, $filter, deviceResource, roomResource,NgTableParams, DTOptionsBuilder, DTColumnBuilder, $resource) {
+    ['$scope', '$rootScope', '$filter', 'roomResource', "NgTableParams", "DTOptionsBuilder", "DTColumnBuilder", "$resource",
+        function ($scope, $rootScope, $filter, roomResource,NgTableParams, DTOptionsBuilder, DTColumnBuilder, $resource) {
             $scope.deviceList = [];
             var roomresource = new roomResource();
-            var deviceresource = new deviceResource();
             var siteid = "001";
             $scope.listobj = [];
             $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
@@ -62,6 +61,7 @@ angular.module('app').controller('mpv-locationcontroller',
                     $scope.getLocationbySite(siteid);
                 else
                     $scope.getAllLocation();
+                // $scope.putDashforEmptyValue();
             }
 
             $scope.reinitDeviceWidget = function(){
@@ -96,7 +96,7 @@ angular.module('app').controller('mpv-locationcontroller',
             // }
 
             $scope.getAllLocation = function(){
-                roomresource.$getall(function(data){
+                roomresource.$getall().then(function(data){
                     $scope.listobj = data.obj;
                     $scope.putDashforEmptyValue();
                     $scope.showSeveralLocationRows(data.obj);
@@ -107,7 +107,7 @@ angular.module('app').controller('mpv-locationcontroller',
             }
 
             $scope.getLocationbySite = function(siteid){
-                roomresource.$getloc({_id:siteid}, function(data){
+                roomresource.$getloc({_id:siteid}).then(function(data){
                     if(data.success){
                         $scope.listobj = data.obj;
                         $scope.putDashforEmptyValue();
@@ -128,7 +128,7 @@ angular.module('app').controller('mpv-locationcontroller',
                 $rootScope.sitelist = [];
                 angular.forEach($scope.sitewidgets, function(widget) {
                     if(widget.widgetSettings.configuration.datasource != undefined){
-                    roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}, function(data){
+                    roomresource.$getbyid({_id:widget.widgetSettings.configuration.datasource}).then(function(data){
                         if(data.success){
                             var isRedundantdata = $filter('filter')($rootScope.sitelist,function(site){
                                 return site.uuid === data.obj.uuid

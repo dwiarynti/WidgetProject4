@@ -23,7 +23,7 @@ angular.module('app').controller('usermanagementcontroller',
             $scope.errormessage = "";
             $scope.userlist = [];
             $scope.init = function(){
-                userresource.$getall(function(data){
+                userresource.$getall().then(function(data){
                     
                     $scope.userlist = data.obj;
                 });
@@ -32,13 +32,13 @@ angular.module('app').controller('usermanagementcontroller',
             }
 
             $scope.getSiteList = function(){
-                siteresource.$getall(function(data){
+                siteresource.$getall().then(function(data){
                     $scope.sitelist = data.obj;
                 });
             }
 
             $scope.getPageList = function(){
-                appmanagementresource.$init(function(data){
+                appmanagementresource.$init().then(function(data){
                     $scope.pagelist = data.obj;
                     $scope.pagelistEditMode = data.obj;
                 });
@@ -65,7 +65,7 @@ angular.module('app').controller('usermanagementcontroller',
                 userresource.role = $scope.userobject.role;
                 userresource.pages = $scope.userobject.pages;
                 userresource.siteid = $scope.userobject.siteid;
-                userresource.$create(function(data){
+                userresource.$create().then(function(data){
                     
                     if(data.success){
                         $("#modal-add").modal('hide');   
@@ -124,7 +124,7 @@ angular.module('app').controller('usermanagementcontroller',
                 userresource.role= $scope.selecteduser.role;
                 userresource.pages= $scope.selecteduser.pages;
                 userresource.siteid = $scope.selecteduser.siteid;                
-                userresource.$update(function(data){
+                userresource.$update().then(function(data){
                     if(data.success){
                         $("#modal-edit").modal('hide');
                         $scope.init();
@@ -134,7 +134,7 @@ angular.module('app').controller('usermanagementcontroller',
 
             $scope.Delete = function(){
                 userresource.id = $scope.deleteuserid;                
-                userresource.$delete(function(data){
+                userresource.$delete().then(function(data){
                     if(data.success){
                         $("#modal-delete").modal('hide');
                         $scope.init();

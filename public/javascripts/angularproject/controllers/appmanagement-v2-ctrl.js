@@ -5,7 +5,7 @@ angular.module('app').controller('appmanagemet-v2controller',
 
             $scope.PageList=[];
             $scope.init = function(){
-                widgetmanagementresource.$getall(function(data){
+                widgetmanagementresource.$getall().then(function(data){
                     $scope.PageList = data.obj;
                 });
             }
@@ -29,7 +29,7 @@ angular.module('app').controller('appmanagemet-v2controller',
                 widgetmanagementresource.appname = obj.appname;
                 widgetmanagementresource.appstatus = obj.appstatus;
                 widgetmanagementresource.widget = obj.widget;
-                widgetmanagementresource.$update(function(data){
+                widgetmanagementresource.$update().then(function(data){
                     if(data.success){
                         $scope.turnoffeditmode(obj);
                         
@@ -57,7 +57,7 @@ angular.module('app').controller('appmanagemet-v2controller',
                 widgetmanagementresource.appname = obj.appname;
                 widgetmanagementresource.appstatus = obj.appstatus == true ?false:true;
                 widgetmanagementresource.widget = obj.widget;
-                widgetmanagementresource.$update(function(data){
+                widgetmanagementresource.$update().then(function(data){
                     if(data.success){
                         $window.alert("Data updated successfully");
                         $scope.init();

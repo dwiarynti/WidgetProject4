@@ -8,7 +8,7 @@ angular.module('app').controller('peoplemanagementcontroller',
             var date = new Date();
 
             $scope.init = function(){
-                personresource.$getAll(function(data){
+                personresource.$getAll().then(function(data){
                     $scope.peopleList = data.obj;
                 });
             }
@@ -32,7 +32,7 @@ angular.module('app').controller('peoplemanagementcontroller',
 
             $scope.Save = function(obj){
                 personresource.personobj = obj;
-                personresource.$create(function(data){
+                personresource.$create().then(function(data){
                     if(data.success)
                         $scope.init();
                         
@@ -57,7 +57,7 @@ angular.module('app').controller('peoplemanagementcontroller',
                 obj.changeby = $rootScope.userobj.id;
                 obj.changebyname = $rootScope.userobj.username;
                 personresource.personobj = obj;
-                personresource.$update(function(data){
+                personresource.$update().then(function(data){
                     if(data.success)
                         $scope.init();
                     
@@ -71,7 +71,7 @@ angular.module('app').controller('peoplemanagementcontroller',
             
             $scope.Delete = function(){
                 personresource.personobj = {uuid:$scope.deleteuuid};
-                personresource.$delete(function(data){
+                personresource.$delete().then(function(data){
                     if(data.success)
                         $scope.init();
                         $("#modal-delete").modal('hide');

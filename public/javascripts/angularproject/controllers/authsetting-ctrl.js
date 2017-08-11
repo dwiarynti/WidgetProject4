@@ -4,13 +4,13 @@ angular.module('app').controller('authsettingcontroller',
             var authsettingresource = new authsettingResource();
             $scope.obj = false;
 
-            authsettingresource.$init(function(data){
+            authsettingresource.$init().then(function(data){
                 $scope.obj = data.obj;
             });
 
             $scope.updateAuthenticationSetting = function(){
                 authsettingresource.auth = $scope.obj;
-                authsettingresource.$update(function(data){
+                authsettingresource.$update().then(function(data){
                     if(data.success){
                         $window.alert("Data saved successfully");
                     }

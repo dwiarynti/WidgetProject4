@@ -1,9 +1,8 @@
 "use strict";
 
 angular.module('app').controller('mvp-locationdialogcontroller',
-    ['$scope', '$rootScope', '$filter', 'dataService','roomResource',
-    function ($scope, $rootScope, $filter, dataService, roomResource) {
-        var roomresource = new roomResource();
+    ['$scope', '$rootScope', '$filter', 'dataService',
+    function ($scope, $rootScope, $filter, dataService) {
         $scope.listapplicationwidget = $scope.$parent.$parent.$parent.$parent.applicationObj.widget;
         $rootScope.isSingleSiteUpdated = false;
         $scope.convertlisttotree = function(data){

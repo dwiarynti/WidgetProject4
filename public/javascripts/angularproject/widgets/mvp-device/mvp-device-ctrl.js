@@ -21,7 +21,7 @@ angular.module('app').controller('mpv-devicecontroller',
             $scope.widgetdata = $scope.$parent.item; 
             $scope.getAllDevice = function(){
                 $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
-                roomdevresource.$getAll(function(data){
+                roomdevresource.$getAll().then(function(data){
                     if(data.success)
                         $scope.listobj = data.obj;
                         $scope.widgetdata.widgetSettings.configuration.backuplist = angular.copy($scope.listobj); 
@@ -37,7 +37,7 @@ angular.module('app').controller('mpv-devicecontroller',
                 $scope.widgetdata.widgetSettings.configuration.initializeStatus = false;
                 angular.forEach(locationList, function(locdata){
                     // if(locdata.uuid != ""){
-                        roomdevresource.$getbylocation({_id:locdata.uuid},function(data){
+                        roomdevresource.$getbylocation({_id:locdata.uuid}).then(function(data){
                             if(data.success)
                             {       
                                 angular.forEach(data.obj, function(obj){

@@ -8,7 +8,7 @@ angular.module('app').controller('mpv-sitecontroller',
             $scope.obj = "";
             
             $scope.getWdigetValue = function(){
-                roomresource.$getbyid({_id:$scope.$parent.item.widgetSettings.configuration.datasource},function(data){
+                roomresource.$getbyid({_id:$scope.$parent.item.widgetSettings.configuration.datasource}).then(function(data){
                     if(data.success){
                         $scope.obj = data.obj.name;
                     }

@@ -20,7 +20,7 @@ angular.module('app').controller('devicemanagementcontroller',
             $scope.errormessage = "";
 
             $scope.init = function(){
-                roomdevresource.$getAll(function(data){
+                roomdevresource.$getAll().then(function(data){
                     if(data.success)
                         $scope.deviceslist = data.obj;
                         $scope.getroom();
@@ -39,14 +39,14 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.getroom = function(){
-                roomresource.$getall(function(data){
+                roomresource.$getall().then(function(data){
                     if(data.success)
                         $scope.roomlist = data.obj;                   
                 });
             }
 
             $scope.getperson = function(){
-                personresource.$getAll(function(data){
+                personresource.$getAll().then(function(data){
                     if(data.success)
                         $scope.personlist = data.obj;                   
                 });
@@ -76,7 +76,7 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.Save = function(){
                 roomdevresource.deviceobj = $scope.deviceobj;
-                roomdevresource.$create(function(data){
+                roomdevresource.$create().then(function(data){
                     if(data.success){
                         $scope.init();
                         $scope.closemodaladd();
@@ -97,7 +97,7 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.Update = function(){
                 roomdevresource.deviceobj = $scope.deviceobj;
-                roomdevresource.$update(function(data){
+                roomdevresource.$update().then(function(data){
                     if(data.success){
                         $scope.init();
                         $scope.closemodaledit();
@@ -116,7 +116,7 @@ angular.module('app').controller('devicemanagementcontroller',
 
             $scope.Delete = function(){
                 roomdevresource.deviceobj = $scope.deviceobj;
-                roomdevresource.$delete(function(data){
+                roomdevresource.$delete().then(function(data){
                     if(data.success){
                         $scope.init(); 
                         $scope.deviceobj={};

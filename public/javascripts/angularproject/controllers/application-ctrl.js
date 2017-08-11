@@ -5,7 +5,7 @@ angular.module('app').controller('applicationcontroller',
             var widgetmanagementresource = new widgetmanagementResource();
             $scope.applicationObj = {};
 
-            widgetmanagementresource.$getappbyid({_id:$routeParams.euid}, function(data){
+            widgetmanagementresource.$getappbyid({_id:$routeParams.euid}).then(function(data){
                 $scope.applicationObj = data.obj;
 
             });

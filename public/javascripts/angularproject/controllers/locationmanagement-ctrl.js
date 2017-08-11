@@ -49,7 +49,7 @@ angular.module('app').controller('locationmanagementcontroller',
             }
 
             $scope.init = function(){
-                roomresource.$getall(function(data){
+                roomresource.$getall().then(function(data){
                     $scope.roomList.flat = data.obj;
                     $scope.roomList.tree = $scope.convertlisttotree(data.obj);
                     // $scope.getlocflatdata();
@@ -77,7 +77,7 @@ angular.module('app').controller('locationmanagementcontroller',
                 }else{
                     $scope.errormessage = "";
                     roomresource.roomobj = obj;
-                    roomresource.$create(function(data){
+                    roomresource.$create().then(function(data){
                         if(data.success)
                             $scope.closemodal();
                             $scope.init();
@@ -102,7 +102,7 @@ angular.module('app').controller('locationmanagementcontroller',
                 obj.changebyname = $rootScope.userobj.username;
                 obj.parent = parseInt(obj.parent);                
                 roomresource.roomobj = obj;
-                roomresource.$update(function(data){
+                roomresource.$update().then(function(data){
                     if(data.success)
                         $scope.closemodal();
                         $scope.init();
@@ -116,7 +116,7 @@ angular.module('app').controller('locationmanagementcontroller',
             
             $scope.Delete = function(){
                 roomresource.roomobj = {uuid:$scope.deleteuuid};
-                roomresource.$delete(function(data){
+                roomresource.$delete().then(function(data){
                     if(data.success)
                         $scope.init();
                         $("#modal-delete").modal('hide');

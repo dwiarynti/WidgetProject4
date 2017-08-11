@@ -22,19 +22,19 @@ angular.module('app').controller('personlocmanagementcontroller',
             var date = new Date();
 
             $scope.getAllPersonLoc = function(){
-                personlocresource.$getall(function(data){
+                personlocresource.$getall().then(function(data){
                     $scope.personlocList = data.obj;
                 });
             }
             
             $scope.getdevicemobile = function(){
-                roomdevresource.$getdevicemobile(function(data){
+                roomdevresource.$getdevicemobile().then(function(data){
                     $scope.listdevice = data.obj;
                 });
             }
 
             $scope.getRoom = function(){
-                roomresource.$getall(function(data){
+                roomresource.$getall().then(function(data){
                     $scope.roomList = data.obj;
                 });
             }
@@ -55,7 +55,7 @@ angular.module('app').controller('personlocmanagementcontroller',
                 personlocresource.personobj = $scope.personlocobj;
                 personlocresource.personobj.datecreate = new Date();
                 personlocresource.personobj.lastseen = new Date();
-                personlocresource.$create(function(data){
+                personlocresource.$create().then(function(data){
                     if(data.success)
                         $scope.init();
                         $("#modal-add").modal('hide'); 
@@ -89,7 +89,7 @@ angular.module('app').controller('personlocmanagementcontroller',
                 obj.changeby = $rootScope.userobj.id;
                 obj.changebyname = $rootScope.userobj.username;
                 personlocresource.personobj = obj;
-                personlocresource.$update(function(data){
+                personlocresource.$update().then(function(data){
                     if(data.success)
                         $scope.init();
                     
@@ -103,7 +103,7 @@ angular.module('app').controller('personlocmanagementcontroller',
             
             $scope.Delete = function(){
                 personlocresource.personobj = {uuid:$scope.deleteuuid};
-                personlocresource.$delete(function(data){
+                personlocresource.$delete().then(function(data){
                     if(data.success)
                         $scope.init();
                         $("#modal-delete").modal('hide');
