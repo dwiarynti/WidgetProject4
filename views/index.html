@@ -187,7 +187,7 @@
                                                     </uib-tab-heading>
                                                     <form style="margin:1%">
                                                         <h3 class="text-center">Register</h1>
-                                                        <p ng-if="errmessage != ''" class="text-danger">* {{errmessage}}</p>
+                                                        <p ng-if="errmessage_register != ''" class="text-danger">* {{errmessage_register}}</p>
 
                                                         <div class="form-group">
                                                             <label>Username</label>
@@ -197,7 +197,7 @@
                                                             <label>Password</label>
                                                             <input type="password" ng-model="registerobj.password" class="form-control"/>
                                                         </div>
-                                                        <button class="btn btn-default" ng-click="signUp()">Sign Up</button>                
+                                                        <button  class="btn btn-default" ng-click="signUp()">Sign Up</button>                
                                                     </form>
                                                     <br>
                                                     

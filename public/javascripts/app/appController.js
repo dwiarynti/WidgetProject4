@@ -17,6 +17,7 @@ angular.module('app').controller('appController',
             $scope.menuItems = [];
             $rootScope.userobj = {id:0,authorized:"", username:"", role:"", siteid:""};
             $scope.errmessage = "";
+            $scope.errmessage_register = "";
             $rootScope.authenticationStatus = true;
             $scope.notificationnumber = 0;
 
@@ -80,18 +81,23 @@ angular.module('app').controller('appController',
             };
 
             $scope.signUp = function(){
-                userresource.username = $scope.registerobj.username;
-                userresource.password = $scope.registerobj.password;
-                userresource.$register(function(data){
-                    
-                    if(data.success){
-                        $scope.state = 'authorized';
-                        $scope.errmessage = "";         
-                        $scope.loginobj = $scope.registerobj;           
-                    }else{
-                        $scope.errmessage = data.message;
-                    }
-                });                
+                if($scope.registerobj.username && $scope.registerobj.password){
+                    userresource.username = $scope.registerobj.username;
+                    userresource.password = $scope.registerobj.password;
+                    userresource.$register(function(data){
+                        
+                        if(data.success){
+                            $scope.state = 'authorized';
+                            $scope.errmessage_register = "";         
+                            $scope.loginobj = $scope.registerobj;           
+                        }else{
+                            $scope.errmessage_register = data.message;
+                        }
+                    });   
+                }else{
+                    $scope.errmessage_register = "username and password are required";
+                }
+             
             }
 
             $scope.getUserPage = function(userid){

@@ -14,12 +14,13 @@ angular.module('app').controller('devicemanagementcontroller',
                 person:0,
                 device : [{euid:""}]
             };
+            var dvm = this;
             $scope.roomlist =[];
             $scope.roomlist_tree =[];
             $scope.personlist =[];
             $scope.action = "";
             $scope.errormessage = "";
-            $scope.selected = {};
+            dvm.selected = {};            
 
             $scope.init = function(){
                 roomdevresource.$getAll().then(function(data){
@@ -55,7 +56,7 @@ angular.module('app').controller('devicemanagementcontroller',
                     if(data.success)
                         $scope.roomlist = data.obj; 
                         $scope.roomlist_tree =  $scope.treeData(data.obj);
-                        // $scope.selected =  $scope.roomlist_tree[0];
+                        // dvm.selected =  $scope.roomlist_tree[0];
                 });
             }
 
@@ -86,10 +87,11 @@ angular.module('app').controller('devicemanagementcontroller',
                     person:0,
                     device : [{euid:""}]
                 };
-                $scope.selected = {};
+                dvm.selected = {};
             }
 
             $scope.Save = function(){
+                $scope.deviceobj.room = dvm.selected.uuid;
                 roomdevresource.deviceobj = $scope.deviceobj;
                 roomdevresource.$create().then(function(data){
                     if(data.success){
@@ -108,18 +110,21 @@ angular.module('app').controller('devicemanagementcontroller',
             }
 
             $scope.btnEditClick = function(obj){
-                console.log($scope.roomlist);
+                console.log(dvm.selected);
+                
                 obj.prevdeviceobj = angular.copy(obj);
                 // $scope.deviceobj = obj;
                 $scope.deviceobj = angular.copy(obj);
                 $scope.action = "Edit";        
                 $scope.errormessage = "";        
                 $("#modal-edit").modal('show');   
-                $scope.selected = $scope.getselectedroom(parseInt(obj.room));           
+                dvm.selected = $scope.getselectedroom(parseInt(obj.room));           
             }
 
             $scope.Update = function(){
+                $scope.deviceobj.room = dvm.selected.uuid;                
                 roomdevresource.deviceobj = $scope.deviceobj;
+                console.log(dvm.selected);
                 roomdevresource.$update().then(function(data){
                     if(data.success){
                         $scope.init();
