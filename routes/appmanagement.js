@@ -159,14 +159,16 @@ router.get('/appmanagement/getbyuser/:_id',function(req,res)
     var userid = req.params._id;
     widgetdb.get('widgetmanagement', function (err, management) {
         if (err)
+        {
             if (err.message == "Key not found in database") {
                 res.json({ "success": true, "message": "no data", "obj": [] });
             }
             else {
                 res.json(500, err);
             }
-
+        }
         else
+        {
         userdb.get('user',function(err,data)
         {
             if(err)
@@ -191,23 +193,30 @@ router.get('/appmanagement/getbyuser/:_id',function(req,res)
                }
                 var result = [];
                 var count = 0;
+                
                 if(user!= "")
                 {
-                for(var i = 0 ; i < management.length; i++)
+                // for(var i = 0 ; i < management.length; i++)
+                // {
+                    
+                //     for(var j= 0; j < user.pages.length;j++)
+                //     {
+                //         if(management[i].id == user.pages[j])
+                //         {
+                //             result.push(management[i]);
+                //         }
+                //     }
+                //     count +=1;
+                // }
+                for(var j = 0 ; j < user.pages.length;j++)
                 {
-                    for(var j= 0; j < user.pages.length;j++)
-                    {
-                        if(management[i].id == user.pages[j])
-                        {
-                            result.push(management[i]);
-                        }
-                    }
-                    count +=1;
+                    result = management.filter(x=>x.id === user.pages[j]);
+                    result.push(management[i]);
+                     count +=1;
                 }
-                if(count == management.length)
-                {
-                    res.json({"success":true, "obj": result});
-                }
+            
+                res.json({"success":true, "obj": result});
+                
             }
             else
             {
@@ -215,6 +224,7 @@ router.get('/appmanagement/getbyuser/:_id',function(req,res)
             }
          }
        });
+        }
     });
 });
 
