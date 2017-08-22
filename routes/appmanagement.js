@@ -211,8 +211,8 @@ router.get('/appmanagement/getbyuser/:_id',function(req,res)
                 for(var j = 0 ; j < user.pages.length;j++)
                 {
                     result = management.filter(x=>x.id === user.pages[j]);
-                    result.push(management[i]);
-                     count +=1;
+                    result.push(management[j]);
+                    count +=1;
                 }
             
                 res.json({"success":true, "obj": result});
