@@ -165,6 +165,7 @@ router.get('/widgetmanagement/getall',function(req,res)
         }
         else
         {
+            
             res.json({"success":true,"obj": result})
         }
     })
