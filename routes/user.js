@@ -27,6 +27,30 @@ var users = [
     
 ]
 
+userdb.get('user',function(err,result)
+{
+    if(err)
+    {
+        if(err.message == "Key not found in database")
+        {
+        sequencedb.put('sequencenumberuser',1,function(err,number)
+        {
+            var datauser =[{
+                id : 1,
+                username:'admin',
+                password:'123',
+                pages: [],
+                role : "SuperAdmin"
+
+            }]
+            userdb.put('user',datauser,function(err,users)
+            {
+                  console.log('user data init');
+            });
+        });
+        }
+    }
+})
 router.post('/user/createuser',function(req,res)
 {
     var generateid ="";
@@ -88,7 +112,7 @@ router.post('/user/create', function (req, res) {
 
         if(generateid != "")
         {
-        var user = {
+        var userdata = {
             id : generateid,
             username: req.body.username,
             password :req.body.password,
@@ -102,7 +126,7 @@ router.post('/user/create', function (req, res) {
             if(err)
             if(err.message == "Key not found in database")
             {
-               listobj.push(user);
+               listobj.push(userdata);
             }
             else
             {
@@ -112,7 +136,7 @@ router.post('/user/create', function (req, res) {
             var username = "";
             for(var i  = 0; i < obj.length ; i++)
             {
-                if(obj[i].username == user.username )
+                if(obj[i].username == userdata.username )
                 {
                     username = obj[i].username;
                 }
@@ -126,12 +150,12 @@ router.post('/user/create', function (req, res) {
             if(obj.length != 0)
             {
                 listobj = obj;
-                listobj.push(user);
+                listobj.push(userdata);
 
             }
             else
             {
-                listobj.push(user);
+                listobj.push(userdata);
             }
 
             userdb.put('user', listobj, function (err) {
@@ -159,14 +183,10 @@ router.post('/user/register', function (req, res)
     if(err)
     {
         if (err.message == "Key not found in database") {
-            var no = 0;
-            sequencedb.put('sequencenumberuser', no, function (err, id) {
-                if 
-                (err) res.json(500, err)
-                else 
-                generateid = id + 1;
-            });
-            }
+            
+            generateid =  1;
+          
+        }
         else 
         {
             res.json(500, err);
@@ -174,9 +194,9 @@ router.post('/user/register', function (req, res)
     }
     else
     {
-        generateid = 1;
+        generateid = sequence + 1;
     }
-    var user = {
+    var userdata = {
             id : generateid,
             username: req.body.username,
             password :req.body.password,
@@ -192,7 +212,7 @@ router.post('/user/register', function (req, res)
         {
             if(err.message == "Key not found in database" )
             {
-                listobj.push(user);
+                listobj.push(userdata);
             }
             else
             {
@@ -203,7 +223,7 @@ router.post('/user/register', function (req, res)
         {
             for(var i  = 0; i < obj.length ; i++)
             {
-                if(obj[i].username == user.username )
+                if(obj[i].username == userdata.username )
                 {
                     username = obj[i].username;
                 }
@@ -218,21 +238,26 @@ router.post('/user/register', function (req, res)
         }
         else
         {
-            listobj.push(user);
-           
-        }
         userdb.put('user', listobj, function (err) {
-             if (err) res.json(500, err);
-             else 
-               sequencedb.put('sequencenumberuser', generateid, function (err, no) {
+            if (err) 
+            {
+                res.json(500, err);
+            }
+            else 
+            {
+            
+               sequencedb.put('sequencenumberuser', generateid, function (err, no) 
+               {
                             if (err) res.json(500, err)
                             else
                                 res.json({ "success": true})
-                        });
-            }); 
+                });
+            }
         });
-
+        }
+            
     });
+});
 })
 
 router.post('/user/login',function(req,res)
@@ -257,10 +282,10 @@ router.post('/user/login',function(req,res)
         {
         for(var i = 0 ; i < datauser.length;i++)
         {
-            var element = datauser[i];
-            if(element.username == user.username && element.password == user.password)
+            
+            if(datauser[i].username == user.username && datauser[i].password == user.password)
             {
-                result = element;
+                result = datauser[i];
             }
         }
         if(result!= "")
