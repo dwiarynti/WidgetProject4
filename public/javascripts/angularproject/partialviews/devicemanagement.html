@@ -1,4 +1,4 @@
-<div ng-controller="devicemanagementcontroller">
+<div ng-controller="devicemanagementcontroller as dvm">
     <div class="common-widget">
     <div class="common-heading">
         <img class="common-icon" ng-src="/javascripts/images/employee.png" alt="employee" />
@@ -70,7 +70,7 @@
                             <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
                         </select> -->
                         <label>Location :</label>
-                        <tree-dropdown ng-if="action == 'Add'" class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>
+                        <tree-dropdown class="tree-dropdown" data="roomlist_tree" selected="dvm.selected"></tree-dropdown>
                     </div>
                     <!--end-->
 
@@ -126,7 +126,7 @@
                             <!-- <option value="">Please Select Room</option> -->
                             <!-- <option value="{{room.uuid}}" ng-repeat="room in roomlist" ng-selected="isSelectedItem(deviceobj.room, room.uuid)">{{room.name}}</option>
                         </select> -->
-                        <tree-dropdown ng-if="action == 'Edit'" class="tree-dropdown" data="roomlist_tree" selected="selected"></tree-dropdown>                        
+                        <tree-dropdown ng-if="action == 'Edit'" class="tree-dropdown" data="roomlist_tree" selected="dvm.selected"></tree-dropdown>                        
                     </div>
                     <!--end-->
 
