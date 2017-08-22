@@ -196,24 +196,24 @@ router.get('/appmanagement/getbyuser/:_id',function(req,res)
                 
                 if(user!= "")
                 {
-                // for(var i = 0 ; i < management.length; i++)
-                // {
-                    
-                //     for(var j= 0; j < user.pages.length;j++)
-                //     {
-                //         if(management[i].id == user.pages[j])
-                //         {
-                //             result.push(management[i]);
-                //         }
-                //     }
-                //     count +=1;
-                // }
-                for(var j = 0 ; j < user.pages.length;j++)
+                for(var i = 0 ; i < management.length; i++)
                 {
-                    result = management.filter(x=>x.euid === user.pages[j]);
-                    result.push(management[j]);
+                    
+                    for(var j= 0; j < user.pages.length;j++)
+                    {
+                        if(management[i].euid == user.pages[j])
+                        {
+                            result.push(management[i]);
+                        }
+                    }
                     count +=1;
                 }
+                // for(var j = 0 ; j < user.pages.length;j++)
+                // {
+                //     result = management.filter(x=>x.euid === user.pages[j]);
+                //     result.push(management[j]);
+                //     count +=1;
+                // }
             
                 res.json({"success":true, "obj": result});
                 
