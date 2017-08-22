@@ -631,7 +631,7 @@ router.post('/roomdev/update',function(req,res)
                               
                 if(roomdev[j].euid == devices.prevdeviceobj.euid)
                 {
-                    checkeuid = roomdev.filter(p=>p.euid === devices.euid);
+                   
                     roomdev[j].euid = devices.euid;
                     roomdev[j].room = devices.room;
                     roomdev[j].type = devices.type;
@@ -639,12 +639,7 @@ router.post('/roomdev/update',function(req,res)
                     
                 }   
             }
-            if(checkeuid.length > 0)
-            {
-                res.json({"success": false,"message":"mac address already exists"})
-            }
-            else
-            {
+          
                 if(devices.type == "fixed")
                 {
                     roomdevroomdb.get('roomdevroom',function(err,roomroom)
@@ -819,7 +814,7 @@ router.post('/roomdev/update',function(req,res)
                         });
                     });
                 }
-            }
+            
 
 
            
