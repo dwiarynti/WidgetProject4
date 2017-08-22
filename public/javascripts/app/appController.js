@@ -97,10 +97,11 @@ angular.module('app').controller('appController',
             $scope.getUserPage = function(userid){
                 appmanagementresource.$getbyuser({_id:userid},function(data){
                     // 
+                    console.log(data);
                     $scope.menuItems=[];
                     angular.forEach(data.obj, function (obj) {
                         $scope.menuItems.push({
-                            label: obj.pagename, href: '/prevpage/' + obj.id, icon: 'fa-dashboard', isGroup: false, submenuItems: []
+                            label: obj.appname, href: '/application/' + obj.euid, icon: 'fa-dashboard', isGroup: false, submenuItems: []
                         });
                     });
                 });

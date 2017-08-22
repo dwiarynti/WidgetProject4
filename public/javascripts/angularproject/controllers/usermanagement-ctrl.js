@@ -1,9 +1,11 @@
 angular.module('app').controller('usermanagementcontroller',
-    ['$scope','$location', 'userResource' ,'passingdataservice', '$rootScope','appmanagementResource','$filter','siteResource',
-        function ($scope, $location, userResource, passingdataservice, $rootScope, appmanagementResource, $filter,siteResource) {
+    ['$scope','$location', 'userResource' ,'passingdataservice', '$rootScope','appmanagementResource','$filter','siteResource', 'widgetmanagementResource',
+        function ($scope, $location, userResource, passingdataservice, $rootScope, appmanagementResource, $filter,siteResource, widgetmanagementResource) {
            var userresource = new userResource();
            var appmanagementresource = new appmanagementResource();
            var siteresource = new siteResource();
+           var widgetmanagementresource = new widgetmanagementResource();
+           
            $scope.pagelist = [];
            $scope.sitelist = [];
            $scope.pagelistEditMode = [];
@@ -26,6 +28,7 @@ angular.module('app').controller('usermanagementcontroller',
                 userresource.$getall().then(function(data){
                     
                     $scope.userlist = data.obj;
+                    console.log(data.obj)
                 });
                 $scope.getPageList();
                 $scope.getSiteList();
@@ -38,7 +41,8 @@ angular.module('app').controller('usermanagementcontroller',
             }
 
             $scope.getPageList = function(){
-                appmanagementresource.$init().then(function(data){
+                widgetmanagementresource.$getall().then(function(data){
+                    console.log(data.obj);
                     $scope.pagelist = data.obj;
                     $scope.pagelistEditMode = data.obj;
                 });
@@ -60,6 +64,7 @@ angular.module('app').controller('usermanagementcontroller',
 
 
             $scope.Save = function(){
+                console.log($scope.userobject);
                 userresource.username = $scope.userobject.username;
                 userresource.password = $scope.userobject.password;
                 userresource.role = $scope.userobject.role;
@@ -80,16 +85,16 @@ angular.module('app').controller('usermanagementcontroller',
             $scope.pushSelectedTransactionType = function(obj, active, mode){
                 if (active){
                     if(mode=="add"){
-                        $scope.userobject.pages.push(obj.id);
+                        $scope.userobject.pages.push(obj.euid);
                     }else{
-                        $scope.selecteduser.pages.push(obj.id);
+                        $scope.selecteduser.pages.push(obj.euid);
                     }
                 }
                 else{
                     if(mode=="add"){
-                        $scope.userobject.pages.splice($scope.userobject.pages.indexOf(obj.id), 1);
+                        $scope.userobject.pages.splice($scope.userobject.pages.indexOf(obj.euid), 1);
                     }else{
-                        $scope.selecteduser.pages.splice($scope.userobject.pages.indexOf(obj.id), 1);
+                        $scope.selecteduser.pages.splice($scope.userobject.pages.indexOf(obj.euid), 1);
                     }
                 }             
                 
@@ -100,7 +105,7 @@ angular.module('app').controller('usermanagementcontroller',
                 
                 angular.forEach($scope.pagelistEditMode, function (pageobj) {
                     var selectedpages = $filter('filter')(obj.pages,function(item){
-                        return pageobj.id === item
+                        return pageobj.euid === item
                     })[0];
                     
                     pageobj.selected = selectedpages != undefined ? true:false;
@@ -118,6 +123,7 @@ angular.module('app').controller('usermanagementcontroller',
             }
             
             $scope.Update = function(){
+                console.log($scope.selecteduser);
                 userresource.id = $scope.selecteduser.id;
                 userresource.username = $scope.selecteduser.username;
                 userresource.password= $scope.selecteduser.password;
