@@ -210,7 +210,7 @@ router.get('/appmanagement/getbyuser/:_id',function(req,res)
                 // }
                 for(var j = 0 ; j < user.pages.length;j++)
                 {
-                    result = management.filter(x=>x.id === user.pages[j]);
+                    result = management.filter(x=>x.euid === user.pages[j]);
                     result.push(management[j]);
                     count +=1;
                 }
