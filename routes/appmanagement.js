@@ -6,6 +6,7 @@ var db = require('./connection');
 var appmanagementdb = db.sublevel('appmanagement');
 var sequencedb = db.sublevel('sequencenumber');
 var userdb = db.sublevel('user');
+var widgetdb = db.sublevel('widgetmanagement');
 
 appmanagementdb.get('appmanagement', function (err, app) {
     if (err) {
@@ -156,7 +157,7 @@ router.get('/appmanagement/:_id', function (req, res) {
 router.get('/appmanagement/getbyuser/:_id',function(req,res)
 {
     var userid = req.params._id;
-    appmanagementdb.get('appmanagement', function (err, management) {
+    widgetdb.get('widgetmanagement', function (err, management) {
         if (err)
             if (err.message == "Key not found in database") {
                 res.json({ "success": true, "message": "no data", "obj": [] });
