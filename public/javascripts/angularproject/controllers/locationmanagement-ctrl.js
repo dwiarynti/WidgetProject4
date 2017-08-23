@@ -76,6 +76,7 @@ angular.module('app').controller('locationmanagementcontroller',
                     $scope.errormessage = obj.areatype== "" ? "Please select area type": "Please select parent";
                 }else{
                     $scope.errormessage = "";
+                    var roomresource = new roomResource();
                     roomresource.roomobj = obj;
                     roomresource.$create().then(function(data){
                         if(data.success)
