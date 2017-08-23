@@ -911,6 +911,7 @@ router.post('/roomdev/create',function(req,res)
         }
         else
         {
+            devices = [];
             for(var i = 0 ; i < listdevice.length;i++)
             {
                
