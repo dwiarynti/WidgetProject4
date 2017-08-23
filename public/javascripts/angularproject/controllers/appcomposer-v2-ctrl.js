@@ -15,7 +15,7 @@ angular.module('app').controller('appcomposer-v2controller',
 
             $scope.gridsterOpts = {
                 columns: 13,
-                margins: [30, 20],
+                margins: [10, 20],
                 outerMargin: false,
                 pushing: true,
                 floating: false,

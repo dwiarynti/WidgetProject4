@@ -11,8 +11,8 @@ angular.module('app').controller('applicationcontroller',
             });
             
             $scope.gridsterOpts = {
-                columns: 20,
-                margins: [20, 20],
+                columns: 13,
+                margins: [10, 20],
                 outerMargin: false,
                 pushing: true,
                 floating: false,
